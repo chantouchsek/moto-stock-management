@@ -38,7 +38,7 @@ class CategoryController extends Controller
             $this->setPagination(Input::get('limit'));
         }
 
-        $pagination = Category::paginate($this->getPagination());
+        $pagination = Category::search(Input::get('q'), null, true)->paginate($this->getPagination());
 
         $users = $this->transformer->transformCollection(collect($pagination->items()));
 

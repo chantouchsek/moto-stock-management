@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Searchable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -35,10 +36,18 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Category withoutTrashed()
  * @mixin \Eloquent
+ * @property string|null $uuid
+ * @property int|null $parent_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereUuid($value)
  */
 class Category extends Model
 {
-    use SoftDeletes, Sluggable;
+    use SoftDeletes, Sluggable, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -62,6 +71,25 @@ class Category extends Model
             ]
         ];
     }
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'categories.name' => 1,
+            'categories.description' => 2
+        ]
+    ];
 
     /**
      *  Setup model event hooks
