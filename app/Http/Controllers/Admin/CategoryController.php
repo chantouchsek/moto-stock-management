@@ -40,10 +40,10 @@ class CategoryController extends Controller
 
         $pagination = Category::search(Input::get('q'), null, true)->paginate($this->getPagination());
 
-        $users = $this->transformer->transformCollection(collect($pagination->items()));
+        $data = $this->transformer->transformCollection(collect($pagination->items()));
 
         return $this->respondWithPagination($pagination, [
-            'data' => $users
+            'data' => $data
         ]);
     }
 
