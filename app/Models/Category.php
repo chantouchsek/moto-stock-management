@@ -86,8 +86,8 @@ class Category extends Model
          * @var array
          */
         'columns' => [
-            'categories.name' => 1,
-            'categories.description' => 2
+            'categories.name' => 10,
+            'categories.description' => 1
         ]
     ];
 
