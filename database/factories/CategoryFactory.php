@@ -7,6 +7,6 @@ $factory->define(\App\Models\Category::class, function (Faker $faker) {
         'name' => $faker->name,
         'slug' => $faker->slug,
         'description' => $faker->text,
-        'status' => true
+        'active' => $faker->boolean
     ];
 });

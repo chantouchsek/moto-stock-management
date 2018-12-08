@@ -18,9 +18,13 @@ class CreateCategoriesTable extends Migration
             $table->string('name')->nullable()->unique();
             $table->string('slug')->nullable()->unique();
             $table->string('description', 255)->nullable();
-            $table->boolean('status')->default(1);
+            $table->boolean('active')->default(1);
+            $table->unsignedInteger('parent_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('parent_id')
+                ->references('id')->on('categories')
+                ->onDelete('cascade');
         });
     }
 

@@ -16,10 +16,11 @@ class CategoryTransformer extends BaseTransformer
     {
         return [
             'id' => (int)$item->id,
+            'uuid' => (string)$item->uuid,
             'name' => (string)$item->name,
             'slug' => (string)$item->slug,
             'description' => $item->description,
-            'active' => (boolean)$item->status
+            'active' => (int)$item->active
         ];
     }
 }
