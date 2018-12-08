@@ -120,7 +120,7 @@ trait Searchable
     /**
      * Returns whether or not to keep duplicates.
      *
-     * @return array
+     * @return bool
      */
     protected function getGroupBy()
     {
