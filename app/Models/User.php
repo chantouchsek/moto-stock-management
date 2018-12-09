@@ -7,16 +7,19 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Webpatser\Uuid\Uuid;
+
 
 /**
  * App\Models\User
  *
  * @property int $id
+ * @property string $uuid
  * @property string $name
  * @property string $email
  * @property string|null $phone_number
  * @property string|null $username
- * @property int|null $role_id
  * @property string|null $email_verified_at
  * @property string $password
  * @property int $gender
@@ -34,13 +37,17 @@ use Laravel\Passport\HasApiTokens;
  * @property string|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
  * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User role($roles)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereAvatarUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereBaseSalary($value)
@@ -57,18 +64,18 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhoneNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereResignedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRoleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStartWorkDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUuid($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User withoutTrashed()
  * @mixin \Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, SoftDeletes;
+    use Notifiable, HasApiTokens, SoftDeletes, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -76,12 +83,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone_number', 'username', 'date_of_birth',
+        'first_name', 'last_name', 'email', 'password', 'phone_number', 'username', 'date_of_birth',
         'gender', 'address', 'start_work_date', 'base_salary', 'avatar_url',
-        'status', 'resigned_at', 'bonus', 'role_id'
+        'status', 'resigned_at', 'bonus', 'uuid', 'bio'
     ];
 
     protected $dates = ['date_of_birth', 'start_work_date', 'resigned_at'];
+
+    protected $appends = ['name'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -91,4 +100,34 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = (string)Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
+    }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Models\Role as BaseRole;
 
 /**
  * App\Models\Role
@@ -33,17 +32,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Role withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Role withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @method static \Illuminate\Database\Eloquent\Builder|\Spatie\Permission\Models\Role permission($permissions)
+ * @property string $guard_name
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereGuardName($value)
  */
-class Role extends Model
+class Role extends BaseRole
 {
-    use SoftDeletes;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'slug', 'description', 'status'
-    ];
+    //
 }

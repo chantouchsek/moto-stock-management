@@ -16,9 +16,30 @@ class UserTransformer extends BaseTransformer
     {
         return [
             'id' => (int)$item->id,
+            'uuid' => (string)$item->uuid,
             'name' => (string)$item->name,
+            'first_name' => (string)$item->first_name,
+            'last_name' => (string)$item->last_name,
+            'username' => (string)$item->username,
             'email' => (string)$item->email,
             'registered' => $item->created_at->toDateString(),
+            'phone_number' => (string)$item->phone_number,
+            'email_verified_at' => (string)$item->email_verified_at,
+            'gender' => (int)$item->gender,
+            'pay_day' => (string)$item->pay_day,
+            'date_of_birth' => (string)$item->date_of_birth,
+            'address' => (string)$item->address,
+            'start_work_date' => (string)$item->start_work_date->toDateString(),
+            'base_salary' => (float)$item->base_salary,
+            'avatar_url' => (string)$item->avatar_url,
+            'status' => (boolean)$item->status,
+            'resigned_at' => (string)$item->resigned_at,
+            'bonus' => (float)$item->bonus,
+            'created_at' => (string)$item->created_at,
+            'updated_at' => (string)$item->updated_at,
+            'deleted_at' => (string)$item->deleted_at,
+            'bio' => (string)$item->bio,
+            'roles' => $item->roles
         ];
     }
 }

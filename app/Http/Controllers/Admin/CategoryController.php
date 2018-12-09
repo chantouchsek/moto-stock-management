@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\Category\DeleteRequest;
+use App\Http\Requests\Admin\Category\IndexRequest;
+use App\Http\Requests\Admin\Category\ShowRequest;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 use App\Transformers\CategoryTransformer;
 use App\Http\Requests\Admin\Category\StoreRequest;
 use App\Http\Requests\Admin\Category\UpdateRequest;
@@ -30,15 +32,16 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param IndexRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        if (Input::get('limit')) {
-            $this->setPagination(Input::get('limit'));
+        if ($request->get('limit')) {
+            $this->setPagination($request->get('limit'));
         }
 
-        $pagination = Category::search(Input::get('q'), null, true)->paginate($this->getPagination());
+        $pagination = Category::search($request->get('q'), null, true)->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
@@ -66,9 +69,10 @@ class CategoryController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Category $category
+     * @param ShowRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Category $category)
+    public function show(Category $category, ShowRequest $request)
     {
         return $this->respond($this->transformer->transform($category));
     }
@@ -91,10 +95,11 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Category $category
+     * @param DeleteRequest $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category, DeleteRequest $request)
     {
         $category->delete();
         return $this->respond(['data' => $category, 'message' => 'Category destroyed.']);
