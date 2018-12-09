@@ -118,13 +118,9 @@ class UserController extends Controller
         } else {
             $input = array_except($input, array('password'));
         }
-
         $user->update($input);
-        DB::table('model_has_roles')->where('model_id', $user->id)->delete();
-
-        $user->assignRole($request->input('roles'));
-
-        return $this->respondCreated('User updated.');
+        $user->syncRoles($request->input('roles'));
+        return $this->respond(['data' => $user, 'message' => 'User updated.']);
     }
 
 

@@ -39,7 +39,7 @@ class UserTransformer extends BaseTransformer
             'updated_at' => (string)$item->updated_at,
             'deleted_at' => (string)$item->deleted_at,
             'bio' => (string)$item->bio,
-            'roles' => $item->roles
+            'roles' => $item->roles->pluck('name')->all()
         ];
     }
 }
