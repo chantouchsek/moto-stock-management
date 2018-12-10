@@ -56,9 +56,12 @@ class MakeController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $make = new Make($request->all());
-        $make->save();
-        return $this->respond(['data' => $make, 'message' => 'Item created.']);
+        $input = $request->all();
+        $make = Make::create($input);
+        return $this->respond([
+            'data' => $this->transformer->transform($make),
+            'message' => 'Item created.'
+        ]);
     }
 
     /**
@@ -84,7 +87,10 @@ class MakeController extends Controller
     {
         $make->update($request->all());
         $make->save();
-        return $this->respond(['data' => $make, 'message' => 'Item updated.']);
+        return $this->respond([
+            'data' => $this->transformer->transform($make),
+            'message' => 'Item updated.'
+        ]);
     }
 
     /**
@@ -98,6 +104,9 @@ class MakeController extends Controller
     public function destroy(Make $make, DeleteRequest $request)
     {
         $make->delete();
-        return $this->respond(['data' => $make, 'message' => 'Item deleted.']);
+        return $this->respond([
+            'data' => $this->transformer->transform($make),
+            'message' => 'Item deleted.'
+        ]);
     }
 }

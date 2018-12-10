@@ -58,7 +58,10 @@ class ModelsController extends Controller
     {
         $model = new Models($request->all());
         $model->save();
-        return $this->respond(['data' => $model, 'message' => 'Item created.']);
+        return $this->respond([
+            'data' => $this->transformer->transform($model),
+            'message' => 'Item created.'
+        ]);
     }
 
     /**
@@ -84,7 +87,10 @@ class ModelsController extends Controller
     {
         $model->update($request->all());
         $model->save();
-        return $this->respond(['data' => $model, 'message' => 'Item updated.']);
+        return $this->respond([
+            'data' => $this->transformer->transform($model),
+            'message' => 'Item updated.'
+        ]);
     }
 
     /**
@@ -98,6 +104,9 @@ class ModelsController extends Controller
     public function destroy(Models $model, DeleteRequest $request)
     {
         $model->delete();
-        return $this->respond(['data' => $model, 'message' => 'Item deleted.']);
+        return $this->respond([
+            'data' => $this->transformer->transform($model),
+            'message' => 'Item deleted.'
+        ]);
     }
 }
