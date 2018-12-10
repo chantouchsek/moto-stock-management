@@ -44,6 +44,7 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer withoutTrashed()
  * @mixin \Eloquent
+ * @property-read string $full_name
  */
 class Customer extends Model
 {
