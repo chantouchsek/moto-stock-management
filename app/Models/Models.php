@@ -22,6 +22,25 @@ use Webpatser\Uuid\Uuid;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Models withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Models withoutTrashed()
+ * @property int $id
+ * @property string $uuid
+ * @property int $make_id
+ * @property string|null $name
+ * @property string|null $description
+ * @property int $active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \App\Models\Make $make
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereMakeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereUuid($value)
  */
 class Models extends Model
 {
@@ -30,6 +49,11 @@ class Models extends Model
 
     protected $table = 'models';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name', 'description', 'active', 'uuid', 'make_id'
     ];
@@ -81,7 +105,7 @@ class Models extends Model
      * @return BelongsTo
      */
 
-    public function make():BelongsTo
+    public function make(): BelongsTo
     {
         return $this->belongsTo(Make::class)->withTrashed();
     }

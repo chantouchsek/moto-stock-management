@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Searchable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
@@ -46,8 +47,23 @@ class Supplier extends Model
 {
     use SoftDeletes, Searchable;
 
-    protected $fillable = ['uuid', 'name', 'start_provide_date', 'address', 'email', 'phone_number'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'uuid',
+        'name',
+        'start_provide_date',
+        'address',
+        'email',
+        'phone_number'
+    ];
 
+    /**
+     * @var array
+     */
     protected $dates = ['start_provide_date'];
 
     /**
@@ -92,5 +108,13 @@ class Supplier extends Model
     public function getRouteKeyName()
     {
         return 'uuid';
+    }
+
+    /**
+     * @param $value
+     */
+    public function setStartProvideDateAttribute($value)
+    {
+        $this->attributes['start_provide_date'] = (new Carbon($value))->format('Y-m-d');
     }
 }

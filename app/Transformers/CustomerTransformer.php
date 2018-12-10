@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-class SupplierTransformer extends BaseTransformer
+class CustomerTransformer extends BaseTransformer
 {
 
     /**
@@ -17,11 +17,13 @@ class SupplierTransformer extends BaseTransformer
         return [
             'id' => (int)$item->id,
             'uuid' => (string)$item->uuid,
-            'name' => (string)$item->name,
+            'full_name' => (string)$item->full_name,
+            'first_name' => (string)$item->first_name,
+            'last_name' => (string)$item->last_name,
             'email' => (string)$item->email,
             'phone_number' => (string)$item->phone_number,
             'address' => (string)$item->address,
-            'start_provide_date' => isset($item->start_provide_date) ? $item->start_provide_date->toDateString() : ''
+            'date_of_birth' => isset($item->date_of_birth) ? $item->date_of_birth->toDateString() : ''
         ];
     }
 }

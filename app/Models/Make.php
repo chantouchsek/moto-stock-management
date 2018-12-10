@@ -22,11 +22,33 @@ use Webpatser\Uuid\Uuid;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Make withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Make withoutTrashed()
+ * @property int $id
+ * @property string $uuid
+ * @property string|null $name
+ * @property string|null $description
+ * @property int $active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Models[] $models
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereUuid($value)
  */
 class Make extends Model
 {
     use Searchable, SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name', 'description', 'active', 'uuid'
     ];

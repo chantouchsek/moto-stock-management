@@ -86,7 +86,11 @@ use Webpatser\Uuid\Uuid;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, SoftDeletes, HasRoles, Searchable;
+    use Notifiable,
+        HasApiTokens,
+        SoftDeletes,
+        HasRoles,
+        Searchable;
 
     /**
      * The attributes that are mass assignable.
