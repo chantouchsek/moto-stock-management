@@ -36,6 +36,6 @@ class CreateModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_models');
+        Schema::dropIfExists('models');
     }
 }
