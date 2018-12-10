@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-class CategoryTransformer extends BaseTransformer
+class MakeTransformer extends BaseTransformer
 {
 
     /**

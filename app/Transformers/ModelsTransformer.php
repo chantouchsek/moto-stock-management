@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-class CategoryTransformer extends BaseTransformer
+class ModelsTransformer extends BaseTransformer
 {
 
     /**
@@ -17,6 +17,7 @@ class CategoryTransformer extends BaseTransformer
         return [
             'id' => (int)$item->id,
             'uuid' => (string)$item->uuid,
+            'make_id' => (int)$item->make_id,
             'name' => (string)$item->name,
             'description' => $item->description,
             'active' => (int)$item->active
