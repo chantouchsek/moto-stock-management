@@ -104,6 +104,30 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = ['name'];
 
     /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'users.first_name' => 10,
+            'users.last_name' => 10,
+            'users.email' => 9,
+            'users.address' => 8,
+            'users.bio' => 1,
+            'users.phone_number' => 6,
+            'users.pay_day' => 5
+        ]
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array

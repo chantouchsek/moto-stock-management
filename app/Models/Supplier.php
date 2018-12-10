@@ -68,7 +68,7 @@ class Supplier extends Model
             'suppliers.email' => 9,
             'suppliers.address' => 8,
             'suppliers.start_provide_date' => 7,
-            'phone_number' => 6
+            'suppliers.phone_number' => 6
         ]
     ];
 
