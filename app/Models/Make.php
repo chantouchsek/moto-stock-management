@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
@@ -71,5 +72,13 @@ class Make extends Model
     public function getRouteKeyName()
     {
         return 'uuid';
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function models(): HasMany
+    {
+        return $this->hasMany(Models::class)->withTrashed();
     }
 }

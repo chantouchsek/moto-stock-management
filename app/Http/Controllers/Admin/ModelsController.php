@@ -64,40 +64,40 @@ class ModelsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Models $models
+     * @param  \App\Models\Models $model
      * @param ShowRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Models $models, ShowRequest $request)
+    public function show(Models $model, ShowRequest $request)
     {
-        return $this->respond($this->transformer->transform($models));
+        return $this->respond($this->transformer->transform($model));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  UpdateRequest $request
-     * @param  \App\Models\Models $models
+     * @param  \App\Models\Models $model
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateRequest $request, Models $models)
+    public function update(UpdateRequest $request, Models $model)
     {
-        $models->update($request->all());
-        $models->save();
-        return $this->respond(['data' => $models, 'message' => 'Item updated.']);
+        $model->update($request->all());
+        $model->save();
+        return $this->respond(['data' => $model, 'message' => 'Item updated.']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models $models
+     * @param  \App\Models\Models $model
      * @param DeleteRequest $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy(Models $models, DeleteRequest $request)
+    public function destroy(Models $model, DeleteRequest $request)
     {
-        $models->delete();
-        return $this->respond(['data' => $models, 'message' => 'Item deleted.']);
+        $model->delete();
+        return $this->respond(['data' => $model, 'message' => 'Item deleted.']);
     }
 }

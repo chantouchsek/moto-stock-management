@@ -19,7 +19,8 @@ class MakeTransformer extends BaseTransformer
             'uuid' => (string)$item->uuid,
             'name' => (string)$item->name,
             'description' => $item->description,
-            'active' => (int)$item->active
+            'active' => (int)$item->active,
+            'models' => collect($item->models)
         ];
     }
 }

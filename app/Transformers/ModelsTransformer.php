@@ -20,7 +20,8 @@ class ModelsTransformer extends BaseTransformer
             'make_id' => (int)$item->make_id,
             'name' => (string)$item->name,
             'description' => $item->description,
-            'active' => (int)$item->active
+            'active' => (int)$item->active,
+            'make' => $item->make
         ];
     }
 }
