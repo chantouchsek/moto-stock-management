@@ -21,4 +21,5 @@ Route::namespace('Admin')->group(function () {
     Route::resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('roles', 'RoleController', ['only' => ['index']]);
+    Route::resource('suppliers', 'SupplierController', ['except' => ['create', 'edit']]);
 });

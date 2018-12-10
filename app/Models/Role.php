@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Searchable;
 use Spatie\Permission\Models\Role as BaseRole;
 
 /**
@@ -37,8 +38,28 @@ use Spatie\Permission\Models\Role as BaseRole;
  * @method static \Illuminate\Database\Eloquent\Builder|\Spatie\Permission\Models\Role permission($permissions)
  * @property string $guard_name
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereGuardName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
  */
 class Role extends BaseRole
 {
-    //
+    use Searchable;
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'permissions.name' => 10
+        ]
+    ];
 }

@@ -44,7 +44,7 @@ class UserController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = $user->paginate($this->getPagination());
+        $pagination = $user->search($request->get('q'), null, true)->paginate($this->getPagination());
 
         $users = $this->transformer->transformCollection(collect($pagination->items()));
 
@@ -84,22 +84,6 @@ class UserController extends Controller
     public function show(User $user, ShowRequest $request)
     {
         return $this->respond($this->transformer->transform($user));
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = User::find($id);
-        $roles = Role::pluck('name', 'name')->all();
-        $userRole = $user->roles->pluck('name', 'name')->all();
-
-        return view('users.edit', compact('user', 'roles', 'userRole'));
     }
 
 

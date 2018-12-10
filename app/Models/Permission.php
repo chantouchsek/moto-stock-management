@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Searchable;
 use Spatie\Permission\Models\Permission as BasePermission;
 
 /**
@@ -26,8 +27,28 @@ use Spatie\Permission\Models\Permission as BasePermission;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
  */
 class Permission extends BasePermission
 {
-    //
+    use Searchable;
+
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'permissions.name' => 10
+        ]
+    ];
 }
