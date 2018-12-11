@@ -30,7 +30,7 @@ class StoreRequest extends FormRequest
             'cost' => 'required',
             'supplier_id' => [
                 'required',
-                Rule::exists('supplier', 'id')
+                Rule::exists('suppliers', 'id')
             ],
             'category_id' => [
                 'required',

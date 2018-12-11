@@ -30,7 +30,7 @@ class UpdateRequest extends FormRequest
             'cost' => 'required',
             'supplier_id' => [
                 'required',
-                Rule::exists('supplier', 'id')
+                Rule::exists('suppliers', 'id')
             ],
             'category_id' => [
                 'required',
@@ -52,7 +52,7 @@ class UpdateRequest extends FormRequest
             'frame_number' => [
                 'required',
                 'min:4',
-                'unique:products,frame_number' . $this->id
+                'unique:products,frame_number,' . $this->id
             ],
             'status' => [
                 'required',

@@ -60,7 +60,10 @@ class ProductController extends Controller
 
         $product->save();
 
-        return $this->respondCreated();
+        return $this->respond([
+            'data' => $this->transformer->transform($product),
+            'message' => 'Product created.'
+        ]);
     }
 
     /**
@@ -86,7 +89,10 @@ class ProductController extends Controller
     {
         $product->update($request->all());
         $product->save();
-        return $this->respond(['data' => $product, 'message' => 'Product updated.']);
+        return $this->respond([
+            'data' => $this->transformer->transform($product),
+            'message' => 'Product updated.'
+        ]);
     }
 
     /**
@@ -100,6 +106,9 @@ class ProductController extends Controller
     public function destroy(Product $product, DeleteRequest $request)
     {
         $product->delete();
-        return $this->respond(['data' => $product, 'message' => 'Product destroyed.']);
+        return $this->respond([
+            'data' => $this->transformer->transform($product),
+            'message' => 'Product destroyed.'
+        ]);
     }
 }

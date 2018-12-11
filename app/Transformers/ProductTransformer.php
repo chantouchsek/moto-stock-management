@@ -26,7 +26,7 @@ class ProductTransformer extends BaseTransformer
             'supplier_id' => (int)$item->supplier_id,
             'price' => (float)$item->price,
             'cost' => (float)$item->cost,
-            'color' => (float)$item->color,
+            'color' => (string)$item->color,
             'engine_number' => (string)$item->engine_number,
             'frame_number' => (string)$item->frame_number,
             'plate_number' => (string)$item->plate_number,
