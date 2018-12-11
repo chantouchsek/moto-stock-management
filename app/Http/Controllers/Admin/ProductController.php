@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\DeleteRequest;
 use App\Http\Requests\Admin\Product\IndexRequest;
 use App\Http\Requests\Admin\Product\ShowRequest;
@@ -55,9 +56,9 @@ class ProductController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $customer = new Product($request->all());
+        $product = new Product($request->all());
 
-        $customer->save();
+        $product->save();
 
         return $this->respondCreated();
     }
@@ -65,40 +66,40 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product $customer
+     * @param  \App\Models\Product $product
      * @param ShowRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Product $customer, ShowRequest $request)
+    public function show(Product $product, ShowRequest $request)
     {
-        return $this->respond($this->transformer->transform($customer));
+        return $this->respond($this->transformer->transform($product));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  UpdateRequest $request
-     * @param  \App\Models\Product $customer
+     * @param  \App\Models\Product $product
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateRequest $request, Product $customer)
+    public function update(UpdateRequest $request, Product $product)
     {
-        $customer->update($request->all());
-        $customer->save();
-        return $this->respond(['data' => $customer, 'message' => 'Product updated.']);
+        $product->update($request->all());
+        $product->save();
+        return $this->respond(['data' => $product, 'message' => 'Product updated.']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product $customer
+     * @param  \App\Models\Product $product
      * @param DeleteRequest $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy(Product $customer, DeleteRequest $request)
+    public function destroy(Product $product, DeleteRequest $request)
     {
-        $customer->delete();
-        return $this->respond(['data' => $customer, 'message' => 'Product destroyed.']);
+        $product->delete();
+        return $this->respond(['data' => $product, 'message' => 'Product destroyed.']);
     }
 }

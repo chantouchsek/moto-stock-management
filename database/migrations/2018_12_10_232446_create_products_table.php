@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
             $table->integer('qty')->default(0);
             $table->string('engine_number')->nullable();
             $table->string('color')->default(null);
-            $table->string('plat_number')->default(null)->comment('If motorbike is second hand');
+            $table->string('plate_number')->default(null)->comment('If motorbike is second hand');
             $table->string('frame_number')->default(null);
             $table->string('status')->default('new')->comment('Is new or second hand');
             $table->string('code')->default(null);

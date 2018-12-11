@@ -85,7 +85,7 @@ class Product extends Model
         'supplier_id',
         'engine_number',
         'color',
-        'plat_number',
+        'plate_number',
         'frame_number',
         'make_id',
         'model_id',
