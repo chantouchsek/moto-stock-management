@@ -59,18 +59,28 @@ class UserController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\InvalidBase64Data
      */
     public function store(StoreRequest $request)
     {
-
+        DB::beginTransaction();
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+        $input['password'] = Hash::make($input['phone_number']);
 
         $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $user->assignRole($input['roles']);
 
+        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif'];
 
-        return $this->respondCreated('User Created');
+        if ($request->has('avatar_url')) {
+            $user->addMediaFromBase64($input['avatar_url'], $allowedMimeTypes)->toMediaCollection('avatars');
+        }
+        DB::commit();
+        return $this->respond([
+            'data' => $this->transformer->transform($user),
+            'message' => 'User has been created.'
+        ]);
     }
 
 
@@ -96,6 +106,7 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, User $user)
     {
+        DB::beginTransaction();
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
@@ -104,6 +115,7 @@ class UserController extends Controller
         }
         $user->update($input);
         $user->syncRoles($request->input('roles'));
+        DB::commit();
         return $this->respond(['data' => $this->transformer->transform($user), 'message' => 'User updated.']);
     }
 
@@ -118,7 +130,9 @@ class UserController extends Controller
      */
     public function destroy(User $user, DeleteRequest $request)
     {
+        DB::beginTransaction();
         $user->delete();
-        return $this->respond(['data' => $user, 'message' => 'User Deleted.']);
+        DB::commit();
+        return $this->respond(['data' => $this->transformer->transform($user), 'message' => 'User Deleted.']);
     }
 }

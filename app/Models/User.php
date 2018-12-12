@@ -103,8 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      */
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'phone_number', 'username', 'date_of_birth',
-        'gender', 'address', 'start_work_date', 'base_salary', 'avatar_url',
-        'status', 'resigned_at', 'bonus', 'uuid', 'bio'
+        'gender', 'address', 'start_work_date', 'base_salary', 'status', 'resigned_at', 'bonus', 'uuid', 'bio'
     ];
 
     protected $dates = ['date_of_birth', 'start_work_date', 'resigned_at'];
