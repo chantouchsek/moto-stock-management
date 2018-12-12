@@ -108,7 +108,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
 
     protected $dates = ['date_of_birth', 'start_work_date', 'resigned_at'];
 
-    protected $appends = ['name'];
+    protected $appends = ['full_name'];
 
     /**
      * Searchable rules.
@@ -168,7 +168,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     /**
      * @return string
      */
-    public function getNameAttribute()
+    public function getFullNameAttribute()
     {
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
     }
