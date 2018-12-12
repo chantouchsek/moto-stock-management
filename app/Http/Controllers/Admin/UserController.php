@@ -104,7 +104,7 @@ class UserController extends Controller
         }
         $user->update($input);
         $user->syncRoles($request->input('roles'));
-        return $this->respond(['data' => $user, 'message' => 'User updated.']);
+        return $this->respond(['data' => $this->transformer->transform($user), 'message' => 'User updated.']);
     }
 
 

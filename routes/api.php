@@ -19,6 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::namespace('Admin')->group(function () {
     Route::resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
+    Route::namespace('User')->prefix('users')->name('users.')->group(function () {
+        Route::post('{user}/upload-avatar', 'UploadAvatarController@upload')->name('upload-avatar');
+    });
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('roles', 'RoleController', ['only' => ['index']]);
     Route::resource('suppliers', 'SupplierController', ['except' => ['create', 'edit']]);

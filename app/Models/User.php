@@ -8,6 +8,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 use Webpatser\Uuid\Uuid;
 
@@ -84,13 +87,14 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
     use Notifiable,
         HasApiTokens,
         SoftDeletes,
         HasRoles,
-        Searchable;
+        Searchable,
+        HasMediaTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -168,5 +172,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getNameAttribute()
     {
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
+    }
+
+    /**
+     * @param Media|null $media
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')->crop('crop-center', 100, 100);
     }
 }
