@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UserTableSeeder extends Seeder
 {
@@ -11,7 +12,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::create([
+        $user = User::create([
             'first_name' => 'Admin',
             'last_name' => 'User',
             'email' => 'admin@test.com',
@@ -31,6 +32,7 @@ class UserTableSeeder extends Seeder
             'bonus' => 20,
             'phone_number' => '093234923'
         ]);
-        factory(\App\Models\User::class, 5)->create();
+        $user->assignRole('super-admin');
+        factory(User::class, 5)->create();
     }
 }
