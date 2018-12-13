@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Product\StoreRequest;
 use App\Http\Requests\Admin\Product\UpdateRequest;
 use App\Models\Product;
 use App\Transformers\ProductTransformer;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -87,8 +88,25 @@ class ProductController extends Controller
      */
     public function update(UpdateRequest $request, Product $product)
     {
+        DB::beginTransaction();
+
         $product->update($request->all());
+
+        $array = [];
+        $colors = collect($request->get('colors'));
+        foreach ($colors as $key => $color) {
+            $array[$color['colorId']] = [
+                'engine_number' => $color['engineNumber'],
+                'plate_number' => $color['plateNumber'],
+                'frame_number' => $color['frameNumber'],
+                'code' => $color['code'],
+            ];
+        }
+
+        $product->colors()->sync($array);
         $product->save();
+
+        DB::commit();
         return $this->respond([
             'data' => $this->transformer->transform($product),
             'message' => 'Product updated.'

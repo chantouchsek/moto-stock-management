@@ -53,12 +53,11 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('product_id')->nullable();
             $table->unsignedInteger('color_id')->nullable();
             $table->string('engine_number')->nullable();
-            $table->string('plate_number')->default(null)->comment('If motorbike is second hand');
-            $table->string('frame_number')->default(null);
+            $table->string('plate_number')->nullable()->comment('If motorbike is second hand');
+            $table->string('frame_number')->nullable();
             $table->string('status')->default('new')->comment('Is new or second hand');
-            $table->string('code')->default(null);
+            $table->string('code')->nullable();
             $table->dateTime('sole_on')->nullable();
-            $table->integer('qty')->nullable();
             $table->timestamps();
         });
     }

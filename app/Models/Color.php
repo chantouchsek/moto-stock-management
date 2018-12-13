@@ -73,8 +73,7 @@ class Color extends Model
                 'frame_number',
                 'status',
                 'code',
-                'sole_on',
-                'qty'
+                'sole_on'
             ])
             ->withTimestamps();
     }

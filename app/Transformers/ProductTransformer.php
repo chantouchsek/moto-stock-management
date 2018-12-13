@@ -32,7 +32,16 @@ class ProductTransformer extends BaseTransformer
             'model' => $item->model,
             'make' => $item->make,
             'supplier' => $item->supplier,
-            'colors' => $item->colors
+            'colors' => collect($item->colors)->map(function ($color) {
+                return [
+                    'engineNumber' => $color->pivot->engine_number,
+                    'plateNumber' => $color->pivot->plate_number,
+                    'frameNumber' => $color->pivot->frame_number,
+                    'code' => $color->pivot->code,
+                    'soleOn' => $color->pivot->sole_on,
+                    'name' => $color->name
+                ];
+            })
         ];
     }
 }
