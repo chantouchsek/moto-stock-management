@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
@@ -83,14 +84,8 @@ class Product extends Model
         'cost',
         'qty',
         'supplier_id',
-        'engine_number',
-        'color',
-        'plate_number',
-        'frame_number',
         'make_id',
-        'model_id',
-        'code',
-        'status'
+        'model_id'
     ];
 
     /**
@@ -163,6 +158,24 @@ class Product extends Model
     public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class)->withTrashed();
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function colors(): BelongsToMany
+    {
+        return $this->belongsToMany(Color::class, 'product_color', 'product_id', 'color_id')
+            ->withPivot([
+                'engine_number',
+                'plate_number',
+                'frame_number',
+                'status',
+                'code',
+                'sole_on',
+                'qty'
+            ])
+            ->withTimestamps();
     }
 
 }
