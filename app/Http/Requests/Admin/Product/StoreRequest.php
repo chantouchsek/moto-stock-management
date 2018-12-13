@@ -43,27 +43,6 @@ class StoreRequest extends FormRequest
             'model_id' => [
                 'required',
                 Rule::exists('models', 'id')
-            ],
-            'engine_number' => [
-                'required',
-                'min:4',
-                'unique:products,engine_number'
-            ],
-            'frame_number' => [
-                'required',
-                'min:4',
-                'unique:products,frame_number'
-            ],
-            'status' => [
-                'required',
-                'in:new,second_hand'
-            ],
-            'color' => [
-                'required',
-                'min:2'
-            ],
-            'plate_number' => [
-                'required_if:status,second_hand'
             ]
         ];
     }
