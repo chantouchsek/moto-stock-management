@@ -85,7 +85,10 @@ class Product extends Model
         'qty',
         'supplier_id',
         'make_id',
-        'model_id'
+        'model_id',
+        'year',
+        'import_from',
+        'date_import'
     ];
 
     /**

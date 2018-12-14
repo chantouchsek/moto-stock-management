@@ -57,10 +57,25 @@ class ProductController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        DB::beginTransaction();
         $product = new Product($request->all());
 
         $product->save();
 
+        $array = [];
+        $colors = collect($request->get('colors'));
+        foreach ($colors as $key => $color) {
+            $array[$color['colorId']] = [
+                'engine_number' => $color['engineNumber'],
+                'plate_number' => $color['plateNumber'],
+                'frame_number' => $color['frameNumber'],
+                'status' => $color['status'],
+                'code' => $color['code'],
+            ];
+        }
+
+        $product->colors()->attach($array);
+        DB::commit();
         return $this->respond([
             'data' => $this->transformer->transform($product),
             'message' => 'Product created.'
@@ -99,11 +114,13 @@ class ProductController extends Controller
                 'engine_number' => $color['engineNumber'],
                 'plate_number' => $color['plateNumber'],
                 'frame_number' => $color['frameNumber'],
+                'status' => $color['status'],
                 'code' => $color['code'],
             ];
         }
 
         $product->colors()->sync($array);
+
         $product->save();
 
         DB::commit();

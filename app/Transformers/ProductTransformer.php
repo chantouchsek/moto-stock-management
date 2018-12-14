@@ -39,7 +39,9 @@ class ProductTransformer extends BaseTransformer
                     'frameNumber' => $color->pivot->frame_number,
                     'code' => $color->pivot->code,
                     'soleOn' => $color->pivot->sole_on,
-                    'name' => $color->name
+                    'name' => $color->name,
+                    'colorId' => $color->id,
+                    'status' => $color->pivot->status
                 ];
             })
         ];
