@@ -22,6 +22,9 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('User')->prefix('users')->name('users.')->group(function () {
         Route::post('{user}/upload-avatar', 'UploadAvatarController@upload')->name('upload-avatar');
     });
+    Route::namespace('Product')->prefix('products')->name('products.')->group(function () {
+        Route::delete('{product}/{colorId}', 'ColorController@destroyColor')->name('destroy.color');
+    });
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('roles', 'RoleController', ['only' => ['index']]);
     Route::resource('suppliers', 'SupplierController', ['except' => ['create', 'edit']]);
