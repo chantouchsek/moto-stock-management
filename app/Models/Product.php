@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -72,9 +74,9 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product withoutTrashed()
  * @mixin \Eloquent
  */
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use SoftDeletes, Searchable;
+    use SoftDeletes, Searchable, HasMediaTrait;
 
     protected $fillable = [
         'name',
@@ -90,6 +92,8 @@ class Product extends Model
         'import_from',
         'date_import'
     ];
+
+    protected $dates = ['date_import'];
 
     /**
      * Searchable rules.
