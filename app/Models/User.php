@@ -179,6 +179,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      */
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')->crop('crop-center', 150, 150);
+        $this->addMediaConversion('thumb')->crop('crop-center', 150, 150)
+            ->quality(100)->nonQueued();
     }
 }
