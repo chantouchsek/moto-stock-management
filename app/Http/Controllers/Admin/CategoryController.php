@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Transformers\CategoryTransformer;
 use App\Http\Requests\Admin\Category\StoreRequest;
 use App\Http\Requests\Admin\Category\UpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -58,10 +59,11 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        DB::beginTransaction();
         $category = new Category($request->all());
 
         $category->save();
-
+        DB::commit();
         return $this->respondCreated();
     }
 
@@ -86,8 +88,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, Category $category)
     {
+        DB::beginTransaction();
         $category->update($request->all());
         $category->save();
+        DB::commit();
         return $this->respond(['data' => $category, 'message' => 'Category updated.']);
     }
 

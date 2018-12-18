@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Supplier\StoreRequest;
 use App\Http\Requests\Admin\Supplier\UpdateRequest;
 use App\Models\Supplier;
 use App\Transformers\SupplierTransformer;
+use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
 {
@@ -60,8 +61,10 @@ class SupplierController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        DB::beginTransaction();
         $supplier = new Supplier($request->all());
         $supplier->save();
+        DB::commit();
         return $this->respond(['data' => $supplier, 'message' => 'Item created']);
     }
 
@@ -86,8 +89,10 @@ class SupplierController extends Controller
      */
     public function update(UpdateRequest $request, Supplier $supplier)
     {
+        DB::beginTransaction();
         $supplier->update($request->all());
         $supplier->save();
+        DB::commit();
         return $this->respond(['data' => $supplier, 'message' => 'Item updated.']);
     }
 

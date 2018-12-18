@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Make\StoreRequest;
 use App\Http\Requests\Admin\Make\UpdateRequest;
 use App\Models\Make;
 use App\Transformers\MakeTransformer;
+use Illuminate\Support\Facades\DB;
 
 class MakeController extends Controller
 {
@@ -56,8 +57,10 @@ class MakeController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        DB::beginTransaction();
         $input = $request->all();
         $make = Make::create($input);
+        DB::commit();
         return $this->respond([
             'data' => $this->transformer->transform($make),
             'message' => 'Item created.'
@@ -85,8 +88,10 @@ class MakeController extends Controller
      */
     public function update(UpdateRequest $request, Make $make)
     {
+        DB::beginTransaction();
         $make->update($request->all());
         $make->save();
+        DB::commit();
         return $this->respond([
             'data' => $this->transformer->transform($make),
             'message' => 'Item updated.'

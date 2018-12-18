@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Customer\StoreRequest;
 use App\Http\Requests\Admin\Customer\UpdateRequest;
 use App\Models\Customer;
 use App\Transformers\CustomerTransformer;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -56,10 +57,11 @@ class CustomerController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        DB::beginTransaction();
         $customer = new Customer($request->all());
 
         $customer->save();
-
+        DB::commit();
         return $this->respondCreated();
     }
 
@@ -84,8 +86,10 @@ class CustomerController extends Controller
      */
     public function update(UpdateRequest $request, Customer $customer)
     {
+        DB::beginTransaction();
         $customer->update($request->all());
         $customer->save();
+        DB::commit();
         return $this->respond(['data' => $customer, 'message' => 'Customer updated.']);
     }
 

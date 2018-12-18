@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Color\StoreRequest;
 use App\Http\Requests\Admin\Color\UpdateRequest;
 use App\Models\Color;
 use App\Transformers\ColorTransformer;
+use Illuminate\Support\Facades\DB;
 
 class ColorController extends Controller
 {
@@ -56,10 +57,11 @@ class ColorController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        DB::beginTransaction();
         $color = new Color($request->all());
 
         $color->save();
-
+        DB::commit();
         return $this->respondCreated();
     }
 
@@ -84,8 +86,10 @@ class ColorController extends Controller
      */
     public function update(UpdateRequest $request, Color $color)
     {
+        DB::beginTransaction();
         $color->update($request->all());
         $color->save();
+        DB::commit();
         return $this->respond(['data' => $color, 'message' => 'Color updated.']);
     }
 

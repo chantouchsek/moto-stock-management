@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Models\StoreRequest;
 use App\Http\Requests\Admin\Models\UpdateRequest;
 use App\Models\Models;
 use App\Transformers\ModelsTransformer;
+use Illuminate\Support\Facades\DB;
 
 class ModelsController extends Controller
 {
@@ -56,8 +57,10 @@ class ModelsController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        DB::beginTransaction();
         $model = new Models($request->all());
         $model->save();
+        DB::commit();
         return $this->respond([
             'data' => $this->transformer->transform($model),
             'message' => 'Item created.'
@@ -85,8 +88,10 @@ class ModelsController extends Controller
      */
     public function update(UpdateRequest $request, Models $model)
     {
+        DB::beginTransaction();
         $model->update($request->all());
         $model->save();
+        DB::commit();
         return $this->respond([
             'data' => $this->transformer->transform($model),
             'message' => 'Item updated.'

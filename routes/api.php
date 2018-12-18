@@ -13,11 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::namespace('Admin')->group(function () {
+    Route::get('user', 'User\AuthController@show')->name('auth.user');
     Route::resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
     Route::namespace('User')->prefix('users')->name('users.')->group(function () {
         Route::post('{user}/upload-avatar', 'UploadAvatarController@upload')->name('upload-avatar');
