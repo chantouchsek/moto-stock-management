@@ -36,6 +36,15 @@ trait Searchable
         return $this->scopeSearchRestricted($q, $search, null, $threshold, $entireText, $entireTextOnly);
     }
 
+    /**
+     * @param Builder $q
+     * @param $search
+     * @param $restriction
+     * @param null $threshold
+     * @param bool $entireText
+     * @param bool $entireTextOnly
+     * @return Builder
+     */
     public function scopeSearchRestricted(Builder $q, $search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
     {
         $query = clone $q;

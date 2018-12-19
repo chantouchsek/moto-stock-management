@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Searchable;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -87,7 +88,7 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
  */
-class User extends Authenticatable implements MustVerifyEmail, HasMedia
+class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLocalePreference
 {
     use Notifiable,
         HasApiTokens,
@@ -103,11 +104,18 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      */
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'phone_number', 'username', 'date_of_birth',
-        'gender', 'address', 'start_work_date', 'base_salary', 'status', 'resigned_at', 'bonus', 'uuid', 'bio'
+        'gender', 'address', 'start_work_date', 'base_salary', 'status', 'resigned_at', 'bonus', 'uuid',
+        'bio', 'locale'
     ];
 
+    /**
+     * @var array
+     */
     protected $dates = ['date_of_birth', 'start_work_date', 'resigned_at'];
 
+    /**
+     * @var array
+     */
     protected $appends = ['full_name'];
 
     /**
@@ -181,5 +189,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         $this->addMediaConversion('thumb')->crop('crop-center', 150, 150)
             ->quality(100)->nonQueued();
+    }
+
+    /**
+     * Get the preferred locale of the entity.
+     *
+     * @return string|null
+     */
+    public function preferredLocale()
+    {
+        return $this->locale;
     }
 }

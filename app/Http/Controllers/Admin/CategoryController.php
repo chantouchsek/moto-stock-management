@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\DB;
 class CategoryController extends Controller
 {
 
-
     /**
      * @var CategoryTransformer The transformer used to transform the model.
      */

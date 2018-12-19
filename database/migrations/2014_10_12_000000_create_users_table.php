@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar_url')->nullable();
             $table->boolean('status')->default(1);
             $table->dateTime('resigned_at')->nullable();
+            $table->string('locale')->default('en');
             $table->decimal('bonus', 20, 2)->nullable();
             $table->rememberToken();
             $table->timestamps();

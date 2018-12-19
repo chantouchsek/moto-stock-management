@@ -30,4 +30,5 @@ Route::namespace('Admin')->group(function () {
     Route::resource('customers', 'CustomerController', ['except' => ['create', 'edit']]);
     Route::resource('colors', 'ColorController', ['except' => ['create', 'edit']]);
     Route::resource('products', 'ProductController', ['except' => ['create', 'edit']]);
+    Route::resource('sales', 'SaleController', ['except' => ['create', 'edit']]);
 });
