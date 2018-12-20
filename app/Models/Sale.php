@@ -54,6 +54,16 @@ class Sale extends Model
     }
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+    /**
      * @return BelongsTo
      */
     public function user(): BelongsTo
@@ -62,13 +72,21 @@ class Sale extends Model
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    /**
      * @return BelongsToMany
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Color::class, 'sale_product', 'product_id', 'sale_id')
+        return $this->belongsToMany(Product::class, 'sale_product', 'product_id', 'sale_id')
             ->withPivot([
-                'aty',
+                'qty',
                 'discount',
                 'additional_price'
             ])
