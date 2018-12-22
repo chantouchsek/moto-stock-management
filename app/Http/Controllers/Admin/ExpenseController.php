@@ -42,6 +42,7 @@ class ExpenseController extends Controller
         }
 
         $pagination = Expense::search($request->get('q'), null, true)
+            ->orderBy('date')
             ->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
@@ -51,7 +52,17 @@ class ExpenseController extends Controller
         })->map(function ($row) {
             return [
                 'total' => number_format($row->sum->amount, 2),
-                'expenses' => $row
+                'expenses' => $row->map(function ($item) {
+                    return [
+                        'amount' => number_format($item['amount'], 2),
+                        'date' => $item['date'],
+                        'expense_on' => $item['expense_on'],
+                        'notes' => $item['notes'],
+                        'user' => $item['user'],
+                        'user_id' => $item['user_id'],
+                        'uuid' => $item['uuid']
+                    ];
+                })
             ];
         });
 
@@ -71,6 +82,7 @@ class ExpenseController extends Controller
     {
         DB::beginTransaction();
         $input = $request->all();
+        $input['user_id'] = $request->user('api')->id;
         $make = Expense::create($input);
         DB::commit();
         return $this->respond([

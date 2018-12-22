@@ -26,7 +26,8 @@ class StoreRequest extends FormRequest
         return [
             'amount' => [
                 'required', 'min:2', 'int'
-            ]
+            ],
+            'date' => 'required|date'
         ];
     }
 }
