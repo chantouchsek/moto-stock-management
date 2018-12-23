@@ -22,7 +22,8 @@ class ExpenseTransformer extends BaseTransformer
             'notes' => (string)$item->notes,
             'user_id' => (int)$item->user_id,
             'user' => $item->user,
-            'date' => isset($item->date) ? $item->date->toDateString() : ''
+            'date' => isset($item->date) ? $item->date->toDateString() : '',
+            'files' => collect($item->getMedia('attachments'))
         ];
     }
 }

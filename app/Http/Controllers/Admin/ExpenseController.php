@@ -83,10 +83,10 @@ class ExpenseController extends Controller
         DB::beginTransaction();
         $input = $request->all();
         $input['user_id'] = $request->user('api')->id;
-        $make = Expense::create($input);
+        $expense = Expense::create($input);
         DB::commit();
         return $this->respond([
-            'data' => $this->transformer->transform($make),
+            'data' => $this->transformer->transform($expense),
             'message' => 'Item created.'
         ]);
     }
@@ -94,30 +94,30 @@ class ExpenseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Expense $make
+     * @param  \App\Models\Expense $expense
      * @param ShowRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Expense $make, ShowRequest $request)
+    public function show(Expense $expense, ShowRequest $request)
     {
-        return $this->respond($this->transformer->transform($make));
+        return $this->respond($this->transformer->transform($expense));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  UpdateRequest $request
-     * @param  \App\Models\Expense $make
+     * @param  \App\Models\Expense $expense
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateRequest $request, Expense $make)
+    public function update(UpdateRequest $request, Expense $expense)
     {
         DB::beginTransaction();
-        $make->update($request->all());
-        $make->save();
+        $expense->update($request->all());
+        $expense->save();
         DB::commit();
         return $this->respond([
-            'data' => $this->transformer->transform($make),
+            'data' => $this->transformer->transform($expense),
             'message' => 'Item updated.'
         ]);
     }
@@ -125,16 +125,16 @@ class ExpenseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Expense $make
+     * @param  \App\Models\Expense $expense
      * @param DeleteRequest $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy(Expense $make, DeleteRequest $request)
+    public function destroy(Expense $expense, DeleteRequest $request)
     {
-        $make->delete();
+        $expense->delete();
         return $this->respond([
-            'data' => $this->transformer->transform($make),
+            'data' => $this->transformer->transform($expense),
             'message' => 'Item deleted.'
         ]);
     }
