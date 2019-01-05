@@ -23,6 +23,11 @@ class CreateSalesTable extends Migration
             $table->decimal('total', 20, 2)->nullable();
             $table->integer('tax')->nullable()->comment('If needed, can input number percentage of tax will be charged.');
             $table->integer('tax_amount')->nullable()->comment('Auto calculate if tax input.');
+            $table->decimal('price', 20 ,2)->nullable();
+            $table->unsignedInteger('product_id')->nullable();
+            $table->date('date')->nullable();
+            $table->string('customer_name')->nullable();
+            $table->decimal('amount', 20, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -34,25 +39,10 @@ class CreateSalesTable extends Migration
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
-        });
-
-        Schema::create('sale_product', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('sale_id')->nullable();
-            $table->unsignedInteger('product_id')->nullable();
-            $table->decimal('additional_price', 20, 2)->nullable()->comment('If price will be sale different from product.');
-            $table->integer('qty')->nullable()->comment('Quantity of product when customer buy.');
-            $table->decimal('discount', 20, 2)->nullable()->comment('Discount amount only to apply for this product.');
-            $table->timestamps();
 
             $table->foreign('product_id')
                 ->references('id')->on('products')
                 ->onDelete('cascade');
-
-            $table->foreign('sale_id')
-                ->references('id')->on('sales')
-                ->onDelete('cascade');
-
         });
     }
 
@@ -63,7 +53,6 @@ class CreateSalesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sale_product');
         Schema::dropIfExists('sales');
     }
 }

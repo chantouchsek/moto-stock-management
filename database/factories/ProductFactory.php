@@ -12,7 +12,6 @@ $factory->define(\App\Models\Product::class, function (Faker $faker) {
         'description' => $faker->text,
         'price' => $faker->numberBetween(200, 5000),
         'cost' => $faker->numberBetween(100, 4000),
-        'qty' => rand(5, 20),
         'year' => $faker->date('Y'),
         'import_from' => $faker->country
     ];

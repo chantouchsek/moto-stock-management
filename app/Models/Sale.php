@@ -50,6 +50,21 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Sale withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Sale withoutTrashed()
  * @mixin \Eloquent
+ * @property int|null $color_id
+ * @property int|null $product_id
+ * @property string|null $engine_number
+ * @property string|null $plate_number
+ * @property string|null $frame_number
+ * @property string|null $customer_name
+ * @property float|null $amount
+ * @property-read \App\Models\Product|null $product
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereColorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereCustomerName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereEngineNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereFrameNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale wherePlateNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereProductId($value)
  */
 class Sale extends Model
 {
@@ -60,7 +75,21 @@ class Sale extends Model
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = ['uuid', 'customer_id', 'user_id', 'is_in_lack', 'in_lack_amount', 'total', 'tax', 'tax_amount'];
+    protected $fillable = [
+        'uuid',
+        'customer_id',
+        'user_id',
+        'is_in_lack',
+        'in_lack_amount',
+        'total',
+        'tax',
+        'tax_amount',
+        'customer_name',
+        'price',
+        'amount',
+        'product_id',
+        'date'
+    ];
 
     /**
      * Searchable rules.
@@ -122,16 +151,10 @@ class Sale extends Model
     }
 
     /**
-     * @return BelongsToMany
+     * @return BelongsTo
      */
-    public function products(): BelongsToMany
+    public function product(): BelongsTo
     {
-        return $this->belongsToMany(Product::class, 'sale_product', 'product_id', 'sale_id')
-            ->withPivot([
-                'qty',
-                'discount',
-                'additional_price'
-            ])
-            ->withTimestamps();
+        return $this->belongsTo(Product::class);
     }
 }

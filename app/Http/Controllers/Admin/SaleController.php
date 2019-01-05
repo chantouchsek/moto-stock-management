@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Sale;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Transformers\SaleTransformer;
@@ -60,19 +61,13 @@ class SaleController extends Controller
     public function store(StoreRequest $request)
     {
         DB::beginTransaction();
-        $sale = new Sale($request->all());
-        $sale->save();
-        $array = [];
-        $products = collect($request->get('products'));
-        foreach ($products as $key => $product) {
-            $array[$product['productId']] = [
-                'qty' => $product['qty'],
-                'discount' => $product['discount'],
-                'additional_price' => $product['additional_price']
-            ];
-        }
 
-        $sale->products()->attach($array);
+        $sale = new Sale($request->all());
+
+        $sale->save();
+
+        $sale->product()->update(['sole_on' => Carbon::now()]);
+
         DB::commit();
 
         return $this->respond(['data' => $this->transformer->transform($sale), 'message' => 'Sale created.']);
@@ -100,18 +95,9 @@ class SaleController extends Controller
     public function update(UpdateRequest $request, Sale $sale)
     {
         DB::beginTransaction();
-        $sale->update($request->all());
-        $array = [];
-        $products = collect($request->get('products'));
-        foreach ($products as $key => $product) {
-            $array[$product['productId']] = [
-                'qty' => $product['qty'],
-                'discount' => $product['discount'],
-                'additional_price' => $product['additional_price']
-            ];
-        }
 
-        $sale->products()->sync($array);
+        $sale->update($request->all());
+
         DB::commit();
 
         return $this->respond(['data' => $this->transformer->transform($sale), 'message' => 'Sale updated.']);

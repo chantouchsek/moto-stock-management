@@ -77,26 +77,46 @@ use Webpatser\Uuid\Uuid;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Color[] $colors
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Models\Media[] $media
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereDateImport($value)
+ * @property int|null $color_id
+ * @property string|null $plate_number If motorbike is second hand
+ * @property string|null $sole_on
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereColorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product wherePlateNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereSoleOn($value)
  */
 class Product extends Model implements HasMedia
 {
-    use SoftDeletes, Searchable, HasMediaTrait;
+    use SoftDeletes,
+        Searchable,
+        HasMediaTrait;
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'name',
         'category_id',
         'description',
         'price',
         'cost',
-        'qty',
         'supplier_id',
         'make_id',
+        'color_id',
         'model_id',
         'year',
         'import_from',
-        'date_import'
+        'date_import',
+        'engine_number',
+        'plate_number',
+        'frame_number',
+        'status',
+        'code',
+        'sole_on'
     ];
 
+    /**
+     * @var array
+     */
     protected $dates = ['date_import'];
 
     /**
@@ -113,8 +133,11 @@ class Product extends Model implements HasMedia
          * @var array
          */
         'columns' => [
-            'name' => 10,
-            'description' => 1
+            'products.id' => 10,
+            'products.name' => 9,
+            'products.description' => 1,
+            'products.engine_number' => 10,
+            'products.frame_number' => 9
         ]
     ];
 
@@ -172,20 +195,11 @@ class Product extends Model implements HasMedia
     }
 
     /**
-     * @return BelongsToMany
+     * @return BelongsTo
      */
-    public function colors(): BelongsToMany
+    public function color(): BelongsTo
     {
-        return $this->belongsToMany(Color::class, 'product_color', 'product_id', 'color_id')
-            ->withPivot([
-                'engine_number',
-                'plate_number',
-                'frame_number',
-                'status',
-                'code',
-                'sole_on'
-            ])
-            ->withTimestamps();
+        return $this->belongsTo(Color::class)->withTrashed();
     }
 
 }

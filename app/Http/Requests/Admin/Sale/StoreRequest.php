@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Sale;
 
 use App\Http\Requests\BaseRequest as FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -24,9 +25,14 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'customer_name' => [
                 'required', 'min:2', 'string'
-            ]
+            ],
+            'product_id' => [
+                'required',
+                Rule::exists('products', 'id')->whereNull('sole_on')
+            ],
+            'engine_number' => 'required|string'
         ];
     }
 }

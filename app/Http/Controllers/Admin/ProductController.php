@@ -40,13 +40,55 @@ class ProductController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = Product::search($request->get('q'), null, true)->paginate($this->getPagination());
+        $q = $request->get('q');
+        $categoryId = $request->get('category_id');
+
+        $pagination = Product::search($q, null, false)
+            ->when($categoryId, function ($query, $q) {
+                return $query->where('category_id', $q);
+            })
+            ->when($request->get('make_id'), function ($query, $q) {
+                return $query->where('make_id', $q);
+            })
+            ->when($request->get('model_id'), function ($query, $q) {
+                return $query->where('model_id', $q);
+            });
+
+        if ($request->has('first')) {
+            $pagination = $pagination->first();
+
+            if (!$pagination) {
+                return $this->respond([
+                    'data' => $pagination,
+                    'pagination' => [
+                        'total_count' => 0,
+                        'total_pages' => 0,
+                        'current_page' => 0,
+                        'limit' => 0,
+                    ],
+                    "first" => true
+                ]);
+            }
+
+            $data = $this->transformer->transform($pagination);
+
+            return $this->respond([
+                'data' => $data,
+                'pagination' => [
+                    'total_count' => 0,
+                    'total_pages' => 0,
+                    'current_page' => 0,
+                    'limit' => 0,
+                ],
+                "first" => true
+            ]);
+        }
+
+        $pagination = $pagination->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
-        return $this->respondWithPagination($pagination, [
-            'data' => $data
-        ]);
+        return $this->respondWithPagination($pagination, ['data' => $data]);
     }
 
     /**
@@ -62,19 +104,6 @@ class ProductController extends Controller
 
         $product->save();
 
-        $array = [];
-        $colors = collect($request->get('colors'));
-        foreach ($colors as $key => $color) {
-            $array[$color['colorId']] = [
-                'engine_number' => $color['engineNumber'],
-                'plate_number' => $color['plateNumber'],
-                'frame_number' => $color['frameNumber'],
-                'status' => $color['status'],
-                'code' => $color['code'],
-            ];
-        }
-
-        $product->colors()->attach($array);
         DB::commit();
         return $this->respond([
             'data' => $this->transformer->transform($product),
@@ -95,6 +124,30 @@ class ProductController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param ShowRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function findBy(ShowRequest $request)
+    {
+        $product = Product::whereEngineNumber($request->input('q'))->whereNull('sole_on')->first();
+        if (!$product) {
+            return $this->respond([
+                'data' => $product,
+                'pagination' => [
+                    'total_count' => 0,
+                    'total_pages' => 0,
+                    'current_page' => 0,
+                    'limit' => 0,
+                ],
+                "first" => true
+            ]);
+        }
+        return $this->respond($this->transformer->transform($product));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  UpdateRequest $request
@@ -106,20 +159,6 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         $product->update($request->all());
-
-        $array = [];
-        $colors = collect($request->get('colors'));
-        foreach ($colors as $key => $color) {
-            $array[$color['colorId']] = [
-                'engine_number' => $color['engineNumber'],
-                'plate_number' => $color['plateNumber'],
-                'frame_number' => $color['frameNumber'],
-                'status' => $color['status'],
-                'code' => $color['code'],
-            ];
-        }
-
-        $product->colors()->sync($array);
 
         $product->save();
 

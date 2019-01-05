@@ -26,25 +26,20 @@ class ProductTransformer extends BaseTransformer
             'price' => (float)$item->price,
             'cost' => (float)$item->cost,
             'year' => (int)$item->year,
-            'qty' => (int)$item->qty,
             'import_from' => (string)$item->import_from,
             'category' => $item->category,
             'model' => $item->model,
             'make' => $item->make,
+            'color' => $item->color,
             'supplier' => $item->supplier,
             'date_import' => isset($item->date_import) ? $item->date_import->toDateString() : '',
-            'colors' => collect($item->colors)->map(function ($color) {
-                return [
-                    'engineNumber' => (string)$color->pivot->engine_number,
-                    'plateNumber' => (string)$color->pivot->plate_number,
-                    'frameNumber' => (string)$color->pivot->frame_number,
-                    'code' => (string)$color->pivot->code,
-                    'soleOn' => isset($color->pivot->sole_on) ? $color->pivot->sole_on->toDateString() : '',
-                    'name' => (string)$color->name,
-                    'colorId' => (int)$color->id,
-                    'status' => (string)$color->pivot->status
-                ];
-            })
+            'engine_number' => (string)$item->engine_number,
+            'plate_number' => (string)$item->plate_number,
+            'frame_number' => (string)$item->frame_number,
+            'code' => (string)$item->code,
+            'sole_on' => isset($item->sole_on) ? $item->sole_on->toDateString() : '',
+            'color_id' => (int)$item->color_id,
+            'status' => (string)$item->status
         ];
     }
 }

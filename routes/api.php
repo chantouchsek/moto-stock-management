@@ -32,6 +32,7 @@ Route::namespace('Admin')->group(function () {
     Route::resource('models', 'ModelsController', ['except' => ['create', 'edit']]);
     Route::resource('customers', 'CustomerController', ['except' => ['create', 'edit']]);
     Route::resource('colors', 'ColorController', ['except' => ['create', 'edit']]);
+    Route::get('products/filter', 'ProductController@findBy')->name('products.findBy');
     Route::resource('products', 'ProductController', ['except' => ['create', 'edit']]);
     Route::resource('sales', 'SaleController', ['except' => ['create', 'edit']]);
     Route::resource('expenses', 'ExpenseController', ['except' => ['create', 'edit']]);
