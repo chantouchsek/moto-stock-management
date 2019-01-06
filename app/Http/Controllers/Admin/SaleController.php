@@ -66,6 +66,8 @@ class SaleController extends Controller
 
         $sale->save();
 
+        $sale->user()->associate($request->user('api')->id);
+
         $sale->product()->update(['sole_on' => Carbon::now()]);
 
         DB::commit();

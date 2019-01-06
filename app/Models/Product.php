@@ -117,7 +117,7 @@ class Product extends Model implements HasMedia
     /**
      * @var array
      */
-    protected $dates = ['date_import'];
+    protected $dates = ['date_import', 'sole_on'];
 
     /**
      * Searchable rules.

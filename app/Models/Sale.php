@@ -91,6 +91,8 @@ class Sale extends Model
         'date'
     ];
 
+    protected $dates = ['date'];
+
     /**
      * Searchable rules.
      *

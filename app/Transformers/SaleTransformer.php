@@ -26,19 +26,14 @@ class SaleTransformer extends BaseTransformer
             'total' => (float)$item->total,
             'tax' => (int)$item->tax,
             'tax_amount' => (float)$item->tax_amount,
-            'products' => collect($item->products)->map(function ($item) {
-                return [
-                    'id' => (int)$item->id,
-                    'description' => (string)$item->description,
-                    'name' => (string)$item->name,
-                    'additional_price' => (float)$item->pivot->additional_price,
-                    'discount' => (float)$item->pivot->discount,
-                    'qty' => (int)$item->pivot->qty
-                ];
-            }),
             'created_at' => isset($item->created_at) ? $item->created_at->toDateString() : '',
             'customer' => $item->customer,
-            'user' => $item->user
+            'user' => $item->user,
+            'product' => $item->product,
+            'customer_name' => $item->customer_name,
+            'price' => $item->price,
+            'date' => isset($item->date) ? $item->date->toDateString() : '',
+            'amount' => $item->amount
         ];
     }
 }
