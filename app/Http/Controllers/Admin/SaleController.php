@@ -66,9 +66,15 @@ class SaleController extends Controller
 
         $sale->save();
 
-        $sale->user()->associate($request->user('api')->id);
+        $sale->user()->associate($request->user()->id);
 
         $sale->product()->update(['sole_on' => Carbon::now()]);
+
+        if ($request->hasFile('files')) {
+            $sale->addMultipleMediaFromRequest(['files'])->each(function ($fileAdder) {
+                $fileAdder->toMediaCollection('sale-attachment');
+            });
+        }
 
         DB::commit();
 

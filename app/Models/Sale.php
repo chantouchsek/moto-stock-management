@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -66,10 +68,11 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale wherePlateNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereProductId($value)
  */
-class Sale extends Model
+class Sale extends Model implements HasMedia
 {
     use SoftDeletes,
-        Searchable;
+        Searchable,
+        HasMediaTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -111,7 +114,8 @@ class Sale extends Model
             'in_lack_amount' => 1,
             'total' => 2,
             'tax' => 3,
-            'tax_amount' => 4
+            'tax_amount' => 4,
+            'price' => 10
         ]
     ];
 

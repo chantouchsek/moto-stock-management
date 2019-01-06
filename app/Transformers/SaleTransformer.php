@@ -33,7 +33,8 @@ class SaleTransformer extends BaseTransformer
             'customer_name' => $item->customer_name,
             'price' => $item->price,
             'date' => isset($item->date) ? $item->date->toDateString() : '',
-            'amount' => $item->amount
+            'amount' => $item->amount,
+            'files' => collect($item->getMedia('sale-attachment'))
         ];
     }
 }
