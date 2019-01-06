@@ -96,6 +96,8 @@ class ProductController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\InvalidBase64Data
      */
     public function store(StoreRequest $request)
     {
@@ -103,6 +105,13 @@ class ProductController extends Controller
         $product = new Product($request->all());
 
         $product->save();
+
+        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif'];
+
+        if ($request->has('file')) {
+            $product->addMediaFromBase64($request->get('file'), $allowedMimeTypes)
+                ->toMediaCollection('product-image-featured');
+        }
 
         DB::commit();
         return $this->respond([
@@ -153,6 +162,8 @@ class ProductController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Product $product
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\InvalidBase64Data
      */
     public function update(UpdateRequest $request, Product $product)
     {
@@ -161,6 +172,16 @@ class ProductController extends Controller
         $product->update($request->all());
 
         $product->save();
+
+        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif'];
+
+        if ($request->has('file')) {
+            if ($product->hasMedia('product-image-featured')) {
+                $product->clearMediaCollection('product-image-featured');
+            }
+            $product->addMediaFromBase64($request->get('file'), $allowedMimeTypes)
+                ->toMediaCollection('product-image-featured');
+        }
 
         DB::commit();
         return $this->respond([

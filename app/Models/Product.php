@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -200,6 +201,16 @@ class Product extends Model implements HasMedia
     public function color(): BelongsTo
     {
         return $this->belongsTo(Color::class)->withTrashed();
+    }
+
+
+    /**
+     * @param Media|null $media
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('product-image-featured')->quality(100)->nonQueued();
     }
 
 }
