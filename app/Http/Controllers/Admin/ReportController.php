@@ -59,11 +59,12 @@ class ReportController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $fromDate = Carbon::now()->addDay(-7)->toDateString();
+        $query = (int)$request->input('q', 7);
+
+        $fromDate = Carbon::now()->addDay(-$query)->toDateString();
         $tillDate = Carbon::now()->subDay()->toDateString();
 
-        $pagination = Product::search($request->get('q'), null, true)
-            ->whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
+        $pagination = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
             ->with(['make'])
             ->orderBy('make_id')
             ->get();
