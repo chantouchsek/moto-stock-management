@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-class SaleTransformer extends BaseTransformer
+class ReportTransformer extends BaseTransformer
 {
 
     /**
@@ -28,13 +28,11 @@ class SaleTransformer extends BaseTransformer
             'customer' => $item->customer,
             'user' => $item->user,
             'product' => $item->product,
-            'color' => $item->product->color,
             'customer_name' => $item->customer_name,
             'price' => $item->price,
             'date' => isset($item->date) ? $item->date->toDateString() : '',
             'amount' => $item->amount,
-            'files' => collect($item->getMedia('sale-attachment')),
-            'notes' => $item->notes
+            'files' => collect($item->getMedia('sale-attachment'))
         ];
     }
 }

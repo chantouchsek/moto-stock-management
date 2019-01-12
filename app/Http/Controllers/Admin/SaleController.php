@@ -63,10 +63,8 @@ class SaleController extends Controller
         DB::beginTransaction();
 
         $sale = new Sale($request->all());
-
-        $sale->save();
-
         $sale->user()->associate($request->user()->id);
+        $sale->save();
 
         $sale->product()->update(['sole_on' => Carbon::now()]);
 
@@ -104,7 +102,7 @@ class SaleController extends Controller
     {
         DB::beginTransaction();
 
-        $sale->update($request->all());
+        $sale->update($request->except(['product_id', 'engine_number', 'plate_number']));
 
         DB::commit();
 

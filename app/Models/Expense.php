@@ -77,9 +77,9 @@ class Expense extends Model implements HasMedia
          * @var array
          */
         'columns' => [
-            'notes' => 10,
-            'expense_on' => 10,
-            'date' => 1,
+            'notes' => 3,
+            'expense_on' => 1,
+            'date' => 10,
             'amount' => 5
         ]
     ];

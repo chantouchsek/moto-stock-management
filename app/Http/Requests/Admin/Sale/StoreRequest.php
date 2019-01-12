@@ -32,7 +32,13 @@ class StoreRequest extends FormRequest
                 'required',
                 Rule::exists('products', 'id')->whereNull('sole_on')
             ],
-            'engine_number' => 'required|string'
+            'engine_number' => [
+                'required', 'string',
+                Rule::exists('products', 'engine_number')->whereNull('sole_on')
+            ],
+            'price' => 'required',
+            'date' => 'required|date',
+            'in_lack_amount' => 'required_if:is_in_lack,1'
         ];
     }
 }

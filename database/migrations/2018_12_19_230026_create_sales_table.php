@@ -28,6 +28,7 @@ class CreateSalesTable extends Migration
             $table->date('date')->nullable();
             $table->string('customer_name')->nullable();
             $table->decimal('amount', 20, 2)->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

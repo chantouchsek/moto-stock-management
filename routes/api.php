@@ -25,6 +25,9 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('Expense')->prefix('expenses')->name('expenses.')->group(function () {
         Route::resource('{expense}/uploads', 'UploadAttachmentController', ['only' => ['store', 'destroy']]);
     });
+    Route::namespace('Sale')->prefix('sales')->name('sales.')->group(function () {
+        Route::resource('{sale}/uploads', 'MediaController', ['only' => ['store', 'destroy']]);
+    });
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('roles', 'RoleController', ['only' => ['index']]);
     Route::resource('suppliers', 'SupplierController', ['except' => ['create', 'edit']]);
@@ -36,4 +39,5 @@ Route::namespace('Admin')->group(function () {
     Route::resource('products', 'ProductController', ['except' => ['create', 'edit']]);
     Route::resource('sales', 'SaleController', ['except' => ['create', 'edit']]);
     Route::resource('expenses', 'ExpenseController', ['except' => ['create', 'edit']]);
+    Route::resource('reports', 'ReportController', ['only' => ['index']]);
 });

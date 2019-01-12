@@ -108,7 +108,7 @@ class ProductController extends Controller
 
         $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif'];
 
-        if ($request->has('file')) {
+        if ($request->input('file')) {
             $product->addMediaFromBase64($request->get('file'), $allowedMimeTypes)
                 ->toMediaCollection('product-image-featured');
         }
@@ -175,7 +175,7 @@ class ProductController extends Controller
 
         $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif'];
 
-        if ($request->has('file')) {
+        if ($request->input('file')) {
             if ($product->hasMedia('product-image-featured')) {
                 $product->clearMediaCollection('product-image-featured');
             }

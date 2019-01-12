@@ -60,7 +60,8 @@ class ExpenseController extends Controller
                         'notes' => $item['notes'],
                         'user' => $item['user'],
                         'user_id' => $item['user_id'],
-                        'uuid' => $item['uuid']
+                        'uuid' => $item['uuid'],
+                        'id' => $item['id']
                     ];
                 })
             ];

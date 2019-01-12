@@ -91,7 +91,8 @@ class Sale extends Model implements HasMedia
         'price',
         'amount',
         'product_id',
-        'date'
+        'date',
+        'notes'
     ];
 
     protected $dates = ['date'];
@@ -130,15 +131,20 @@ class Sale extends Model implements HasMedia
         });
     }
 
+
     /**
      * Get the route key for the model.
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
-        return 'uuid';
+        if (request()->expectsJson()) {
+            return 'uuid';
+        }
+        return 'id';
     }
+
 
     /**
      * @return BelongsTo

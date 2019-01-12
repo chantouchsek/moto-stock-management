@@ -43,7 +43,14 @@ class StoreRequest extends FormRequest
             'model_id' => [
                 'required',
                 Rule::exists('models', 'id')
-            ]
+            ],
+            'color_id' => [
+                'required',
+                Rule::exists('colors', 'id')
+            ],
+            'date_import' => 'required|date',
+            'engine_number' => 'required',
+            'frame_number' => 'required'
         ];
     }
 }

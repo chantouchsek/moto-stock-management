@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Sale;
 
 use App\Http\Requests\BaseRequest as FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -24,7 +25,12 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'min:3', 'string']
+            'customer_name' => [
+                'required', 'min:2', 'string'
+            ],
+            'price' => 'required',
+            'date' => 'required|date',
+            'in_lack_amount' => 'required_if:is_in_lack,1'
         ];
     }
 }
