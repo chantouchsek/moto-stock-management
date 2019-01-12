@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\Report\IndexRequest;
+use App\Models\Expense;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Transformers\ReportTransformer;
@@ -64,14 +65,14 @@ class ReportController extends Controller
         $fromDate = Carbon::now()->addDay(-$query)->toDateString();
         $tillDate = Carbon::now()->subDay()->toDateString();
 
-        $pagination = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
+        $products = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
             ->with(['make'])
             ->orderBy('make_id')
             ->get();
 
-        $data = collect($pagination);
+        $dataProducts = collect($products);
 
-        $reportBuys = $data->groupBy('make.name')->map(function ($row) {
+        $reportBuys = $dataProducts->groupBy('make.name')->map(function ($row) {
             return [
                 'total_price' => number_format($row->sum->price, 2),
                 'total_rows' => $row->count(),
@@ -84,6 +85,46 @@ class ReportController extends Controller
             ];
         });
 
-        return $this->respond(['data' => $reportBuys]);
+        $sales = Sale::whereBetween(DB::raw('date(date)'), [$fromDate, $tillDate])
+            ->with(['product.make', 'product.model'])
+            ->orderBy('product_id')
+            ->get();
+
+        $dataSales = collect($sales);
+
+        $reportSales = $dataSales->groupBy('product.make.name')->map(function ($row) {
+            return [
+                'total_price' => number_format($row->sum->price, 2),
+                'total_rows' => $row->count(),
+                'products' => $row->map(function ($item) {
+                    return [
+                        'name' => $item->product->name,
+                        'price' => $item->price,
+                        'date' => isset($item->date) ? $item->date->toDateString() : ''
+                    ];
+                })
+            ];
+        });
+
+        $expenses = Expense::whereBetween(DB::raw('date(date)'), [$fromDate, $tillDate])
+            ->with(['user'])
+            ->orderBy('date')
+            ->get();
+
+        $dataExpenses = collect($expenses);
+
+        $reportExpenses = $dataExpenses->groupBy(function ($proj) {
+            return $proj->date->format('Y-m');
+        })->map(function ($year) {
+            return number_format($year->sum('amount'), 2);
+        });
+
+        return $this->respond([
+            'data' => [
+                'buys' => $reportBuys,
+                'sales' => $reportSales,
+                'expenses' => $reportExpenses
+            ]
+        ]);
     }
 }
