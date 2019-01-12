@@ -39,5 +39,6 @@ Route::namespace('Admin')->group(function () {
     Route::resource('products', 'ProductController', ['except' => ['create', 'edit']]);
     Route::resource('sales', 'SaleController', ['except' => ['create', 'edit']]);
     Route::resource('expenses', 'ExpenseController', ['except' => ['create', 'edit']]);
-    Route::resource('reports', 'ReportController', ['only' => ['index']]);
+    Route::get('reports', 'ReportController@groupByMake')->name('reports.group-by-make');
+    // Route::resource('reports', 'ReportController', ['only' => ['index']]);
 });
