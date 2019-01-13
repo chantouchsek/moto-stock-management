@@ -23,6 +23,7 @@ class CustomerTransformer extends BaseTransformer
             'email' => (string)$item->email,
             'phone_number' => (string)$item->phone_number,
             'address' => (string)$item->address,
+            'registered_date' => isset($item->created_at) ? $item->created_at->toDateString() : '',
             'date_of_birth' => isset($item->date_of_birth) ? $item->date_of_birth->toDateString() : '',
             'total_price' => number_format(collect($item->purchases)->sum('price'), 2),
             'purchases' => collect($item->purchases)->map(function ($item) {
@@ -32,7 +33,8 @@ class CustomerTransformer extends BaseTransformer
                     'total' => number_format($item->total, 2),
                     'product' => $item->product
                 ];
-            })
+            }),
+            'last_purchased' => count($item->purchases) ? collect($item->purchases)->sortByDesc('date')->first()->date->toDateString() : ''
         ];
     }
 }
