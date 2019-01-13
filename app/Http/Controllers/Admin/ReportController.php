@@ -114,16 +114,33 @@ class ReportController extends Controller
         $dataExpenses = collect($expenses);
 
         $reportExpenses = $dataExpenses->groupBy(function ($proj) {
-            return $proj->date->format('Y-m');
+            return $proj->date->format('Y');
         })->map(function ($year) {
             return number_format($year->sum('amount'), 2);
         });
+
+        $totalExpenses = number_format($expenses->sum('amount'), 2);
+        $totalSales = number_format($sales->sum('price'), 2);
+        $totalBuys = number_format($dataProducts->sum('price'), 2);
+        $totalBuyProducts = number_format($dataProducts->count(), 0);
+        $totalSalesProducts = number_format($sales->count(), 0);
 
         return $this->respond([
             'data' => [
                 'buys' => $reportBuys,
                 'sales' => $reportSales,
-                'expenses' => $reportExpenses
+                'expenses' => $reportExpenses,
+                'totalExpenses' => $totalExpenses,
+                'totalSales' => $totalSales,
+                'totalBuys' => $totalBuys,
+                'totalBuyProducts' => $totalBuyProducts,
+                'totalSaleProducts' => $totalSalesProducts
+            ],
+            'pagination' => [
+                'total_count' => 0,
+                'total_pages' => 0,
+                'current_page' => 0,
+                'limit' => 0
             ]
         ]);
     }
