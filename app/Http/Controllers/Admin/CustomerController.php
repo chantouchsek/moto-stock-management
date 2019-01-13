@@ -40,7 +40,9 @@ class CustomerController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = Customer::search($request->get('q'), null, true)->paginate($this->getPagination());
+        $pagination = Customer::search($request->get('q'), null, true)
+            ->with(['purchases.product'])
+            ->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
@@ -54,6 +56,7 @@ class CustomerController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -83,6 +86,7 @@ class CustomerController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Customer $customer
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Customer $customer)
     {

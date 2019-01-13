@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Searchable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
@@ -135,5 +136,13 @@ class Customer extends Model
     public function setDateOfBirthAttribute($value)
     {
         $this->attributes['date_of_birth'] = (new Carbon($value))->format('Y-m-d');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Sale::class, 'customer_id', 'id');
     }
 }

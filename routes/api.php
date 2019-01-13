@@ -18,6 +18,11 @@ Route::namespace('Admin')->group(function () {
     Route::resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
     Route::namespace('User')->prefix('users')->name('users.')->group(function () {
         Route::post('{user}/upload-avatar', 'UploadAvatarController@upload')->name('upload-avatar');
+        //Notifications
+        Route::get('notifications', 'NotificationsController@index')->name('notifications.all');
+        Route::get('notifications/markAsRead', 'NotificationsController@readNotification')->name('notifications.read');
+        Route::get('notifications/unReads', 'NotificationsController@unReads')->name('notifications.unread');
+
     });
     Route::namespace('Product')->prefix('products')->name('products.')->group(function () {
         Route::delete('{product}/{colorId}', 'ColorController@destroyColor')->name('destroy.color');
