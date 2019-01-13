@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Customer;
 use App\Models\Sale;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -63,8 +64,32 @@ class SaleController extends Controller
     {
         DB::beginTransaction();
 
+        list($first, $second) = explode(" ", $request->input('customer_name'));
+        // Create customer first and than associate it.
+        $customer = Customer::where('phone_number', $request->input('customer_phone_number'))
+            ->where('first_name', $first)
+            ->where('last_name', $second)
+            ->first();
+
+        if (empty($customer)) {
+            $this->validate($request, [
+                'customer_phone_number' => [
+                    'required', 'min:2', 'string', 'unique:customers,phone_number'
+                ]
+            ]);
+            $customer = Customer::create([
+                'first_name' => $first,
+                'last_name' => $second,
+                'phone_number' => $request->input('customer_phone_number'),
+                'address' => $request->input('customer_address')
+            ]);
+        }
+
         $sale = new Sale($request->all());
         $sale->user()->associate($request->user()->id);
+        $sale->customer()->associate($customer->id);
+        $tax = ($request->input('tax_amount', 0) / 100) * $request->input('price');
+        $sale->total = $request->input('price') + $tax;
         $sale->save();
 
         $sale->product()->update(['sole_on' => Carbon::now()]);
@@ -104,7 +129,18 @@ class SaleController extends Controller
     {
         DB::beginTransaction();
 
-        $sale->update($request->except(['product_id', 'engine_number', 'plate_number']));
+        $this->validate($request, [
+            'customer_phone_number' => [
+                'required', 'min:2', 'string', 'unique:customers,phone_number,' . $sale->customer['id']
+            ]
+        ]);
+
+        $sale->fill($request->except(['product_id', 'engine_number', 'plate_number']));
+
+        $tax = ($request->input('tax_amount', 0) / 100) * $request->input('price');
+        $sale->total = $request->input('price') + $tax;
+
+        $sale->save();
 
         DB::commit();
 

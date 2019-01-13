@@ -111,12 +111,18 @@ class Sale extends Model implements HasMedia
          * @var array
          */
         'columns' => [
-            'is_in_lack' => 1,
-            'in_lack_amount' => 1,
-            'total' => 2,
-            'tax' => 3,
-            'tax_amount' => 4,
-            'price' => 10
+            'sales.is_in_lack' => 1,
+            'sales.in_lack_amount' => 1,
+            'sales.total' => 2,
+            'sales.tax' => 3,
+            'sales.tax_amount' => 4,
+            'sales.price' => 10,
+            'customers.first_name' => 9,
+            'customers.last_name' => 9,
+            'sales.date' => 8
+        ],
+        'joins' => [
+            'customers' => ['sales.customer_id', 'customers.id']
         ]
     ];
 
