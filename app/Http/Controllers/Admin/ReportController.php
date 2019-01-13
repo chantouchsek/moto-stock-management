@@ -60,9 +60,9 @@ class ReportController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $query = (int)$request->input('q', 7);
+        $query = (int)$request->input('q');
 
-        $fromDate = Carbon::now()->addDay(-$query)->toDateString();
+        $fromDate = $request->has('date') ? Carbon::createFromFormat('Y-m-d', $request->input('date'))->format('Y-m-d') : Carbon::now()->addDay(-$query)->toDateString();
         $tillDate = Carbon::now()->subDay()->toDateString();
 
         $products = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
