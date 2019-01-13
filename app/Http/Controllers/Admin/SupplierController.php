@@ -44,7 +44,9 @@ class SupplierController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = Supplier::search($request->get('q'), null, true)->paginate($this->getPagination());
+        $pagination = Supplier::search($request->get('q'), null, true)
+            ->with(['products'])
+            ->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
@@ -58,6 +60,7 @@ class SupplierController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -86,6 +89,7 @@ class SupplierController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Supplier $supplier
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Supplier $supplier)
     {

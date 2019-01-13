@@ -54,6 +54,7 @@ class ColorController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -83,6 +84,7 @@ class ColorController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Color $color
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Color $color)
     {

@@ -78,6 +78,7 @@ class ExpenseController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -110,6 +111,7 @@ class ExpenseController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Expense $expense
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Expense $expense)
     {

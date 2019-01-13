@@ -57,6 +57,7 @@ class SaleController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -97,6 +98,7 @@ class SaleController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Sale $sale
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Sale $sale)
     {

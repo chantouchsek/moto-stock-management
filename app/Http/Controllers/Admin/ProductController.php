@@ -98,6 +98,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\InvalidBase64Data
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {

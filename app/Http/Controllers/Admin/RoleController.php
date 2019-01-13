@@ -122,7 +122,8 @@ class RoleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Role $role
-     * @return \Illuminate\Http\Response
+     * @param DeleteRequest $request
+     * @return void
      */
     public function destroy(Role $role, DeleteRequest $request)
     {

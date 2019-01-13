@@ -103,6 +103,7 @@ class UserController extends Controller
      * @param  UpdateRequest $request
      * @param User $user
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, User $user)
     {

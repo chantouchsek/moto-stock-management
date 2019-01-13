@@ -21,7 +21,8 @@ class SupplierTransformer extends BaseTransformer
             'email' => (string)$item->email,
             'phone_number' => (string)$item->phone_number,
             'address' => (string)$item->address,
-            'start_provide_date' => isset($item->start_provide_date) ? $item->start_provide_date->toDateString() : ''
+            'start_provide_date' => isset($item->start_provide_date) ? $item->start_provide_date->toDateString() : '',
+            'products' => collect($item->products)
         ];
     }
 }

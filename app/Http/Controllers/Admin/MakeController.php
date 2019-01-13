@@ -54,6 +54,7 @@ class MakeController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -85,6 +86,7 @@ class MakeController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Make $make
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Make $make)
     {

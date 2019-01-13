@@ -54,6 +54,7 @@ class ModelsController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -85,6 +86,7 @@ class ModelsController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Models $model
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Models $model)
     {

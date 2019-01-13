@@ -55,6 +55,7 @@ class CategoryController extends Controller
      *
      * @param  StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -84,6 +85,7 @@ class CategoryController extends Controller
      * @param  UpdateRequest $request
      * @param  \App\Models\Category $category
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Category $category)
     {
