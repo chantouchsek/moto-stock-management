@@ -32,7 +32,7 @@ class UserTableSeeder extends Seeder
             'bonus' => 20,
             'phone_number' => '093234923'
         ]);
-        $user->assignRole('super-admin');
+        $user->assignRole('Supper Admin');
         factory(User::class, 5)->create();
     }
 }

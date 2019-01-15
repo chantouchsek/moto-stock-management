@@ -6,6 +6,9 @@ namespace App\Traits;
 trait Authorizable
 {
 
+    /**
+     * @var array
+     */
     private $abilities = [
         'index' => 'view',
         'edit' => 'edit',
@@ -29,9 +32,13 @@ trait Authorizable
             $this->authorize($ability);
         }
 
-        return $this->callAction($method, $parameters);
+        return parent::callAction($method, $parameters);
     }
 
+    /**
+     * @param $method
+     * @return string|null
+     */
     public function getAbility($method)
     {
         $routeName = explode('.', \Request::route()->getName());
@@ -40,11 +47,17 @@ trait Authorizable
         return $action ? $action . '-' . $routeName[0] : null;
     }
 
+    /**
+     * @return array
+     */
     private function getAbilities()
     {
         return $this->abilities;
     }
 
+    /**
+     * @param $abilities
+     */
     public function setAbilities($abilities)
     {
         $this->abilities = $abilities;

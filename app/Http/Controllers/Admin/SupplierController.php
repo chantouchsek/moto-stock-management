@@ -9,11 +9,15 @@ use App\Http\Requests\Admin\Supplier\ShowRequest;
 use App\Http\Requests\Admin\Supplier\StoreRequest;
 use App\Http\Requests\Admin\Supplier\UpdateRequest;
 use App\Models\Supplier;
+use App\Traits\Authorizable;
 use App\Transformers\SupplierTransformer;
 use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
 {
+
+    use Authorizable;
+
     /**
      * @var SupplierTransformer The transformer used to transform the model.
      */
@@ -25,10 +29,6 @@ class SupplierController extends Controller
      */
     public function __construct(SupplierTransformer $transformer)
     {
-        $this->middleware('permission:roles-list');
-        $this->middleware('permission:roles-create', ['only' => ['store']]);
-        $this->middleware('permission:roles-edit', ['only' => ['update']]);
-        $this->middleware('permission:roles-delete', ['only' => ['destroy']]);
         $this->transformer = $transformer;
     }
 

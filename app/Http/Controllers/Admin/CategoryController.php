@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Category\IndexRequest;
 use App\Http\Requests\Admin\Category\ShowRequest;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Traits\Authorizable;
 use App\Transformers\CategoryTransformer;
 use App\Http\Requests\Admin\Category\StoreRequest;
 use App\Http\Requests\Admin\Category\UpdateRequest;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-
+    use Authorizable;
     /**
      * @var CategoryTransformer The transformer used to transform the model.
      */

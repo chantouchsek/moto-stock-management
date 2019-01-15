@@ -24,9 +24,6 @@ Route::namespace('Admin')->group(function () {
         Route::get('notifications/unReads', 'NotificationsController@unReads')->name('notifications.unread');
 
     });
-    Route::namespace('Product')->prefix('products')->name('products.')->group(function () {
-        Route::delete('{product}/{colorId}', 'ColorController@destroyColor')->name('destroy.color');
-    });
     Route::namespace('Expense')->prefix('expenses')->name('expenses.')->group(function () {
         Route::resource('{expense}/uploads', 'UploadAttachmentController', ['only' => ['store', 'destroy']]);
     });

@@ -84,8 +84,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $user = factory(User::class)->create();
         $user->assignRole($role->name);
 
-        if ($role->name == 'Admin') {
-            $this->command->info('Here is your admin details to login:');
+        if ($role->name == 'Supper Admin') {
+            $this->command->info('Here is your supper admin details to login:');
             $this->command->warn($user->email);
             $this->command->warn('Password is "secret"');
         }

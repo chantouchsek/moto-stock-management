@@ -9,11 +9,13 @@ use App\Http\Requests\Admin\Product\ShowRequest;
 use App\Http\Requests\Admin\Product\StoreRequest;
 use App\Http\Requests\Admin\Product\UpdateRequest;
 use App\Models\Product;
+use App\Traits\Authorizable;
 use App\Transformers\ProductTransformer;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    use Authorizable;
     /**
      * @var ProductTransformer The transformer used to transform the model.
      */

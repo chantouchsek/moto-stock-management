@@ -9,11 +9,13 @@ use App\Http\Requests\Admin\Color\ShowRequest;
 use App\Http\Requests\Admin\Color\StoreRequest;
 use App\Http\Requests\Admin\Color\UpdateRequest;
 use App\Models\Color;
+use App\Traits\Authorizable;
 use App\Transformers\ColorTransformer;
 use Illuminate\Support\Facades\DB;
 
 class ColorController extends Controller
 {
+    use Authorizable;
     /**
      * @var ColorTransformer The transformer used to transform the model.
      */

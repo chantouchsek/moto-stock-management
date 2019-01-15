@@ -9,11 +9,13 @@ use App\Http\Requests\Admin\Make\ShowRequest;
 use App\Http\Requests\Admin\Make\StoreRequest;
 use App\Http\Requests\Admin\Make\UpdateRequest;
 use App\Models\Make;
+use App\Traits\Authorizable;
 use App\Transformers\MakeTransformer;
 use Illuminate\Support\Facades\DB;
 
 class MakeController extends Controller
 {
+    use Authorizable;
     /**
      * @var MakeTransformer The transformer used to transform the model.
      */

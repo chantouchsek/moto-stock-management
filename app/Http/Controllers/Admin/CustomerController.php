@@ -9,11 +9,13 @@ use App\Http\Requests\Admin\Customer\ShowRequest;
 use App\Http\Requests\Admin\Customer\StoreRequest;
 use App\Http\Requests\Admin\Customer\UpdateRequest;
 use App\Models\Customer;
+use App\Traits\Authorizable;
 use App\Transformers\CustomerTransformer;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
+    use Authorizable;
     /**
      * @var CustomerTransformer The transformer used to transform the model.
      */

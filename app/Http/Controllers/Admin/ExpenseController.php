@@ -9,12 +9,14 @@ use App\Http\Requests\Admin\Expense\ShowRequest;
 use App\Http\Requests\Admin\Expense\StoreRequest;
 use App\Http\Requests\Admin\Expense\UpdateRequest;
 use App\Models\Expense;
+use App\Traits\Authorizable;
 use App\Transformers\ExpenseTransformer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ExpenseController extends Controller
 {
+    use Authorizable;
     /**
      * @var ExpenseTransformer The transformer used to transform the model.
      */

@@ -7,11 +7,13 @@ use App\Http\Requests\Admin\Loan\IndexRequest;
 use App\Http\Requests\Admin\Loan\StoreRequest;
 use App\Http\Requests\Admin\Loan\UpdateRequest;
 use App\Models\Loan;
+use App\Traits\Authorizable;
 use App\Transformers\LoanTransformer;
 use Illuminate\Support\Facades\DB;
 
 class LoanController extends Controller
 {
+    use Authorizable;
     /**
      * @var LoanTransformer The transformer used to transform the model.
      */
@@ -23,10 +25,6 @@ class LoanController extends Controller
      */
     public function __construct(LoanTransformer $transformer)
     {
-        $this->middleware('permission:roles-list');
-        $this->middleware('permission:roles-create', ['only' => ['store']]);
-        $this->middleware('permission:roles-edit', ['only' => ['update']]);
-        $this->middleware('permission:roles-delete', ['only' => ['destroy']]);
         $this->transformer = $transformer;
     }
 
@@ -66,6 +64,7 @@ class LoanController extends Controller
         $loan = new Loan($request->all());
         $loan->staff()->associate($request->user('api')->id);
         $loan->save();
+        DB::commit();
         return $this->respond([
             'data' => $this->transformer->transform($loan),
             'message' => 'Item created.'

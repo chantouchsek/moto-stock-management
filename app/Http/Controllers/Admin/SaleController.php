@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Customer;
 use App\Models\Sale;
+use App\Traits\Authorizable;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,8 @@ use App\Http\Requests\Admin\Sale\UpdateRequest;
 
 class SaleController extends Controller
 {
+
+    use Authorizable;
 
     /**
      * @var SaleTransformer The transformer used to transform the model.

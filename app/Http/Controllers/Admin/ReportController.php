@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\Report\IndexRequest;
 use App\Models\Expense;
 use App\Models\Product;
 use App\Models\Sale;
+use App\Traits\Authorizable;
 use App\Transformers\ReportTransformer;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
+    use Authorizable;
     /**
      * @var ReportTransformer The transformer used to transform the model.
      */
