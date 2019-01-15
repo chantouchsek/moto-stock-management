@@ -8,6 +8,49 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
+/**
+ * App\Models\Loan
+ *
+ * @property int $id
+ * @property string $uuid
+ * @property int|null $user_id
+ * @property int|null $staff_id
+ * @property \Illuminate\Support\Carbon|null $needed_date
+ * @property string|null $reason
+ * @property float|null $amount
+ * @property int $is_approved
+ * @property int $is_urgent
+ * @property \Illuminate\Support\Carbon|null $can_offer_on
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \App\Models\User|null $approvedBy
+ * @property-read \App\Models\User|null $staff
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Loan onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan query()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereCanOfferOn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereIsApproved($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereIsUrgent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereNeededDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereStaffId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereUuid($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Loan withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Loan withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Loan extends Model
 {
     use SoftDeletes,

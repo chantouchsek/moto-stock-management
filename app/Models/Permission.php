@@ -51,4 +51,77 @@ class Permission extends BasePermission
             'permissions.name' => 10
         ]
     ];
+
+    /**
+     * @return array
+     */
+    public static function defaultPermissions()
+    {
+        return [
+            'view-users',
+            'add-users',
+            'edit-users',
+            'delete-users',
+
+            'view-roles',
+            'add-roles',
+            'edit-roles',
+            'delete-roles',
+
+            'view-products',
+            'add-products',
+            'edit-products',
+            'delete-products',
+
+            'view-categories',
+            'add-categories',
+            'edit-categories',
+            'delete-categories',
+
+            'view-suppliers',
+            'add-suppliers',
+            'edit-suppliers',
+            'delete-suppliers',
+
+            'view-models',
+            'add-models',
+            'edit-models',
+            'delete-models',
+
+            'view-colors',
+            'add-colors',
+            'edit-colors',
+            'delete-colors',
+
+            'view-customers',
+            'add-customers',
+            'edit-customers',
+            'delete-customers',
+
+            'view-loans',
+            'add-loans',
+            'edit-loans',
+            'delete-loans',
+
+            'view-permissions',
+            'add-permissions',
+            'edit-permissions',
+            'delete-permissions',
+
+            'view-sales',
+            'add-sales',
+            'edit-sales',
+            'delete-sales',
+
+            'view-expenses',
+            'add-expenses',
+            'edit-expenses',
+            'delete-expenses',
+
+            'view-makes',
+            'add-makes',
+            'edit-makes',
+            'delete-makes'
+        ];
+    }
 }

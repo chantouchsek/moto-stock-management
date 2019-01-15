@@ -67,6 +67,15 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereFrameNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale wherePlateNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereProductId($value)
+ * @property string|null $sale_no
+ * @property float|null $price
+ * @property \Illuminate\Support\Carbon|null $date
+ * @property string|null $notes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Models\Media[] $media
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereSaleNo($value)
  */
 class Sale extends Model implements HasMedia
 {

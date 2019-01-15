@@ -43,6 +43,7 @@ use Webpatser\Uuid\Uuid;
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Supplier search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Supplier searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
  */
 class Supplier extends Model
 {

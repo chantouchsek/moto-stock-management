@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\User\StoreRequest;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Models\User;
 use App\Models\Role;
+use App\Traits\Authorizable;
 use App\Transformers\UserTransformer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
+    use Authorizable;
     /**
      * @var UserTransformer The transformer used to transform the model.
      */
@@ -117,6 +119,10 @@ class UserController extends Controller
         }
         $user->update($input);
         $user->syncRoles($request->input('roles'));
+
+        // Handle the user roles
+        // $this->syncPermissions($request, $user);
+
         DB::commit();
         return $this->respond(['data' => $this->transformer->transform($user), 'message' => 'User updated.']);
     }
@@ -136,5 +142,27 @@ class UserController extends Controller
         $user->delete();
         DB::commit();
         return $this->respond(['data' => $this->transformer->transform($user), 'message' => 'User Deleted.']);
+    }
+
+    private function syncPermissions(UpdateRequest $request, $user)
+    {
+        // Get the submitted roles
+        $roles = $request->get('roles', []);
+        $permissions = $request->get('permissions', []);
+
+        // Get the roles
+        $roles = Role::find($roles);
+
+        // check for current role changes
+        if (!$user->hasAllRoles($roles)) {
+            // reset all direct permissions for user
+            $user->permissions()->sync([]);
+        } else {
+            // handle permissions
+            $user->syncPermissions($permissions);
+        }
+
+        $user->syncRoles($roles);
+        return $user;
     }
 }

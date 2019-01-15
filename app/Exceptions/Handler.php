@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Traits\Restable;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -61,6 +62,10 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
             return $this->respondNotAllowed();
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            return $this->unauthenticated($request, $exception);
         }
 
         return parent::render($request, $exception);

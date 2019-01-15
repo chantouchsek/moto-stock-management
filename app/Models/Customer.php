@@ -46,6 +46,7 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer withoutTrashed()
  * @mixin \Eloquent
  * @property-read string $full_name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Sale[] $purchases
  */
 class Customer extends Model
 {

@@ -9,13 +9,14 @@ use App\Http\Requests\Admin\Role\StoreRequest;
 use App\Http\Requests\Admin\Role\UpdateRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Traits\Authorizable;
 use App\Transformers\RoleTransformer;
 use Illuminate\Support\Facades\DB;
 
 
 class RoleController extends Controller
 {
-
+    use Authorizable;
     /**
      * @var RoleTransformer The transformer used to transform the model.
      */

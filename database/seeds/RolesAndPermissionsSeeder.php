@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -16,31 +17,77 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $permissions = [
-            'roles-list',
-            'roles-create',
-            'roles-edit',
-            'roles-delete',
-            'products-list',
-            'products-create',
-            'products-edit',
-            'products-delete'
-        ];
-        // create permissions
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+
+        // Ask for db migration refresh, default is no
+        if ($this->command->confirm('Do you wish to refresh migration before seeding, it will clear all old data ?')) {
+            $this->command->warn("Data cleared, starting from blank database.");
         }
 
-        // create roles and assign created permissions
-        // this can be done as separate statements
-        $role = Role::create(['name' => 'writer']);
-        $role->givePermissionTo('products-edit');
+        // Seed the default permissions
+        $permissions = Permission::defaultPermissions();
 
-        // or may be done by chaining
-        $role = Role::create(['name' => 'moderator'])
-            ->givePermissionTo(['products-create', 'products-delete']);
+        foreach ($permissions as $perms) {
+            Permission::firstOrCreate(['name' => $perms]);
+        }
 
-        $role = Role::create(['name' => 'super-admin']);
-        $role->givePermissionTo(Permission::all());
+        $this->command->info('Default Permissions added.');
+
+        // Confirm roles needed
+        if ($this->command->confirm('Create Roles for user, default are supper-admin, admin and user? [y|N]', true)) {
+
+            // Ask for roles from input
+            $input_roles = $this->command->ask('Enter roles in comma separate format.', 'Supper Admin,Admin,User');
+
+            // Explode roles
+            $roles_array = explode(',', $input_roles);
+
+            // add roles
+            foreach ($roles_array as $role) {
+                $role = Role::firstOrCreate(['name' => trim($role)]);
+
+                if ($role->name == 'Supper Admin') {
+                    // assign all permissions
+                    $role->syncPermissions(Permission::all());
+                    $this->command->info('Supper Admin granted all the permissions');
+                } elseif ($role->name == 'Admin') {
+                    // for Admin by default only read, write access
+                    $role->syncPermissions(Permission::where('name', 'LIKE', 'view-%')
+                        ->orWhere('name', 'LIKE', 'edit-%')
+                        ->orWhere('name', 'LIKE', 'add-%')
+                        ->get());
+                } else {
+                    // for others by default only read access
+                    $role->syncPermissions(Permission::where('name', 'LIKE', 'view-%')->get());
+                }
+
+                // create one user for each role
+                $this->createUser($role);
+            }
+
+            $this->command->info('Roles ' . $input_roles . ' added successfully');
+
+        } else {
+            Role::firstOrCreate(['name' => 'User']);
+            $this->command->info('Added only default user role.');
+        }
+
+        $this->command->warn('All done :)');
+    }
+
+    /**
+     * Create a user with given role
+     *
+     * @param $role
+     */
+    private function createUser($role)
+    {
+        $user = factory(User::class)->create();
+        $user->assignRole($role->name);
+
+        if ($role->name == 'Admin') {
+            $this->command->info('Here is your admin details to login:');
+            $this->command->warn($user->email);
+            $this->command->warn('Password is "secret"');
+        }
     }
 }
