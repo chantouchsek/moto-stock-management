@@ -92,7 +92,8 @@ class Sale extends Model implements HasMedia
         'amount',
         'product_id',
         'date',
-        'notes'
+        'notes',
+        'sale_no'
     ];
 
     protected $dates = ['date'];
@@ -134,6 +135,8 @@ class Sale extends Model implements HasMedia
         parent::boot();
         self::creating(function ($model) {
             $model->uuid = (string)Uuid::generate(4);
+            $lastRecord = Sale::orderBy('id', 'desc')->withTrashed()->first();
+            $model->sale_no = str_pad($lastRecord ? $lastRecord->id + 1 : 1, 10, "0", STR_PAD_LEFT);
         });
     }
 

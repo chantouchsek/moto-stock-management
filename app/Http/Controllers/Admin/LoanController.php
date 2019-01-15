@@ -23,6 +23,10 @@ class LoanController extends Controller
      */
     public function __construct(LoanTransformer $transformer)
     {
+        $this->middleware('permission:roles-list');
+        $this->middleware('permission:roles-create', ['only' => ['store']]);
+        $this->middleware('permission:roles-edit', ['only' => ['update']]);
+        $this->middleware('permission:roles-delete', ['only' => ['destroy']]);
         $this->transformer = $transformer;
     }
 

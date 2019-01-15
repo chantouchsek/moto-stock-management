@@ -16,6 +16,7 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid')->nullable();
+            $table->string('sale_no')->unique()->nullable();
             $table->unsignedInteger('customer_id')->nullable()->comment('Customer info when selected a customer.');
             $table->unsignedInteger('user_id')->nullable()->comment('Who sole this product.');
             $table->boolean('is_in_lack')->default(false);

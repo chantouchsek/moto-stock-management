@@ -35,5 +35,14 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(now()->addDays(15));
 
         Passport::refreshTokensExpireIn(now()->addDays(30));
+
+        // Implicitly grant "super-admin" role all permissions
+        // This works in the app by using gate-related functions like auth()->user->can() and @can()
+        Gate::before(function ($user, $ability) {
+            if ($user->hasRole('super-admin')) {
+                return true;
+            }
+            return false;
+        });
     }
 }

@@ -28,6 +28,7 @@ class UserController extends Controller
      */
     public function __construct(UserTransformer $transformer)
     {
+        $this->middleware(['role:super-admin']);
         $this->transformer = $transformer;
     }
 
