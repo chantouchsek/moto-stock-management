@@ -37,7 +37,7 @@ trait Authorizable
         $routeName = explode('.', \Request::route()->getName());
         $action = array_get($this->getAbilities(), $method);
 
-        return $action ? $action . '_' . $routeName[0] : null;
+        return $action ? $action . '-' . $routeName[0] : null;
     }
 
     private function getAbilities()
