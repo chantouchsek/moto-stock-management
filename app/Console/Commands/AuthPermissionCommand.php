@@ -60,10 +60,19 @@ class AuthPermissionCommand extends Command
             $this->info('Permissions ' . implode(', ', $permissions) . ' created.');
         }
 
-        // sync role for admin
-        if ($role = Role::where('name', 'Admin')->first()) {
+        // sync role for supper admin
+        if ($role = Role::where('name', '=', 'Supper Admin')->first()) {
             $role->syncPermissions(Permission::all());
-            $this->info('Admin permissions');
+            $this->info('Supper Admin permissions');
+        }
+
+        // sync role for admin
+        if ($role = Role::where('name', '=', 'Admin')->first()) {
+            $permizzions = Permission::where('name', 'LIKE', 'view-%')
+                ->orWhere('name', 'LIKE', 'edit-%')
+                ->orWhere('name', 'LIKE', 'add-%')
+                ->get();
+            $role->syncPermissions($permizzions);
         }
     }
 
