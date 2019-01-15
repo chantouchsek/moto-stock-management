@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 
-class NotificationsController extends Controller
+class NotificationController extends Controller
 {
     /**
      * @var NotificationTransformer The transformer used to transform the model.

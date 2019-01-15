@@ -19,9 +19,9 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('User')->prefix('users')->name('users.')->group(function () {
         Route::post('{user}/upload-avatar', 'UploadAvatarController@upload')->name('upload-avatar');
         //Notifications
-        Route::get('notifications', 'NotificationsController@index')->name('notifications.all');
-        Route::get('notifications/markAsRead', 'NotificationsController@readNotification')->name('notifications.read');
-        Route::get('notifications/unReads', 'NotificationsController@unReads')->name('notifications.unread');
+        Route::get('notifications', 'NotificationController@index')->name('notifications.all');
+        Route::get('notifications/markAsRead', 'NotificationController@readNotification')->name('notifications.read');
+        Route::get('notifications/unReads', 'NotificationController@unReads')->name('notifications.unread');
 
     });
     Route::namespace('Expense')->prefix('expenses')->name('expenses.')->group(function () {
