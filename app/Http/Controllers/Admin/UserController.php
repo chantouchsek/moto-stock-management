@@ -63,6 +63,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\InvalidBase64Data
+     * @throws \Exception
      */
     public function store(StoreRequest $request)
     {
@@ -143,7 +144,12 @@ class UserController extends Controller
         return $this->respond(['data' => $this->transformer->transform($user), 'message' => 'User Deleted.']);
     }
 
-    private function syncPermissions(UpdateRequest $request, $user)
+    /**
+     * @param UpdateRequest $request
+     * @param User $user
+     * @return mixed
+     */
+    private function syncPermissions(UpdateRequest $request, User $user)
     {
         // Get the submitted roles
         $roles = $request->get('roles', []);

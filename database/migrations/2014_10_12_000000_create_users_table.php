@@ -32,6 +32,8 @@ class CreateUsersTable extends Migration
             $table->decimal('base_salary', 20, 2)->nullable();
             $table->string('avatar_url')->nullable();
             $table->boolean('status')->default(1);
+            $table->boolean('full_time')->default(1);
+            $table->integer('rate')->default(1);
             $table->dateTime('resigned_at')->nullable();
             $table->string('locale')->default('en');
             $table->decimal('bonus', 20, 2)->nullable();

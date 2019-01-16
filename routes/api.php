@@ -19,7 +19,7 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('User')->prefix('users')->name('users.')->group(function () {
         Route::post('{user}/upload-avatar', 'UploadAvatarController@upload')->name('upload-avatar');
         //Notifications
-        Route::get('notifications', 'NotificationController@index')->name('notifications.all');
+        Route::get('notifications', 'NotificationController@index')->name('notifications.index');
         Route::get('notifications/markAsRead', 'NotificationController@readNotification')->name('notifications.read');
         Route::get('notifications/unReads', 'NotificationController@unReads')->name('notifications.unread');
 
@@ -43,4 +43,8 @@ Route::namespace('Admin')->group(function () {
     Route::resource('expenses', 'ExpenseController', ['except' => ['create', 'edit']]);
     Route::get('reports', 'ReportController@groupByMake')->name('reports.group-by-make');
     Route::resource('loans', 'LoanController', ['except' => ['create', 'edit']]);
+    Route::namespace('Payroll')->prefix('payrolls')->name('payrolls.')->group(function () {
+        Route::resource('histories', 'HistoryController', ['only' => ['index']]);
+    });
+    Route::resource('payrolls', 'PayrollController', ['except' => ['create', 'edit']]);
 });

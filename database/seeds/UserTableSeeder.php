@@ -30,7 +30,9 @@ class UserTableSeeder extends Seeder
             'status' => true,
             'resigned_at' => null,
             'bonus' => 20,
-            'phone_number' => '093234923'
+            'phone_number' => '093234923',
+            'full_time' => true,
+            'rate' => 12
         ]);
         $user->assignRole('Supper Admin');
         factory(User::class, 5)->create();

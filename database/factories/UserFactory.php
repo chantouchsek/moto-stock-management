@@ -33,6 +33,8 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'resigned_at' => null,
         'bonus' => 20,
         'phone_number' => $faker->phoneNumber,
-        'pay_day' => $faker->date('Y-m-d')
+        'pay_day' => $faker->date('Y-m-d'),
+        'full_time' => $faker->boolean,
+        'rate' => $faker->numberBetween(2, 10)
     ];
 });

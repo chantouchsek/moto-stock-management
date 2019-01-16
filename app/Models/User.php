@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Notifications\ResetPasswordNotification;
 use App\Traits\Searchable;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -92,6 +93,10 @@ use Webpatser\Uuid\Uuid;
  * @property-read string $full_name
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Models\Media[] $media
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereLocale($value)
+ * @property int|null $full_time
+ * @property int|null $rate
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFullTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRate($value)
  */
 class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLocalePreference
 {
@@ -110,7 +115,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'phone_number', 'username', 'date_of_birth',
         'gender', 'address', 'start_work_date', 'base_salary', 'status', 'resigned_at', 'bonus', 'uuid',
-        'bio', 'locale'
+        'bio', 'locale', 'full_time', 'rate'
     ];
 
     /**
@@ -216,5 +221,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function payrolls(): HasMany
+    {
+        return $this->hasMany(Payroll::class);
     }
 }
