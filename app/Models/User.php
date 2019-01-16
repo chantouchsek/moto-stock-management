@@ -230,4 +230,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     {
         return $this->hasMany(Payroll::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function loans(): HasMany
+    {
+        return $this->hasMany(Loan::class, 'staff_id', 'id');
+    }
 }

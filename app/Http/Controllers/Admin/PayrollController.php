@@ -11,22 +11,22 @@ use App\Http\Requests\Admin\Payroll\UpdateRequest;
 use App\Models\Payroll;
 use App\Models\User;
 use App\Traits\Authorizable;
-use App\Transformers\PayrollTransformer;
+use App\Transformers\UserTransformer;
 use Illuminate\Support\Facades\DB;
 
 class PayrollController extends Controller
 {
     // use Authorizable;
     /**
-     * @var PayrollTransformer The transformer used to transform the model.
+     * @var UserTransformer The transformer used to transform the model.
      */
     protected $transformer;
 
     /**
-     * PayrollController constructor.
-     * @param PayrollTransformer $transformer The transformer used to transform the model
+     * UserController constructor.
+     * @param UserTransformer $transformer The transformer used to transform the model
      */
-    public function __construct(PayrollTransformer $transformer)
+    public function __construct(UserTransformer $transformer)
     {
         $this->transformer = $transformer;
     }
@@ -43,12 +43,31 @@ class PayrollController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = Payroll::search($request->get('q'), null, true)->paginate($this->getPagination());
+        $pagination = User::search($request->get('q'), null, true)
+            ->with(['loans' => function ($query) {
+                $query->where('is_approved', '=', 1);
+            }])
+            ->role(['Admin', 'User'])
+            ->where('status', '=', 1)
+            ->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
+        $payRolls = $data->map(function ($rows) {
+            $total_loan = count($rows['loans']);
+            return [
+                'id' => $rows['id'],
+                'uuid' => $rows['uuid'],
+                'full_name' => $rows['full_name'],
+                'total_loan' => $total_loan ? number_format($rows['loans']->sum->amount, 2) : 0,
+                'basic' => number_format($rows['base_salary'], 2),
+                'avatar_url' => $rows['avatar_url'],
+                'net' => $total_loan ? number_format($rows['base_salary'] - $rows['loans']->sum->amount, 2) : number_format($rows['base_salary'], 2)
+            ];
+        });
+
         return $this->respondWithPagination($pagination, [
-            'data' => $data
+            'data' => $payRolls
         ]);
     }
 
@@ -62,17 +81,41 @@ class PayrollController extends Controller
     public function store(StoreRequest $request)
     {
         DB::beginTransaction();
-        $users = User::where('status', '=', 1)->get();
+
+        $pagination = User::search($request->get('q'), null, true)
+            ->with(['loans' => function ($query) {
+                $query->where('is_approved', '=', 1);
+            }])
+            ->role(['Admin', 'User'])
+            ->where('status', '=', 1)
+            ->get();
+
+        $data = $this->transformer->transformCollection(collect($pagination));
+
+        $payRolls = $data->map(function ($rows) {
+            $total_loan = count($rows['loans']);
+            return [
+                'id' => $rows['id'],
+                'uuid' => $rows['uuid'],
+                'full_name' => $rows['full_name'],
+                'total_loan' => $total_loan ? number_format($rows['loans']->sum->amount, 2) : 0,
+                'basic' => number_format($rows['base_salary'], 2),
+                'avatar_url' => $rows['avatar_url'],
+                'rate' => $rows['rate'],
+                'net' => $total_loan ? number_format($rows['base_salary'] - $rows['loans']->sum->amount, 2) : number_format($rows['base_salary'], 2)
+            ];
+        });
+
         $i = 0;
-        foreach ($users as $user) {
+        foreach ($payRolls as $user) {
             $payroll = new Payroll([
                 'hours' => $request->input('hours', 0),
-                'rate' => $user->rate,
+                'rate' => $user['rate'],
                 'over_time' => $request->input('over_time', 0)
             ]);
-            $payroll->staff()->associate($user->id);
+            $payroll->staff()->associate($user['id']);
             $payroll->paidBy()->associate($request->user('api')->id);
-            $payroll->grossPay();
+            $payroll->grossPay($user);
             $payroll->save();
             $i++;
         }

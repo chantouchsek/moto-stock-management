@@ -22,8 +22,11 @@ class PayrollTransformer extends BaseTransformer
             'over_time' => (boolean)$item->over_time,
             'hours' => (int)$item->hours,
             'total' => number_format($item->total, 2),
-            'cross' => number_format($item->cross, 2),
-            'notified' => (boolean)$item->notified
+            'gross' => number_format($item->gross, 2),
+            'notified' => (boolean)$item->notified,
+            'created_at' => isset($item->created_at) ? $item->created_at->toDateString() : '',
+            'staff' => $item->staff,
+            'paid_by' => $item->paidBy
         ];
     }
 }

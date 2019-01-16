@@ -96,20 +96,20 @@ class Payroll extends Model
     /**
      * @return float|int
      */
-    public function grossPay()
+    public function grossPay($user)
     {
         $calc = 0;
         if ($this->staff->full_time && !$this->over_time) {
-            return $this->gross = $this->staff->base_salary;
+            return $this->gross = $user['net'];
         }
         if ($this->staff->full_time && $this->over_time) {
             $calc = $this->hours * $this->staff->rate;
-            return $this->gross = $calc + $this->staff->base_salary;
+            return $this->gross = $calc + $user['net'];
         }
         if ($this->over_time || !$this->staff->full_time) {
             $calc = $this->hours * $this->staff->rate;
-            return $this->gross = $calc + $this->staff->base_salary;
+            return $this->gross = $calc + $user['net'];
         }
-        return $this->gross = $calc + $this->staff->base_salary;
+        return $this->gross = $calc + $user['net'];
     }
 }

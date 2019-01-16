@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 class HistoryController extends Controller
 {
-    use Authorizable;
+    // use Authorizable;
     /**
      * @var PayrollTransformer The transformer used to transform the model.
      */
@@ -37,7 +37,9 @@ class HistoryController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = Payroll::search($request->get('q'), null, true)->paginate($this->getPagination());
+        $pagination = Payroll::search($request->get('q'), null, true)
+            ->with(['staff.loans'])
+            ->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
