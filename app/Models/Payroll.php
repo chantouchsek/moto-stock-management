@@ -104,12 +104,12 @@ class Payroll extends Model
         }
         if ($this->staff->full_time && $this->over_time) {
             $calc = $this->hours * $this->staff->rate;
-            return $this->gross = $calc;
+            return $this->gross = $calc + $this->staff->base_salary;
         }
         if ($this->over_time || !$this->staff->full_time) {
             $calc = $this->hours * $this->staff->rate;
-            return $this->gross = $calc;
+            return $this->gross = $calc + $this->staff->base_salary;
         }
-        return $this->gross = $calc;
+        return $this->gross = $calc + $this->staff->base_salary;
     }
 }
