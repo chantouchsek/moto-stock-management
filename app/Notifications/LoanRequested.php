@@ -10,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Lang;
 
-class LoanRequested extends Notification implements ShouldBroadcastNow
+class LoanRequested extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -34,7 +34,7 @@ class LoanRequested extends Notification implements ShouldBroadcastNow
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -61,7 +61,7 @@ class LoanRequested extends Notification implements ShouldBroadcastNow
     public function toArray($notifiable)
     {
         return [
-            'body' => $this->loan->staff->full_name . " was request to loan salary amount: $" . $this->loan->amount . "Reason: {$this->loan->reason}",
+            'body' => $this->loan->staff->full_name . " was request to loan salary amount: $" . $this->loan->amount . "<br/>Reason: {$this->loan->reason}",
             'notify_type' => 'loan_request',
             'notify_id' => $this->loan->uuid
         ];
