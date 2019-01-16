@@ -14,7 +14,7 @@ class LoanRequestObserver
      * @param Loan $loan
      * @return void
      */
-    public function updated(Loan $loan)
+    public function created(Loan $loan)
     {
         $users = User::role(['Supper Admin', 'Admin'])->get();
         foreach ($users as $user) {
