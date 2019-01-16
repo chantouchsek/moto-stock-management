@@ -47,7 +47,7 @@ class LoanRequested extends Notification implements ShouldBroadcastNow
     {
         return (new MailMessage)
             ->subject(Lang::getFromJson('Salary Loan Requested'))
-            ->greeting("{$notifiable->full_name} was request to loan salary amount: {$this->loan->amount}")
+            ->greeting($this->loan->staff->full_name . " was request to loan salary amount: $" . $this->loan->amount)
             ->line(Lang::getFromJson('You are receiving this email because you needed provide feedback to your staff back.'))
             ->line(Lang::getFromJson('So, Plz response back ASAP, Do not let them waiting for you. They may need it in hurry.'));
     }
@@ -61,7 +61,7 @@ class LoanRequested extends Notification implements ShouldBroadcastNow
     public function toArray($notifiable)
     {
         return [
-            'body' => "{$this->loan->staff->full_name} was requested to loan salary amount: {$this->loan->amount}. Reason: {$this->loan->reason}",
+            'body' => $this->loan->staff->full_name . " was request to loan salary amount: $" . $this->loan->amount . "Reason: {$this->loan->reason}",
             'notify_type' => 'loan_request',
             'notify_id' => $this->loan->uuid
         ];
