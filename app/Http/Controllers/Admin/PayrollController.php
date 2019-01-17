@@ -117,7 +117,7 @@ class PayrollController extends Controller
             $payroll->staff()->associate($user['id']);
             $payroll->paidBy()->associate($request->user('api')->id);
             $payroll->deducted = $user['total_loan'];
-            $payroll->gross = $user['net'];
+            $payroll->gross = $user['basic'];
             $payroll->grossPay($user);
             $payroll->save();
             Loan::where('staff_id', $user['id'])
