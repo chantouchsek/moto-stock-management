@@ -126,7 +126,12 @@ class Permission extends BasePermission
             'view-payrolls',
             'add-payrolls',
             'edit-payrolls',
-            'delete-payrolls'
+            'delete-payrolls',
+
+            'view-reports',
+            'add-reports',
+            'edit-reports',
+            'delete-reports'
         ];
     }
 }
