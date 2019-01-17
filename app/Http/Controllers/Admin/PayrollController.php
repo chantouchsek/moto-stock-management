@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class PayrollController extends Controller
 {
-    // use Authorizable;
+    use Authorizable;
     /**
      * @var UserTransformer The transformer used to transform the model.
      */

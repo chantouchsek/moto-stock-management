@@ -121,7 +121,12 @@ class Permission extends BasePermission
             'view-makes',
             'add-makes',
             'edit-makes',
-            'delete-makes'
+            'delete-makes',
+
+            'view-payrolls',
+            'add-payrolls',
+            'edit-payrolls',
+            'delete-payrolls'
         ];
     }
 }

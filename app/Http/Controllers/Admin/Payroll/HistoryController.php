@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 class HistoryController extends Controller
 {
-    // use Authorizable;
+     use Authorizable;
     /**
      * @var PayrollTransformer The transformer used to transform the model.
      */

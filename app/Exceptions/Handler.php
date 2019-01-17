@@ -64,9 +64,9 @@ class Handler extends ExceptionHandler
             return $this->respondNotAllowed();
         }
 
-//        if ($exception instanceof AuthorizationException) {
-//            return $this->respondUnauthorized();
-//        }
+        if ($exception instanceof AuthorizationException) {
+            return $this->respondUnauthorized();
+        }
 
         return parent::render($request, $exception);
     }
