@@ -50,6 +50,8 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Loan withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Loan withoutTrashed()
  * @mixin \Eloquent
+ * @property int|null $is_paid_back
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereIsPaidBack($value)
  */
 class Loan extends Model
 {

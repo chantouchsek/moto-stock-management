@@ -21,7 +21,9 @@ class CreatePayrollsTable extends Migration
             $table->boolean('over_time')->default(0);
             $table->boolean('notified')->default(0);
             $table->integer('hours')->nullable();
-            $table->integer('gross')->nullable();
+            $table->decimal('gross', 20, 2)->nullable();
+            $table->decimal('deducted', 20, 2)->nullable();
+            $table->decimal('net', 20, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
 

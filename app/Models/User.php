@@ -97,6 +97,8 @@ use Webpatser\Uuid\Uuid;
  * @property int|null $rate
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFullTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRate($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Loan[] $loans
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payroll[] $payrolls
  */
 class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLocalePreference
 {

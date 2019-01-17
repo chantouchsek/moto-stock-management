@@ -23,6 +23,33 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Payroll withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Payroll withoutTrashed()
  * @mixin \Eloquent
+ * @property int $id
+ * @property string|null $uuid
+ * @property int $user_id
+ * @property int $staff_id
+ * @property int $over_time
+ * @property int $notified
+ * @property int|null $hours
+ * @property int|null $gross
+ * @property float|null $deducted
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property float|null $net
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \App\Models\User $paidBy
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereDeducted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereGross($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereHours($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereNet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereNotified($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereOverTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereStaffId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payroll whereUuid($value)
  */
 class Payroll extends Model
 {
@@ -41,7 +68,9 @@ class Payroll extends Model
         'hours',
         'total',
         'cross',
-        'notified'
+        'notified',
+        'deducted',
+        'net'
     ];
 
     /**
@@ -100,16 +129,16 @@ class Payroll extends Model
     {
         $calc = 0;
         if ($this->staff->full_time && !$this->over_time) {
-            return $this->gross = $user['net'];
+            return $this->net = $user['net'];
         }
         if ($this->staff->full_time && $this->over_time) {
             $calc = $this->hours * $this->staff->rate;
-            return $this->gross = $calc + $user['net'];
+            return $this->net = $calc + $user['net'];
         }
         if ($this->over_time || !$this->staff->full_time) {
             $calc = $this->hours * $this->staff->rate;
-            return $this->gross = $calc + $user['net'];
+            return $this->net = $calc + $user['net'];
         }
-        return $this->gross = $calc + $user['net'];
+        return $this->net = $calc + $user['net'];
     }
 }
