@@ -27,7 +27,8 @@ class LoanTransformer extends BaseTransformer
             'reason' => (string)$item->reason,
             'needed_date' => isset($item->needed_date) ? $item->needed_date->toDateString() : '',
             'can_offer_on' => isset($item->can_offer_on) ? $item->can_offer_on->toDateString() : '',
-            'created_at' => isset($item->created_at) ? $item->created_at->toDateString() : ''
+            'created_at' => isset($item->created_at) ? $item->created_at->toDateString() : '',
+            'can_edit' => (boolean)$item->can_edit
         ];
     }
 }

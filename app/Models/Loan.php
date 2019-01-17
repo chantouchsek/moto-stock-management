@@ -76,6 +76,11 @@ class Loan extends Model
     ];
 
     /**
+     * @var array
+     */
+    protected $appends = ['can_edit'];
+
+    /**
      * Searchable rules.
      *
      * @var array
@@ -137,5 +142,17 @@ class Loan extends Model
     public function approvedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCanEditAttribute()
+    {
+        $user = User::find(auth()->id());
+        if ($user->hasAnyRole(['Supper Admin', 'Admin'])) {
+            return true;
+        }
+        return false;
     }
 }
