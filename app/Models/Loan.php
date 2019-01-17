@@ -64,7 +64,8 @@ class Loan extends Model
         'can_offer_on',
         'needed_date',
         'is_urgent',
-        'is_approved'
+        'is_approved',
+        'is_paid_back'
     ];
 
     protected $dates = [

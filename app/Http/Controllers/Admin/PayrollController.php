@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Payroll\IndexRequest;
 use App\Http\Requests\Admin\Payroll\ShowRequest;
 use App\Http\Requests\Admin\Payroll\StoreRequest;
 use App\Http\Requests\Admin\Payroll\UpdateRequest;
+use App\Models\Loan;
 use App\Models\Payroll;
 use App\Models\User;
 use App\Traits\Authorizable;
@@ -45,7 +46,7 @@ class PayrollController extends Controller
 
         $pagination = User::search($request->get('q'), null, true)
             ->with(['loans' => function ($query) {
-                $query->where('is_approved', '=', 1);
+                $query->where('is_approved', 1)->where('is_paid_back', 0);
             }])
             ->role(['Admin', 'User'])
             ->where('status', '=', 1)
@@ -82,15 +83,15 @@ class PayrollController extends Controller
     {
         DB::beginTransaction();
 
-        $pagination = User::search($request->get('q'), null, true)
+        $users = User::search($request->get('q'), null, true)
             ->with(['loans' => function ($query) {
-                $query->where('is_approved', '=', 1);
+                $query->where('is_approved', 1)->where('is_paid_back', 0);
             }])
             ->role(['Admin', 'User'])
             ->where('status', '=', 1)
             ->get();
 
-        $data = $this->transformer->transformCollection(collect($pagination));
+        $data = $this->transformer->transformCollection(collect($users));
 
         $payRolls = $data->map(function ($rows) {
             $total_loan = count($rows['loans']);
@@ -117,6 +118,10 @@ class PayrollController extends Controller
             $payroll->paidBy()->associate($request->user('api')->id);
             $payroll->grossPay($user);
             $payroll->save();
+            Loan::where('staff_id', $user['id'])
+                ->where('is_approved', 1)
+                ->where('is_paid_back', 0)
+                ->update(['is_paid_back' => 1]);
             $i++;
         }
         DB::commit();

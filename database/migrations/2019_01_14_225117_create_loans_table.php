@@ -23,6 +23,7 @@ class CreateLoansTable extends Migration
             $table->decimal('amount', 20, 2)->nullable();
             $table->boolean('is_approved')->default(0);
             $table->boolean('is_urgent')->default(0);
+            $table->boolean('is_paid_back')->default(0);
             $table->date('can_offer_on')->nullable();
             $table->timestamps();
             $table->softDeletes();
