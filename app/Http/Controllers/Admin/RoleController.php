@@ -76,7 +76,10 @@ class RoleController extends Controller
             $role->syncPermissions(Permission::where('name', 'LIKE', 'view-%')->get());
         }
 
-        return $this->respondCreated();
+        return $this->respond([
+            'data' => $role,
+            'message' => 'Role created.'
+        ]);
     }
 
     /**
@@ -104,7 +107,10 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permissions'));
 
-        return $this->respondCreated('Item updated');
+        return $this->respond([
+            'data' => $role,
+            'message' => 'Role updated.'
+        ]);
     }
 
     /**

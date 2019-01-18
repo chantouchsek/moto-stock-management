@@ -2,6 +2,8 @@
 
 namespace App\Transformers;
 
+use function PHPSTORM_META\map;
+
 class RoleTransformer extends BaseTransformer
 {
 
@@ -16,7 +18,10 @@ class RoleTransformer extends BaseTransformer
     {
         return [
             'id' => (int)$item->id,
-            'name' => (string)$item->name
+            'name' => (string)$item->name,
+            'permissions' => collect($item->permissions)->map(function ($row) {
+                return $row->name;
+            })
         ];
     }
 }
