@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-class RoleTransformer extends BaseTransformer
+class PermissionTransformer extends BaseTransformer
 {
 
     /**

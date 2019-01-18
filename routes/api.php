@@ -31,7 +31,8 @@ Route::namespace('Admin')->group(function () {
         Route::resource('{sale}/uploads', 'MediaController', ['only' => ['store', 'destroy']]);
     });
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
-    Route::resource('roles', 'RoleController', ['only' => ['index']]);
+    Route::resource('roles', 'RoleController', ['except' => ['create', 'edit']]);
+    Route::resource('permissions', 'PermissionController', ['except' => ['create', 'edit']]);
     Route::resource('suppliers', 'SupplierController', ['except' => ['create', 'edit']]);
     Route::resource('makes', 'MakeController', ['except' => ['create', 'edit']]);
     Route::resource('models', 'ModelsController', ['except' => ['create', 'edit']]);

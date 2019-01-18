@@ -45,10 +45,10 @@ class RoleController extends Controller
 
         $pagination = Role::search($request->get('q'), null, true)->paginate($this->getPagination());
 
-        $users = $this->transformer->transformCollection(collect($pagination->items()));
+        $data = $this->transformer->transformCollection(collect($pagination->items()));
 
         return $this->respondWithPagination($pagination, [
-            'data' => $users
+            'data' => $data
         ]);
     }
 
@@ -75,27 +75,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
-            ->where("role_has_permissions.role_id", $role->id)
-            ->get();
         return $this->respond($this->transformer->transform($role));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Role $role
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Role $role)
-    {
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $role->id)
-            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
-            ->all();
-
-
-        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
     }
 
     /**
