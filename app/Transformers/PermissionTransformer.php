@@ -16,7 +16,10 @@ class PermissionTransformer extends BaseTransformer
     {
         return [
             'id' => (int)$item->id,
-            'name' => (string)$item->name
+            'name' => (string)$item->name,
+            'roles' => collect($item->roles)->map(function ($row) {
+                return $row->name;
+            })
         ];
     }
 }

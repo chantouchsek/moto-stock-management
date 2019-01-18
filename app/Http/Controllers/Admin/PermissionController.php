@@ -87,7 +87,10 @@ class PermissionController extends Controller
             $role->syncPermissions($permizzions);
         }
         DB::commit();
-        return $this->respond(['data' => $arrayPermissions, 'message' => 'Permission created.']);
+        return $this->respond([
+            'data' => $arrayPermissions,
+            'message' => 'Permission created.'
+        ]);
     }
 
     /**
@@ -115,8 +118,12 @@ class PermissionController extends Controller
         DB::beginTransaction();
         $permission->name = $request->input('name');
         $permission->save();
+        $permission->syncRoles($request->input('roles'));
         DB::commit();
-        return $this->respond(['data' => $permission, 'Permission updated']);
+        return $this->respond([
+            'data' => $permission,
+            'message' => 'Permission updated'
+        ]);
     }
 
     /**
