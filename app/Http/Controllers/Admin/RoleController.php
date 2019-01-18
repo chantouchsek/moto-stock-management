@@ -60,9 +60,21 @@ class RoleController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $role = Role::firstOrCreate(['name' => trim($request->input('name'))]);
 
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        if ($role->name == 'Supper Admin') {
+            // assign all permissions
+            $role->syncPermissions(Permission::all());
+        } elseif ($role->name == 'Admin') {
+            // for Admin by default only read, write access
+            $role->syncPermissions(Permission::where('name', 'LIKE', 'view-%')
+                ->orWhere('name', 'LIKE', 'edit-%')
+                ->orWhere('name', 'LIKE', 'add-%')
+                ->get());
+        } else {
+            // for others by default only read access
+            $role->syncPermissions(Permission::where('name', 'LIKE', 'view-%')->get());
+        }
 
         return $this->respondCreated();
     }
@@ -90,7 +102,7 @@ class RoleController extends Controller
         $role->name = $request->input('name');
         $role->save();
 
-        $role->syncPermissions($request->input('permission'));
+        $role->syncPermissions($request->input('permissions'));
 
         return $this->respondCreated('Item updated');
     }
