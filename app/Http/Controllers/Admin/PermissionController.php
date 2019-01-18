@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\Permission\IndexRequest;
+use App\Http\Requests\Admin\Permission\StoreRequest;
+use App\Http\Requests\Admin\Permission\UpdateRequest;
 use App\Models\Permission;
 use App\Traits\Authorizable;
 use App\Transformers\PermissionTransformer;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class PermissionController extends Controller
@@ -50,36 +51,40 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param  StoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $permission = new Permission($request->input('name'));
+        $permission->save();
+        return $this->respond(['data' => $permission, 'Permission created']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param Permission $permission
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(Permission $permission)
     {
-        //
+        return $this->respond($this->transformer->transform($permission));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param  UpdateRequest $request
+     * @param Permission $permission
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Permission $permission)
     {
-        //
+        $permission->name = $request->input('name');
+        $permission->save();
+        return $this->respond(['data' => $permission, 'Permission updated']);
     }
 
     /**
