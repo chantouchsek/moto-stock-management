@@ -47,5 +47,6 @@ Route::namespace('Admin')->group(function () {
         Route::resource('histories', 'HistoryController', ['only' => ['index']]);
     });
     Route::resource('payrolls', 'PayrollController', ['except' => ['create', 'edit']]);
+    Route::get('revenues/product-by-supplier', 'RevenueController@productBySupplier')->name('revenues.productBySupplier');
     Route::resource('revenues', 'RevenueController', ['only' => ['index']]);
 });

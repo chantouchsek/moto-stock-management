@@ -70,7 +70,6 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereSupplierId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereUuid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereYear($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Product withoutTrashed()
  * @mixin \Eloquent
