@@ -161,12 +161,39 @@ class RevenueController extends Controller
     {
         $fromDate = $request->input('start_date');
         $tillDate = $request->input('end_date');
+        $type = $request->input('type', 'model');
 
         $products = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
-            ->with(['supplier'])
-            ->orderBy('supplier_id')
-            ->get()->groupBy(function ($query) {
-                return $query->supplier->name;
+            ->with(['supplier', 'category', 'make', 'model', 'color'])
+            ->when($type === 'supplier', function ($query) {
+                $query->orderBy('supplier_id');
+            })
+            ->when($type === 'make', function ($query) {
+                $query->orderBy('make_id');
+            })
+            ->when($type === 'model', function ($query) {
+                $query->orderBy('model_id');
+            })
+            ->when($type === 'category', function ($query) {
+                $query->orderBy('category_id');
+            })
+            ->when($type === 'color', function ($query) {
+                $query->orderBy('color_id');
+            })
+            ->get()->groupBy(function ($query) use ($type) {
+                if ($type === 'supplier') {
+                    return $query->supplier->name;
+                }
+                if ($type === 'make') {
+                    return $query->make->name;
+                }
+                if ($type === 'model') {
+                    return $query->model->name;
+                }
+                if ($type === 'category') {
+                    return $query->category->name;
+                }
+                return $query->color->name;
             })->map(function ($row) {
                 return $row->count();
             });
