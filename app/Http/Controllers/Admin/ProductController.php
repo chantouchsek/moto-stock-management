@@ -146,17 +146,11 @@ class ProductController extends Controller
         $product = Product::whereEngineNumber($request->input('q'))->whereNull('sole_on')->first();
         if (!$product) {
             return $this->respond([
-                'data' => $product,
-                'pagination' => [
-                    'total_count' => 0,
-                    'total_pages' => 0,
-                    'current_page' => 0,
-                    'limit' => 0,
-                ],
+                'data' => '',
                 "first" => true
             ]);
         }
-        return $this->respond($this->transformer->transform($product));
+        return $this->respond(['data' => $this->transformer->transform($product)]);
     }
 
     /**
