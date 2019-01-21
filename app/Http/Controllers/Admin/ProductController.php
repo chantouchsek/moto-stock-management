@@ -161,6 +161,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\InvalidBase64Data
+     * @throws \Exception
      */
     public function update(UpdateRequest $request, Product $product)
     {
@@ -170,9 +171,9 @@ class ProductController extends Controller
 
         $product->save();
 
-        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif'];
+        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif', 'image/png'];
 
-        if ($request->input('file')) {
+        if ($request->has('file') && strpos($request->input('file'), ';base64') !== false) {
             if ($product->hasMedia('product-image-featured')) {
                 $product->clearMediaCollection('product-image-featured');
             }
