@@ -31,7 +31,7 @@ class UserTransformer extends BaseTransformer
             'address' => (string)$item->address,
             'start_work_date' => isset($item->start_work_date) ? $item->start_work_date->toDateString() : '',
             'base_salary' => (float)$item->base_salary,
-            'avatar_url' => (string)$item->hasMedia('avatars') ? config('app.url') . $item->getMedia('avatars')->first()->getUrl('thumb') : 'http://i.pravatar.cc/500?img=' . $item->id,
+            'avatar_url' => (string)$item->hasMedia('avatars') ? config('app.url') . $item->getMedia('avatars')->first()->getUrl() : 'http://i.pravatar.cc/500?img=' . $item->id,
             'status' => (boolean)$item->status,
             'resigned_at' => (string)$item->resigned_at,
             'bonus' => (float)$item->bonus,
