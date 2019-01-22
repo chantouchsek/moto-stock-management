@@ -142,6 +142,13 @@ class SaleController extends Controller
 
         $tax = ($request->input('tax_amount', 0) / 100) * $request->input('price');
         $sale->total = $request->input('price') + $tax;
+        list($first, $second) = explode(" ", $request->input('customer_name'));
+        $sale->customer()->update([
+            'phone_number' => $request->input('customer_phone_number'),
+            'address' => $request->input('customer_address'),
+            'first_name' => $first,
+            'last_name' => $second
+        ]);
 
         $sale->save();
 

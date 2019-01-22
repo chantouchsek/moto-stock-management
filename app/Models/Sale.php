@@ -111,16 +111,6 @@ class Sale extends Model implements HasMedia
     ];
 
     /**
-     * @var array
-     */
-    protected $revisionFormattedFields = array(
-        'notes'  => 'string:%s',
-        'is_in_lack' => 'boolean:No|Yes',
-        'modified' => 'datetime:m/d/Y g:i A',
-        'deleted_at' => 'isEmpty:Active|Deleted'
-    );
-
-    /**
      * The attributes that are mass assignable.
      * @var array
      */
