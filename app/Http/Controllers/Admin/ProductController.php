@@ -56,36 +56,6 @@ class ProductController extends Controller
                 return $query->where('model_id', $q);
             });
 
-        if ($request->has('first')) {
-            $pagination = $pagination->first();
-
-            if (!$pagination) {
-                return $this->respond([
-                    'data' => $pagination,
-                    'pagination' => [
-                        'total_count' => 0,
-                        'total_pages' => 0,
-                        'current_page' => 0,
-                        'limit' => 0,
-                    ],
-                    "first" => true
-                ]);
-            }
-
-            $data = $this->transformer->transform($pagination);
-
-            return $this->respond([
-                'data' => $data,
-                'pagination' => [
-                    'total_count' => 0,
-                    'total_pages' => 0,
-                    'current_page' => 0,
-                    'limit' => 0,
-                ],
-                "first" => true
-            ]);
-        }
-
         $pagination = $pagination->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
@@ -143,14 +113,19 @@ class ProductController extends Controller
      */
     public function findBy(ShowRequest $request)
     {
-        $product = Product::whereEngineNumber($request->input('q'))->whereNull('sole_on')->first();
-        if (!$product) {
-            return $this->respond([
-                'data' => '',
-                "first" => true
-            ]);
+        if ($request->get('limit')) {
+            $this->setPagination($request->get('limit'));
         }
-        return $this->respond(['data' => $this->transformer->transform($product)]);
+
+        $q = $request->get('q');
+
+        $pagination = Product::whereNull('sole_on')->search($q, null, false);
+
+        $pagination = $pagination->paginate($this->getPagination());
+
+        $data = $this->transformer->transformCollection(collect($pagination->items()));
+
+        return $this->respondWithPagination($pagination, ['data' => $data]);
     }
 
     /**
