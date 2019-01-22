@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Sale;
 use App\Http\Requests\Admin\Sale\IndexRequest;
 use App\Models\Sale;
 use App\Traits\Authorizable;
-use App\Transformers\SaleHistoryTransformer;
+use App\Transformers\RevisionTransformer;
 use App\Http\Controllers\Controller;
 
 class HistoryController extends Controller
@@ -13,15 +13,15 @@ class HistoryController extends Controller
     use Authorizable;
 
     /**
-     * @var SaleHistoryTransformer The transformer used to transform the model.
+     * @var RevisionTransformer The transformer used to transform the model.
      */
     protected $transformer;
 
     /**
      * SaleController constructor.
-     * @param SaleHistoryTransformer $transformer The transformer used to transform the model
+     * @param RevisionTransformer $transformer The transformer used to transform the model
      */
-    public function __construct(SaleHistoryTransformer $transformer)
+    public function __construct(RevisionTransformer $transformer)
     {
         $this->transformer = $transformer;
     }

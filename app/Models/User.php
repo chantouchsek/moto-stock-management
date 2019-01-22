@@ -128,7 +128,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     /**
      * @var array
      */
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'user_avatar'];
 
     /**
      * Searchable rules.
@@ -191,6 +191,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     public function getFullNameAttribute()
     {
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserAvatarAttribute()
+    {
+        return $this->hasMedia('avatars') ? config('app.url') . $this->getMedia('avatars')->first()->getUrl() : 'http://i.pravatar.cc/500?img=' . $this->id;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-class SaleHistoryTransformer extends BaseTransformer
+class RevisionTransformer extends BaseTransformer
 {
 
     /**
@@ -19,7 +19,7 @@ class SaleHistoryTransformer extends BaseTransformer
             'key' => $item->key,
             'old_value' => $item->oldValue(),
             'new_value' => $item->newValue(),
-            'user' => $item->userResponsible()->full_name,
+            'user' => $item->userResponsible(),
             'field_name' => $item->fieldName(),
             'date_updated' => isset($item->created_at) ? $item->created_at->toDateTimeString() : null
         ];
