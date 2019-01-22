@@ -83,6 +83,7 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereColorId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product wherePlateNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereSoleOn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereYear($value)
  */
 class Product extends Model implements HasMedia
 {

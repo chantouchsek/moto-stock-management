@@ -35,7 +35,8 @@ class SaleTransformer extends BaseTransformer
             'amount' => $item->amount,
             'files' => collect($item->getMedia('sale-attachment')),
             'notes' => $item->notes,
-            'sale_no' => $item->sale_no
+            'sale_no' => $item->sale_no,
+            'has_revision' => count($item->hasRevision) ? true : false
         ];
     }
 }

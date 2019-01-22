@@ -52,6 +52,7 @@ use Webpatser\Uuid\Uuid;
  * @mixin \Eloquent
  * @property int|null $is_paid_back
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Loan whereIsPaidBack($value)
+ * @property-read string $can_edit
  */
 class Loan extends Model
 {

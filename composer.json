@@ -20,6 +20,7 @@
         "pusher/pusher-php-server": "^3.3",
         "spatie/laravel-medialibrary": "^7.0.0",
         "spatie/laravel-permission": "^2.28",
+        "venturecraft/revisionable": "^1.28",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {

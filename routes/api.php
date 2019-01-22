@@ -28,6 +28,7 @@ Route::namespace('Admin')->group(function () {
     });
     Route::namespace('Sale')->prefix('sales')->name('sales.')->group(function () {
         Route::resource('{sale}/uploads', 'MediaController', ['only' => ['store', 'destroy']]);
+        Route::resource('{sale}/histories', 'HistoryController', ['only' => ['index']]);
     });
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('roles', 'RoleController', ['except' => ['create', 'edit']]);

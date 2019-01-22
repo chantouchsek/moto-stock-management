@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\RevisionableUpgrade;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Venturecraft\Revisionable\RevisionableTrait;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -76,12 +77,48 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Sale whereSaleNo($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  */
 class Sale extends Model implements HasMedia
 {
     use SoftDeletes,
         Searchable,
-        HasMediaTrait;
+        HasMediaTrait,
+        RevisionableTrait,
+        RevisionableUpgrade;
+
+    /**
+     * @var bool
+     */
+    protected $revisionCreationsEnabled = true;
+    protected $revisionEnabled = true;
+    protected $revisionCleanup = true;
+    protected $historyLimit = 1000;
+    protected $revisionNullString = 'nothing';
+    protected $revisionUnknownString = 'unknown';
+
+    /**
+     * @var array
+     */
+    protected $revisionFormattedFieldNames = [
+        'in_lack_amount' => 'In lack amount',
+        'is_in_lack' => 'Is in lack',
+        'deleted_at' => 'Deleted At',
+        'price' => 'Price',
+        'total' => 'Total',
+        'date' => 'Date',
+        'notes' => 'Notes'
+    ];
+
+    /**
+     * @var array
+     */
+    protected $revisionFormattedFields = array(
+        'notes'  => 'string:<strong>%s</strong>',
+        'is_in_lack' => 'boolean:No|Yes',
+        'modified' => 'datetime:m/d/Y g:i A',
+        'deleted_at' => 'isEmpty:Active|Deleted'
+    );
 
     /**
      * The attributes that are mass assignable.
@@ -105,6 +142,9 @@ class Sale extends Model implements HasMedia
         'sale_no'
     ];
 
+    /**
+     * @var array
+     */
     protected $dates = ['date'];
 
     /**
@@ -186,5 +226,11 @@ class Sale extends Model implements HasMedia
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+
+    public function hasRevision()
+    {
+        return $this->revisionHistory()->where('revisionable_id', '=', $this->id);
     }
 }
