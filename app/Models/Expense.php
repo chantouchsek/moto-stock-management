@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\RevisionableUpgrade;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Venturecraft\Revisionable\RevisionableTrait;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -51,7 +53,30 @@ class Expense extends Model implements HasMedia
 {
     use SoftDeletes,
         Searchable,
-        HasMediaTrait;
+        HasMediaTrait,
+        RevisionableTrait,
+        RevisionableUpgrade;
+
+    /**
+     * @var bool
+     */
+    protected $revisionCreationsEnabled = true;
+    protected $revisionEnabled = true;
+    protected $revisionCleanup = true;
+    protected $historyLimit = 1000;
+    protected $revisionNullString = 'nothing';
+    protected $revisionUnknownString = 'unknown';
+
+    /**
+     * @var array
+     */
+    protected $revisionFormattedFieldNames = [
+        'amount' => 'Amount',
+        'deleted_at' => 'Deleted At',
+        'expense_on' => 'Expense on',
+        'date' => 'Date',
+        'notes' => 'Notes'
+    ];
 
     /**
      * @var array
