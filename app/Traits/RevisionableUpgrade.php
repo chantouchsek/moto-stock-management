@@ -47,7 +47,7 @@ trait RevisionableUpgrade
     /**
      * Returns revision for model created.
      *
-     * @return \Fico7489\Laravel\RevisionableUpgrade\Models\Revision|null
+     * @return Revision|null
      */
     public function revisionCreated()
     {
@@ -57,7 +57,7 @@ trait RevisionableUpgrade
     /**
      * Returns revision for model deleted.
      *
-     * @return \Fico7489\Laravel\RevisionableUpgrade\Models\Revision|null
+     * @return Revision|null
      */
     public function revisionDeleted()
     {
@@ -71,7 +71,7 @@ trait RevisionableUpgrade
      * @param string|null $newValue
      * @param string|null $oldValue
      *
-     * @return \Fico7489\Laravel\RevisionableUpgrade\Models\Revision|null
+     * @return Revision|null
      */
     public function revisionUpdated($key = null, $newValue = null, $oldValue = null)
     {
