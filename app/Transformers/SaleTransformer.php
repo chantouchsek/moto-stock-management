@@ -34,7 +34,7 @@ class SaleTransformer extends BaseTransformer
             'date' => isset($item->date) ? $item->date->toDateString() : '',
             'amount' => $item->amount,
             'files' => collect($item->getMedia('sale-attachment')),
-            'notes' => $item->notes,
+            'notes' => $item->notes ? $item->notes : '',
             'sale_no' => $item->sale_no,
             'has_revision' => count($item->hasRevision) ? true : false
         ];
