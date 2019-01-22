@@ -107,7 +107,8 @@ class Sale extends Model implements HasMedia
         'price' => 'Price',
         'total' => 'Total',
         'date' => 'Date',
-        'notes' => 'Notes'
+        'notes' => 'Notes',
+        'customer_name' => "Customer name"
     ];
 
     /**
