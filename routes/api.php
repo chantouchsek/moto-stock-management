@@ -25,6 +25,7 @@ Route::namespace('Admin')->group(function () {
     });
     Route::namespace('Expense')->prefix('expenses')->name('expenses.')->group(function () {
         Route::resource('{expense}/uploads', 'UploadAttachmentController', ['only' => ['store', 'destroy']]);
+        Route::resource('{expense}/histories', 'HistoryController', ['only' => ['index']]);
     });
     Route::namespace('Sale')->prefix('sales')->name('sales.')->group(function () {
         Route::resource('{sale}/uploads', 'MediaController', ['only' => ['store', 'destroy']]);
