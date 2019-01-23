@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => [
-                'required', 'min:2', 'string'
+                'required', 'min:2', 'string', 'unique:categories,name'
             ]
         ];
     }

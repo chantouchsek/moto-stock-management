@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\Category\Deleted;
+use App\Events\Category\Updated;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -18,6 +20,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'App\Events\Category\Created' => [
+            'App\Listeners\Category\Created',
+        ],
+        Updated::class => [],
+        Deleted::class => []
     ];
 
     /**
@@ -28,7 +35,8 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
+        Event::listen('revisionable.*', function ($model, $revisions) {
+            //
+        });
     }
 }

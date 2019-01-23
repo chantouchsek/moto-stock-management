@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Events\Category\Created;
+use App\Events\Category\Deleted;
+use App\Events\Category\Updated;
+use App\Traits\RevisionableUpgrade;
 use App\Traits\Searchable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Venturecraft\Revisionable\RevisionableTrait;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -44,10 +49,35 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereUuid($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  */
 class Category extends Model
 {
-    use SoftDeletes, Sluggable, Searchable;
+    use SoftDeletes,
+        Sluggable,
+        Searchable,
+        RevisionableTrait,
+        RevisionableUpgrade;
+
+    /**
+     * @var bool
+     */
+    protected $revisionCreationsEnabled = true;
+    protected $revisionEnabled = true;
+    protected $revisionCleanup = true;
+    protected $historyLimit = 1000;
+    protected $revisionNullString = 'nothing';
+    protected $revisionUnknownString = 'unknown';
+
+    /**
+     * @var array
+     */
+    protected $revisionFormattedFieldNames = [
+        'name' => 'Name',
+        'description' => 'Description',
+        'active' => 'Active',
+        'deleted_at' => 'Deleted At'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +86,19 @@ class Category extends Model
      */
     protected $fillable = [
         'name', 'slug', 'description', 'active', 'uuid', 'parent_id'
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * Allows for object-based events for native Eloquent events.
+     *
+     * @var array The event mapping.
+     */
+    protected $dispatchesEvents = [
+        'created' => Created::class,
+        'updated' => Updated::class,
+        'deleted' => Deleted::class
     ];
 
     /**

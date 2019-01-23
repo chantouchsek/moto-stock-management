@@ -24,7 +24,12 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'min:3', 'string']
+            'name' => [
+                'required',
+                'min:3',
+                'string',
+                'unique:categories,name,' . $this->id
+            ]
         ];
     }
 }

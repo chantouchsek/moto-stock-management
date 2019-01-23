@@ -99,6 +99,7 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRate($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Loan[] $loans
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payroll[] $payrolls
+ * @property-read string $user_avatar
  */
 class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLocalePreference
 {

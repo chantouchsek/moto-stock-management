@@ -48,6 +48,7 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Expense withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Expense withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  */
 class Expense extends Model implements HasMedia
 {
