@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Sale;
+namespace App\Http\Controllers\Admin\Product;
 
-use App\Http\Requests\Admin\Sale\IndexRequest;
-use App\Models\Sale;
+use App\Http\Requests\Admin\Product\IndexRequest;
+use App\Models\Product;
 use App\Traits\Authorizable;
 use App\Transformers\RevisionTransformer;
 use App\Http\Controllers\Controller;
 
-class HistoryController extends Controller
+class RevisionController extends Controller
 {
     use Authorizable;
 
@@ -18,7 +18,7 @@ class HistoryController extends Controller
     protected $transformer;
 
     /**
-     * SaleController constructor.
+     * ProductController constructor.
      * @param RevisionTransformer $transformer The transformer used to transform the model
      */
     public function __construct(RevisionTransformer $transformer)
@@ -30,24 +30,21 @@ class HistoryController extends Controller
      * Display a listing of the resource.
      *
      * @param IndexRequest $request
-     * @param Sale $sale
+     * @param Product $product
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(IndexRequest $request, Sale $sale)
+    public function index(IndexRequest $request, Product $product)
     {
         if ($request->get('limit')) {
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = $sale->revisionHistory()->paginate($this->getPagination());
+        $pagination = $product->revisionHistory()->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
         return $this->respondWithPagination($pagination, [
-            'data' => [
-                'revisions' => $data,
-                'sale' => $sale
-            ]
+            'data' => $data
         ]);
     }
 }

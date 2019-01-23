@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\RevisionableUpgrade;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use Venturecraft\Revisionable\RevisionableTrait;
 use Webpatser\Uuid\Uuid;
 
 /**
@@ -89,7 +91,37 @@ class Product extends Model implements HasMedia
 {
     use SoftDeletes,
         Searchable,
-        HasMediaTrait;
+        HasMediaTrait,
+        RevisionableTrait,
+        RevisionableUpgrade;
+
+    /**
+     * @var bool
+     */
+    protected $revisionCreationsEnabled = true;
+    protected $revisionEnabled = true;
+    protected $revisionCleanup = true;
+    protected $historyLimit = 1000;
+    protected $revisionNullString = 'nothing';
+    protected $revisionUnknownString = 'unknown';
+
+
+    /**
+     * @var array
+     */
+    protected $revisionFormattedFieldNames = [
+        'name' => 'Name',
+        'description' => 'Description',
+        'deleted_at' => 'Deleted At',
+        'price' => 'Price',
+        'cost' => 'Cost',
+        'year' => 'Year',
+        'import_from' => 'Import from',
+        'engine_number' => "Engine number",
+        'plate_number' => "Plate number",
+        'frame_number' => "Frame number",
+        'sole_on' => "Sole on"
+    ];
 
     /**
      * @var array
@@ -134,11 +166,11 @@ class Product extends Model implements HasMedia
          * @var array
          */
         'columns' => [
-            'products.id' => 10,
-            'products.name' => 9,
+            'products.id' => 1,
+            'products.name' => 5,
             'products.description' => 1,
             'products.engine_number' => 10,
-            'products.frame_number' => 9
+            'products.frame_number' => 5
         ]
     ];
 

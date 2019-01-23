@@ -25,11 +25,11 @@ Route::namespace('Admin')->group(function () {
     });
     Route::namespace('Expense')->prefix('expenses')->name('expenses.')->group(function () {
         Route::resource('{expense}/uploads', 'UploadAttachmentController', ['only' => ['store', 'destroy']]);
-        Route::resource('{expense}/histories', 'HistoryController', ['only' => ['index']]);
+        Route::resource('{expense}/revisions', 'RevisionController', ['only' => ['index']]);
     });
     Route::namespace('Sale')->prefix('sales')->name('sales.')->group(function () {
         Route::resource('{sale}/uploads', 'MediaController', ['only' => ['store', 'destroy']]);
-        Route::resource('{sale}/histories', 'HistoryController', ['only' => ['index']]);
+        Route::resource('{sale}/revisions', 'RevisionController', ['only' => ['index']]);
     });
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('roles', 'RoleController', ['except' => ['create', 'edit']]);
@@ -39,6 +39,9 @@ Route::namespace('Admin')->group(function () {
     Route::resource('models', 'ModelsController', ['except' => ['create', 'edit']]);
     Route::resource('customers', 'CustomerController', ['except' => ['create', 'edit']]);
     Route::resource('colors', 'ColorController', ['except' => ['create', 'edit']]);
+    Route::namespace('Product')->prefix('products')->name('products.')->group(function () {
+        Route::resource('{product}/revisions', 'RevisionController', ['only' => ['index']]);
+    });
     Route::get('products/filter', 'ProductController@findBy')->name('products.findBy');
     Route::resource('products', 'ProductController', ['except' => ['create', 'edit']]);
     Route::resource('sales', 'SaleController', ['except' => ['create', 'edit']]);

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Expense;
+namespace App\Http\Controllers\Admin\Sale;
 
 use App\Http\Requests\Admin\Sale\IndexRequest;
-use App\Models\Expense;
+use App\Models\Sale;
 use App\Traits\Authorizable;
 use App\Transformers\RevisionTransformer;
 use App\Http\Controllers\Controller;
 
-class HistoryController extends Controller
+class RevisionController extends Controller
 {
     use Authorizable;
 
@@ -30,22 +30,23 @@ class HistoryController extends Controller
      * Display a listing of the resource.
      *
      * @param IndexRequest $request
-     * @param Expense $expense
+     * @param Sale $sale
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(IndexRequest $request, Expense $expense)
+    public function index(IndexRequest $request, Sale $sale)
     {
         if ($request->get('limit')) {
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = $expense->revisionHistory()->paginate($this->getPagination());
+        $pagination = $sale->revisionHistory()->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
         return $this->respondWithPagination($pagination, [
             'data' => [
-                'revisions' => $data
+                'revisions' => $data,
+                'sale' => $sale
             ]
         ]);
     }
