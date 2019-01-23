@@ -79,7 +79,15 @@ class ProductController extends Controller
 
         $product->save();
 
-        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif', 'image/png'];
+        $allowedMimeTypes = [
+            'image/jpeg',
+            'image/pipeg',
+            'image/gif',
+            'image/png',
+            'image/svg+xml',
+            'image/x-icon',
+            'image/vnd.microsoft.icon'
+        ];
 
         if ($request->input('file')) {
             $product->addMediaFromBase64($request->get('file'), $allowedMimeTypes)
@@ -146,7 +154,15 @@ class ProductController extends Controller
 
         $product->save();
 
-        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif', 'image/png'];
+        $allowedMimeTypes = [
+            'image/jpeg',
+            'image/pipeg',
+            'image/gif',
+            'image/png',
+            'image/svg+xml',
+            'image/x-icon',
+            'image/vnd.microsoft.icon'
+        ];
 
         if ($request->has('file') && strpos($request->input('file'), ';base64') !== false) {
             if ($product->hasMedia('product-image-featured')) {
