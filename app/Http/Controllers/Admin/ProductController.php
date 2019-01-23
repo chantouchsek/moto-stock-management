@@ -79,7 +79,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif'];
+        $allowedMimeTypes = ['image/jpeg', 'image/pipeg', 'image/gif', 'image/png'];
 
         if ($request->input('file')) {
             $product->addMediaFromBase64($request->get('file'), $allowedMimeTypes)
