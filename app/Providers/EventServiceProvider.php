@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Events\Category\Deleted;
-use App\Events\Category\Updated;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -21,10 +19,19 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         'App\Events\Category\Created' => [
-            'App\Listeners\Category\Created',
+            'App\Listeners\Category\Created'
         ],
-        Updated::class => [],
-        Deleted::class => []
+        'App\Events\Category\Updated' => [],
+        'App\Events\Category\Deleted' => [],
+        'App\Events\Sale\Created' => [
+            'App\Listeners\Sale\Created'
+        ],
+        'App\Events\Sale\Updated' => [
+            'App\Listeners\Sale\Updated'
+        ],
+        'App\Events\Sale\Deleted' => [
+            'App\Listeners\Sale\Deleted'
+        ]
     ];
 
     /**

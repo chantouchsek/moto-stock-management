@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Events\Sale\Created;
+use App\Events\Sale\Deleted;
+use App\Events\Sale\Updated;
 use App\Traits\RevisionableUpgrade;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
@@ -138,6 +141,20 @@ class Sale extends Model implements HasMedia
      * @var array
      */
     protected $dates = ['date'];
+
+
+    /**
+     * The event map for the model.
+     *
+     * Allows for object-based events for native Eloquent events.
+     *
+     * @var array The event mapping.
+     */
+    protected $dispatchesEvents = [
+        'created' => Created::class,
+        'updated' => Updated::class,
+        'deleted' => Deleted::class
+    ];
 
     /**
      * Searchable rules.
