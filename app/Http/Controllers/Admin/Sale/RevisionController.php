@@ -44,10 +44,7 @@ class RevisionController extends Controller
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 
         return $this->respondWithPagination($pagination, [
-            'data' => [
-                'revisions' => $data,
-                'sale' => $sale
-            ]
+            'data' => $data
         ]);
     }
 }
