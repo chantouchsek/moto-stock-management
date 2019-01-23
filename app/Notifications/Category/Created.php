@@ -13,7 +13,7 @@ class Created extends CategoryNotification
     public function toArray($notifiable)
     {
         return [
-            'body' => "Category: {$this->category->name} was created at {$this->category->created_at} by {$notifiable->full_name}",
+            'body' => "{$this->category->name} was created at {$this->category->created_at} by {$notifiable->full_name}",
             'notify_type' => 'category_created',
             'notify_id' => $this->category->uuid
         ];
