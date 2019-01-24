@@ -2,6 +2,8 @@
 
 namespace App\Notifications\Expense;
 
+use Carbon\Carbon;
+
 class Deleted extends ExpenseNotification
 {
     /**
@@ -12,10 +14,13 @@ class Deleted extends ExpenseNotification
      */
     public function toArray($notifiable)
     {
+        $timestamp = Carbon::now()->addSecond()->toDateTimeString();
         return [
             'body' => "Expense amount: {$this->expense->amount} was deleted at {$this->expense->deleted_at} by {$notifiable->full_name}",
             'notify_type' => 'expense_deleted',
-            'notify_id' => $this->expense->uuid
+            'notify_id' => $this->expense->uuid,
+            'created_at' => $timestamp,
+            'updated_at' => $timestamp
         ];
     }
 }

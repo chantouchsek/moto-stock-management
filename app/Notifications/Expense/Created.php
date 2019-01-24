@@ -2,6 +2,8 @@
 
 namespace App\Notifications\Expense;
 
+use Carbon\Carbon;
+
 class Created extends ExpenseNotification
 {
     /**
@@ -12,10 +14,13 @@ class Created extends ExpenseNotification
      */
     public function toArray($notifiable)
     {
+        $timestamp = Carbon::now()->addSecond()->toDateTimeString();
         return [
             'body' => "Expense amount: {$this->expense->amount} was created at {$this->expense->created_at} by {$notifiable->full_name}",
             'notify_type' => 'expense_created',
-            'notify_id' => $this->expense->uuid
+            'notify_id' => $this->expense->uuid,
+            'created_at' => $timestamp,
+            'updated_at' => $timestamp
         ];
     }
 }

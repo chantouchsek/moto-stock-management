@@ -2,6 +2,8 @@
 
 namespace App\Notifications\Sale;
 
+use Carbon\Carbon;
+
 class Updated extends SaleNotification
 {
     /**
@@ -12,10 +14,13 @@ class Updated extends SaleNotification
      */
     public function toArray($notifiable)
     {
+        $timestamp = Carbon::now()->addSecond()->toDateTimeString();
         return [
             'body' => "Sale number: #{$this->sale->sale_no} was updated at {$this->sale->updated_at} by {$notifiable->full_name}",
             'notify_type' => 'sale_updated',
-            'notify_id' => $this->sale->uuid
+            'notify_id' => $this->sale->uuid,
+            'created_at' => $timestamp,
+            'updated_at' => $timestamp
         ];
     }
 }
