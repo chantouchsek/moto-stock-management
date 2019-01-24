@@ -13,7 +13,7 @@ class Deleted extends SaleNotification
     public function toArray($notifiable)
     {
         return [
-            'body' => "Sale number: #{$this->sale->sale_no} was deleted at {$this->sale->created_at} by {$notifiable->full_name}",
+            'body' => "Sale number: #{$this->sale->sale_no} was deleted at {$this->sale->deleted_at} by {$notifiable->full_name}",
             'notify_type' => 'sale_deleted',
             'notify_id' => $this->sale->uuid
         ];

@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Events\Category;
+namespace App\Events\Expense;
 
 use App\Events\BaseEvent as Event;
-use App\Models\Category;
-use App\Transformers\CategoryTransformer;
+use App\Models\Expense;
+use App\Transformers\ExpenseTransformer;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class CategoryEvent extends Event
+abstract class ExpenseEvent extends Event
 {
-
     /**
      * @var Model The model that has been updated.
      */
@@ -19,12 +18,12 @@ abstract class CategoryEvent extends Event
     /**
      * Create a new event instance.
      *
-     * @param Category $category The category that has been updated.
+     * @param Expense $expense The expense that has been updated.
      */
-    public function __construct(Category $category)
+    public function __construct(Expense $expense)
     {
-        $this->model = $category;
-        $this->transformer = new CategoryTransformer();
+        $this->model = $expense;
+        $this->transformer = new ExpenseTransformer();
     }
 
     /**
@@ -34,6 +33,6 @@ abstract class CategoryEvent extends Event
      */
     public function broadcastOn()
     {
-        return ['category'];
+        return ['expense'];
     }
 }

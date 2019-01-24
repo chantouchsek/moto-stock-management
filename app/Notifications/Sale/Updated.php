@@ -13,7 +13,7 @@ class Updated extends SaleNotification
     public function toArray($notifiable)
     {
         return [
-            'body' => "Sale number: #{$this->sale->sale_no} was updated at {$this->sale->created_at} by {$notifiable->full_name}",
+            'body' => "Sale number: #{$this->sale->sale_no} was updated at {$this->sale->updated_at} by {$notifiable->full_name}",
             'notify_type' => 'sale_updated',
             'notify_id' => $this->sale->uuid
         ];

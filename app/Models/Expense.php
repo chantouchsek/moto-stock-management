@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Events\Expense\Created;
+use App\Events\Expense\Deleted;
+use App\Events\Expense\Updated;
 use App\Traits\RevisionableUpgrade;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
@@ -83,6 +86,20 @@ class Expense extends Model implements HasMedia
      * @var array
      */
     protected $fillable = ['amount', 'expense_on', 'date', 'notes', 'user_id'];
+
+
+    /**
+     * The event map for the model.
+     *
+     * Allows for object-based events for native Eloquent events.
+     *
+     * @var array The event mapping.
+     */
+    protected $dispatchesEvents = [
+        'created' => Created::class,
+        'updated' => Updated::class,
+        'deleted' => Deleted::class
+    ];
 
     /**
      * @var array

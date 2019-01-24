@@ -19,7 +19,7 @@ abstract class SaleEvent extends Event
     /**
      * Create a new event instance.
      *
-     * @param Sale $sale The album that has been updated.
+     * @param Sale $sale The sale that has been updated.
      */
     public function __construct(Sale $sale)
     {

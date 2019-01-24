@@ -18,11 +18,13 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        // Category
         'App\Events\Category\Created' => [
             'App\Listeners\Category\Created'
         ],
         'App\Events\Category\Updated' => [],
         'App\Events\Category\Deleted' => [],
+        // Sales
         'App\Events\Sale\Created' => [
             'App\Listeners\Sale\Created'
         ],
@@ -31,6 +33,16 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\Sale\Deleted' => [
             'App\Listeners\Sale\Deleted'
+        ],
+        // Expenses
+        'App\Events\Expense\Created' => [
+            'App\Listeners\Expense\Created'
+        ],
+        'App\Events\Expense\Updated' => [
+            'App\Listeners\Expense\Updated'
+        ],
+        'App\Events\Expense\Deleted' => [
+            'App\Listeners\Expense\Deleted'
         ]
     ];
 
@@ -42,8 +54,8 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-        Event::listen('revisionable.*', function ($model, $revisions) {
-            //
-        });
+        //Event::listen('revisionable.*', function ($model, $revisions) {
+        //
+        //});
     }
 }
