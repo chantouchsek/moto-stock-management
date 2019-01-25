@@ -41,6 +41,7 @@ Route::namespace('Admin')->group(function () {
     Route::resource('colors', 'ColorController', ['except' => ['create', 'edit']]);
     Route::namespace('Product')->prefix('products')->name('products.')->group(function () {
         Route::resource('{product}/revisions', 'RevisionController', ['only' => ['index']]);
+        Route::resource('imports', 'ImportController', ['only' => ['store']]);
     });
     Route::get('products/filter', 'ProductController@findBy')->name('products.findBy');
     Route::resource('products', 'ProductController', ['except' => ['create', 'edit']]);
