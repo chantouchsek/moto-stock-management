@@ -145,7 +145,8 @@ class Product extends Model implements HasMedia
         'frame_number',
         'status',
         'code',
-        'sole_on'
+        'sole_on',
+        'uuid'
     ];
 
     /**

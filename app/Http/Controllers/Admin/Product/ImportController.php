@@ -20,10 +20,8 @@ class ImportController extends Controller
      */
     public function store(ImportRequest $request)
     {
-        $collection = (new ProductsImport())->queue($request->input('file'));
-        return $this->respond([
-            'data' => $collection,
-            'message' => 'Product imported'
-        ]);
+        $file = $request->file('file');
+        (new ProductsImport)->import($file);
+        return $this->respondCreated('Products imported success fully');
     }
 }

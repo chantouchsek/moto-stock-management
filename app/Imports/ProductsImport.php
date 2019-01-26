@@ -4,45 +4,19 @@ namespace App\Imports;
 
 use App\Models\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Webpatser\Uuid\Uuid;
 
-class ProductsImport implements ToCollection, WithChunkReading, WithBatchInserts, ShouldQueue, WithValidation
+class ProductsImport implements ToModel, WithChunkReading, WithBatchInserts, ShouldQueue, WithValidation, WithHeadingRow
 {
     use Importable;
-
-    /**
-     * @param Collection $collection
-     */
-    public function collection(Collection $collection)
-    {
-        foreach ($collection as $row) {
-            Product::create([
-                'make_id' => $row[0],
-                'model_id' => $row[1],
-                'category_id' => $row[2],
-                'color_id' => $row[3],
-                'name' => $row[4],
-                'description' => $row[5],
-                'price' => $row[6],
-                'cost' => $row[7],
-                'year' => $row[8],
-                'import_from' => $row[9],
-                'date_import' => $row[10],
-                'engine_number' => $row[11],
-                'plate_number' => $row[12],
-                'frame_number' => $row[13],
-                'status' => $row[14],
-                'code' => $row[15],
-                'supplier_id' => $row[15]
-            ]);
-        }
-    }
 
     /**
      * @return int
@@ -60,38 +34,69 @@ class ProductsImport implements ToCollection, WithChunkReading, WithBatchInserts
         return 100;
     }
 
+
+    /**
+     * @param array $row
+     *
+     * @return Model|Model[]|null
+     * @throws \Exception
+     */
+    public function model(array $row)
+    {
+        return new Product([
+            'make_id' => $row['make'],
+            'model_id' => $row['model'],
+            'category_id' => $row['category'],
+            'color_id' => $row['color'],
+            'name' => $row['name'],
+            'description' => $row['description'],
+            'price' => $row['price'],
+            'cost' => $row['cost'],
+            'year' => $row['year'],
+            'import_from' => $row['import_from'],
+            'date_import' => $row['date_import'],
+            'engine_number' => $row['engine_number'],
+            'plate_number' => $row['plate_number'],
+            'frame_number' => $row['frame_number'],
+            'status' => $row['status'],
+            'code' => $row['code'],
+            'supplier_id' => $row['supplier'],
+            'uuid' => (string)Uuid::generate(4)
+        ]);
+    }
+
     /**
      * @return array
      */
     public function rules(): array
     {
         return [
-            '5' => 'required|string|min:2',
-            '6' => 'required',
-            '7' => 'required',
-            '16' => [
+            'name' => 'required|string|min:2',
+            'price' => 'required',
+            'cost' => 'required',
+            'supplier' => [
                 'required',
                 Rule::exists('suppliers', 'id')
             ],
-            '3' => [
+            'category' => [
                 'required',
                 Rule::exists('categories', 'id')
             ],
-            '1' => [
+            'make' => [
                 'required',
                 Rule::exists('makes', 'id')
             ],
-            '2' => [
+            'model' => [
                 'required',
                 Rule::exists('models', 'id')
             ],
-            '4' => [
+            'color' => [
                 'required',
                 Rule::exists('colors', 'id')
             ],
-            '10' => 'required|date',
-            '11' => 'required',
-            '13' => 'required'
+            'date_import' => 'required|date',
+            'engine_number' => 'required',
+            'frame_number' => 'required'
         ];
     }
 }
