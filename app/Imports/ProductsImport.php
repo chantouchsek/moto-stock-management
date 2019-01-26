@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
@@ -54,7 +55,7 @@ class ProductsImport implements ToModel, WithChunkReading, WithBatchInserts, Sho
             'cost' => $row['cost'],
             'year' => $row['year'],
             'import_from' => $row['import_from'],
-            'date_import' => $row['date_import'],
+            'date_import' => new Carbon($row['date_import']),
             'engine_number' => $row['engine_number'],
             'plate_number' => $row['plate_number'],
             'frame_number' => $row['frame_number'],
@@ -94,7 +95,7 @@ class ProductsImport implements ToModel, WithChunkReading, WithBatchInserts, Sho
                 'required',
                 Rule::exists('colors', 'id')
             ],
-            'date_import' => 'required|date_format:Y-m-d',
+            'date_import' => 'required|date_format:d-m-Y',
             'engine_number' => 'required|unique:products,engine_number',
             'frame_number' => 'required|unique:products,frame_number',
             'plate_number' => 'unique:products,plate_number'

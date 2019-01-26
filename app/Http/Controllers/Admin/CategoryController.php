@@ -65,7 +65,10 @@ class CategoryController extends Controller
 
         $category->save();
         DB::commit();
-        return $this->respondCreated();
+        return $this->respond([
+            'data' => $category,
+            'message' => 'Category has been created successful.'
+        ]);
     }
 
     /**
