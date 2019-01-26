@@ -20,9 +20,9 @@ class DownloadController extends Controller
     public function downloadSample()
     {
         try {
-            $file = Storage::disk('public')->get('excel/product-upload-sample.xlsx');
-            return (new Response($file, 200))
-                ->header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            return Storage::disk('public')->download('excel/product-upload-sample.xlsx', 'product-upload-sample.xlsx');
+//            return (new Response($file, 200))
+//                ->header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         } catch (\Exception $ex) {
             return 'Error while downloading file.' . $ex;
         }
