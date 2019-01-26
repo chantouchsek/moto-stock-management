@@ -48,9 +48,10 @@ class StoreRequest extends FormRequest
                 'required',
                 Rule::exists('colors', 'id')
             ],
-            'date_import' => 'required|date',
-            'engine_number' => 'required',
-            'frame_number' => 'required'
+            'date_import' => 'required|date_format:Y-m-d',
+            'engine_number' => 'required|unique:products,engine_number',
+            'frame_number' => 'required|unique:products,frame_number',
+            'plate_number' => 'unique:products,plate_number'
         ];
     }
 }
