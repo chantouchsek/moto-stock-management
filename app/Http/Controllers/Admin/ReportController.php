@@ -35,37 +35,16 @@ class ReportController extends Controller
      * @param IndexRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
+
     public function index(IndexRequest $request)
     {
-        if ($request->get('limit')) {
-            $this->setPagination($request->get('limit'));
-        }
-
-        $pagination = Sale::search($request->get('q'), null, true)->paginate($this->getPagination());
-
-        $data = $this->transformer->transformCollection(collect($pagination->items()));
-
-        return $this->respondWithPagination($pagination, [
-            'data' => $data
-        ]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @param IndexRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function groupByMake(IndexRequest $request)
-    {
-        if ($request->get('limit')) {
-            $this->setPagination($request->get('limit'));
-        }
-
         $query = (int)$request->input('q');
 
-        $fromDate = $request->has('q') ? Carbon::now()->addDay(-$query)->toDateString() : $request->input('start_date');
-        $tillDate = $request->has('q') ? Carbon::now()->subDay()->toDateString() : $request->input('end_date');
+        $startDate = Carbon::createFromFormat('Y-m-d', $request->input('start_date'));
+        $endDate = Carbon::createFromFormat('Y-m-d', $request->input('end_date'));
+
+        $fromDate = $request->has('q') ? Carbon::now()->addDay(-$query)->toDateString() : $startDate;
+        $tillDate = $request->has('q') ? Carbon::now()->subDay()->toDateString() : $endDate;
 
         $products = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
             ->with(['make'])

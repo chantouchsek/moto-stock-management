@@ -159,8 +159,8 @@ class RevenueController extends Controller
      */
     public function productBySupplier(IndexRequest $request)
     {
-        $fromDate = $request->input('start_date');
-        $tillDate = $request->input('end_date');
+        $fromDate = Carbon::createFromFormat('Y-m-d', $request->input('start_date'));
+        $tillDate = Carbon::createFromFormat('Y-m-d', $request->input('end_date'));
         $type = $request->input('type', 'model');
 
         $products = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
