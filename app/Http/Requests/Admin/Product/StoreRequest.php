@@ -51,7 +51,7 @@ class StoreRequest extends FormRequest
             'date_import' => 'required|date_format:Y-m-d',
             'engine_number' => 'required|unique:products,engine_number',
             'frame_number' => 'required|unique:products,frame_number',
-            'plate_number' => 'unique:products,plate_number'
+            'plate_number' => 'required_if:status,second_hand'
         ];
     }
 }

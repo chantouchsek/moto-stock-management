@@ -51,7 +51,7 @@ class UpdateRequest extends FormRequest
             'date_import' => 'required|date_format:Y-m-d',
             'engine_number' => 'required|unique:products,engine_number,' . $this->id,
             'frame_number' => 'required|unique:products,frame_number,' . $this->id,
-            'plate_number' => 'unique:products,plate_number,' . $this->id
+            'plate_number' => 'required_if:status,second_hand'
         ];
     }
 }
