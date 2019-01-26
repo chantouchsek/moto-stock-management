@@ -10,3 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::namespace('Admin\Product')->name('products.')->middleware('guest')->group(function () {
+    Route::get('download-sample', 'DownloadController@downloadSample')->name('products.download.sample');
+});

@@ -7,8 +7,6 @@ use App\Imports\ProductsImport;
 use App\Traits\Authorizable;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 class ImportController extends Controller
@@ -32,7 +30,7 @@ class ImportController extends Controller
     public function downloadSample()
     {
         try {
-            $file = Storage::disk('public')->get('excel/product-upload-sample.xlsx');
+            $file = Storage::disk('public')->get('/excel/product-upload-sample.xlsx');
             $headers = [
                 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             ];
