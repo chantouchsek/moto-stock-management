@@ -40,11 +40,8 @@ class ReportController extends Controller
     {
         $query = (int)$request->input('q');
 
-        $startDate = Carbon::createFromFormat('Y-m-d', $request->input('start_date'));
-        $endDate = Carbon::createFromFormat('Y-m-d', $request->input('end_date'));
-
-        $fromDate = $request->has('q') ? Carbon::now()->addDay(-$query)->toDateString() : $startDate;
-        $tillDate = $request->has('q') ? Carbon::now()->subDay()->toDateString() : $endDate;
+        $fromDate = $request->has('q') ? Carbon::now()->addDay(-$query)->toDateString() : Carbon::createFromFormat('Y-m-d', $request->input('start_date'));
+        $tillDate = $request->has('q') ? Carbon::now()->subDay()->toDateString() : Carbon::createFromFormat('Y-m-d', $request->input('end_date'));
 
         $products = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
             ->with(['make'])
