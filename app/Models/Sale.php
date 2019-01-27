@@ -173,11 +173,11 @@ class Sale extends Model implements HasMedia
             'sales.is_in_lack' => 1,
             'sales.in_lack_amount' => 1,
             'sales.total' => 2,
-            'sales.tax' => 3,
-            'sales.tax_amount' => 4,
             'sales.price' => 10,
             'customers.first_name' => 9,
             'customers.last_name' => 9,
+            'customers.phone_number' => 8,
+            'customers.address' => 7,
             'sales.date' => 8,
             'sales.sale_no' => 10
         ],
