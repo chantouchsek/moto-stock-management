@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -87,11 +88,13 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereSoleOn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereYear($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product sortable($defaultParameters = null)
  */
 class Product extends Model implements HasMedia
 {
     use SoftDeletes,
         Searchable,
+        Sortable,
         HasMediaTrait,
         RevisionableTrait,
         RevisionableUpgrade;
@@ -122,6 +125,31 @@ class Product extends Model implements HasMedia
         'plate_number' => "Plate number",
         'frame_number' => "Frame number",
         'sole_on' => "Sole on"
+    ];
+
+    /**
+     * @var array
+     */
+    public $sortable = [
+        'name',
+        'category_id',
+        'description',
+        'price',
+        'cost',
+        'supplier_id',
+        'make_id',
+        'color_id',
+        'model_id',
+        'year',
+        'import_from',
+        'date_import',
+        'engine_number',
+        'plate_number',
+        'frame_number',
+        'status',
+        'code',
+        'sole_on',
+        'uuid'
     ];
 
     /**

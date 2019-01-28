@@ -179,10 +179,12 @@ class Sale extends Model implements HasMedia
             'customers.phone_number' => 8,
             'customers.address' => 7,
             'sales.date' => 8,
-            'sales.sale_no' => 10
+            'sales.sale_no' => 10,
+            'products.name' => 5
         ],
         'joins' => [
-            'customers' => ['sales.customer_id', 'customers.id']
+            'customers' => ['sales.customer_id', 'customers.id'],
+            'products' => ['sales.product_id', 'products.id'],
         ]
     ];
 

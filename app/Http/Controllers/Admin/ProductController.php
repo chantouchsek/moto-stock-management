@@ -57,7 +57,8 @@ class ProductController extends Controller
             })
             ->when($request->has('only_sole'), function ($query) {
                 return $query->whereNotNull('sole_on');
-            });
+            })
+            ->sortable();
 
         $pagination = $pagination->paginate($this->getPagination());
 

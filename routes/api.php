@@ -42,6 +42,7 @@ Route::namespace('Admin')->group(function () {
     Route::namespace('Product')->prefix('products')->name('products.')->group(function () {
         Route::resource('{product}/revisions', 'RevisionController', ['only' => ['index']]);
         Route::resource('imports', 'ImportController', ['only' => ['store']]);
+        Route::resource('in-stocks', 'InStockController', ['only' => ['index']]);
     });
     Route::get('products/filter', 'ProductController@findBy')->name('products.findBy');
     Route::resource('products', 'ProductController', ['except' => ['create', 'edit']]);
