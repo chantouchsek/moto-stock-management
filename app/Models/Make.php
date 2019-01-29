@@ -50,7 +50,7 @@ class Make extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'active', 'uuid'
+        'name', 'description', 'active', 'uuid', 'category_id'
     ];
 
 

@@ -19,7 +19,8 @@ class CategoryTransformer extends BaseTransformer
             'uuid' => (string)$item->uuid,
             'name' => (string)$item->name,
             'description' => $item->description,
-            'active' => (int)$item->active
+            'active' => (int)$item->active,
+            'parent_id' => (int)$item->parent_id
         ];
     }
 }
