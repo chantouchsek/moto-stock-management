@@ -54,6 +54,9 @@ class InStockController extends Controller
             ->when($request->get('model_id'), function ($query, $q) {
                 return $query->where('model_id', $q);
             })
+            ->when($request->get('color_id'), function ($query, $q) {
+                return $query->where('color_id', $q);
+            })
             ->when($request->get('status'), function ($query, $q) {
                 return $query->where('status', $q);
             });

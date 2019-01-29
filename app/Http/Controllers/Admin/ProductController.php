@@ -55,6 +55,9 @@ class ProductController extends Controller
             ->when($request->get('model_id'), function ($query, $q) {
                 return $query->where('model_id', $q);
             })
+            ->when($request->get('color_id'), function ($query, $q) {
+                return $query->where('color_id', $q);
+            })
             ->when($request->has('only_sole'), function ($query) {
                 return $query->whereNotNull('sole_on');
             })
