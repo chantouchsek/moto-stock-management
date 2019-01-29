@@ -42,7 +42,11 @@ class ModelsController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = Models::search($request->get('q'), null, true)->paginate($this->getPagination());
+        $pagination = Models::search($request->get('q'), null, true)
+            ->when($request->input('make_id'), function ($query, $q) {
+                return $query->where('make_id', $q);
+            })
+            ->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 

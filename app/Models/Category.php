@@ -9,6 +9,7 @@ use App\Traits\RevisionableUpgrade;
 use App\Traits\Searchable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Webpatser\Uuid\Uuid;
@@ -153,6 +154,14 @@ class Category extends Model
     public function getRouteKeyName()
     {
         return 'uuid';
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function makes(): HasMany
+    {
+        return $this->hasMany(Make::class);
     }
 
 }

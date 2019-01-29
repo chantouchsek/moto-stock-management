@@ -42,7 +42,11 @@ class MakeController extends Controller
             $this->setPagination($request->get('limit'));
         }
 
-        $pagination = Make::search($request->get('q'), null, true)->paginate($this->getPagination());
+        $pagination = Make::search($request->get('q'), null, true)
+            ->when($request->input('category_id'), function ($query, $q) {
+                return $query->where('category_id', $q);
+            })
+            ->paginate($this->getPagination());
 
         $data = $this->transformer->transformCollection(collect($pagination->items()));
 

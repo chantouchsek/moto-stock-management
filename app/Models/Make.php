@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
@@ -94,6 +95,14 @@ class Make extends Model
     public function getRouteKeyName()
     {
         return 'uuid';
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class)->withTrashed();
     }
 
     /**
