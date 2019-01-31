@@ -112,4 +112,12 @@ class Make extends Model
     {
         return $this->hasMany(Models::class)->withTrashed();
     }
+
+    /**
+     * @return HasMany
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 }
