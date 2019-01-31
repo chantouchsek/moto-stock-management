@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
@@ -94,19 +95,10 @@ class Color extends Model
     }
 
     /**
-     * @return BelongsToMany
+     * @return HasMany
      */
-    public function products(): BelongsToMany
+    public function products(): HasMany
     {
-        return $this->belongsToMany(Color::class, 'product_color', 'color_id', 'product_id')
-            ->withPivot([
-                'engine_number',
-                'plate_number',
-                'frame_number',
-                'status',
-                'code',
-                'sole_on'
-            ])
-            ->withTimestamps();
+        return $this->hasMany(Product::class, 'color_id', 'id');
     }
 }

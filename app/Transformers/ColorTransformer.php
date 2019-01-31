@@ -19,7 +19,9 @@ class ColorTransformer extends BaseTransformer
             'uuid' => (string)$item->uuid,
             'name' => (string)$item->name,
             'description' => $item->description,
-            'active' => (int)$item->active
+            'active' => (int)$item->active,
+            'products' => collect($item->products),
+            'products_count' => $item->products->count()
         ];
     }
 }

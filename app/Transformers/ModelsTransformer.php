@@ -21,7 +21,8 @@ class ModelsTransformer extends BaseTransformer
             'name' => (string)$item->name,
             'description' => $item->description,
             'active' => (int)$item->active,
-            'make' => $item->make
+            'make' => $item->make,
+            'products' => $item->products->count()
         ];
     }
 }
