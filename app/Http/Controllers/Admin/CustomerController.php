@@ -67,7 +67,7 @@ class CustomerController extends Controller
 
         $customer->save();
         DB::commit();
-        return $this->respondCreated();
+        return $this->respond(['data' => $this->transformer->transform($customer), 'message' => 'Customer created.']);
     }
 
     /**
@@ -96,7 +96,7 @@ class CustomerController extends Controller
         $customer->update($request->all());
         $customer->save();
         DB::commit();
-        return $this->respond(['data' => $customer, 'message' => 'Customer updated.']);
+        return $this->respond(['data' => $this->transformer->transform($customer), 'message' => 'Customer updated.']);
     }
 
     /**
@@ -110,6 +110,6 @@ class CustomerController extends Controller
     public function destroy(Customer $customer, DeleteRequest $request)
     {
         $customer->delete();
-        return $this->respond(['data' => $customer, 'message' => 'Customer destroyed.']);
+        return $this->respond(['data' => $this->transformer->transform($customer), 'message' => 'Customer destroyed.']);
     }
 }
