@@ -42,6 +42,7 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Models whereUuid($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
  */
 class Models extends Model
 {

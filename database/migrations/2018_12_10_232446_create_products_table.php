@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('category_id')->nullable();
             $table->unsignedInteger('color_id')->nullable();
             $table->string('name', 255)->nullable();
-            $table->string('description', 255)->nullable();
+            $table->text('description')->nullable();
             $table->decimal('price', 20, 2)->default(0)->comment('Price is the amount a customer is willing to pay for a product or service.');
             $table->decimal('cost', 20, 2)->default(0)->comment('Cost is typically the expense incurred for a product or service being sold by a company.');
             $table->integer('year')->nullable()->comment('To track product year');

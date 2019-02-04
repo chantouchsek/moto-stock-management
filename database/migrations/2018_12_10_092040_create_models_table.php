@@ -18,7 +18,7 @@ class CreateModelsTable extends Migration
             $table->uuid('uuid');
             $table->unsignedInteger('make_id');
             $table->string('name')->unique()->nullable();
-            $table->string('description', 255)->nullable();
+            $table->text('description')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();

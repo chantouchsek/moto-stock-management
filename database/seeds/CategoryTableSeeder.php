@@ -17,7 +17,7 @@ class CategoryTableSeeder extends Seeder
                 'name' => 'Road Racing',
                 'description' => 'Road racing is a form of motorcycle racing held on a paved road surfaces. The races can be held either on a purpose-built closed circuit or on a street circuit utilizing temporarily closed public roads.',
                 'active' => true,
-                'parent_id' => ''
+                'parent_id' => null
             ], [
                 'name' => 'Traditional road racing',
                 'description' => 'Historically, "road racing" meant a course on closed public roads. This was once commonplace but currently only a few such circuits have survived, mostly in Europe. ',
@@ -61,7 +61,7 @@ class CategoryTableSeeder extends Seeder
 
                 Motocross has a plethora of classes based upon machine displacement (ranging from 50cc 2-stroke youth machines up to 250cc two-stroke and 450cc four-stroke), age of competitor, ability of competitor, sidecars, quads/ATVs, and machine age (classic for pre-1965/67, Twinshock for bikes with two shock absorbers, etc.).',
                 'active' => true,
-                'parent_id' => ''
+                'parent_id' => null
             ], [
                 'name' => 'Suppercross',
                 'description' => 'Supercross (or SX) is simply indoor motocross. Supercross is more technical and rhythm like to riders. Typically situated in a variety of stadiums and open or closed arenas, it is notable for its numerous jumps. In North America, this has been turned into an extremely popular spectator sport, filling large baseball, soccer, and football stadiums, leading to Motocross being now termed the "outdoors". However, in Europe it is less popular sport, as the predominate focus there is on Motocross.',
@@ -78,7 +78,7 @@ class CategoryTableSeeder extends Seeder
                 'name' => 'Enduro and cross-country',
                 'description' => 'Enduro and cross-country',
                 'active' => true,
-                'parent_id' => ''
+                'parent_id' => null
             ], [
                 'name' => 'Enduro',
                 'description' => 'Enduro is a form of off-road motorcycle sport that primarily focuses on the endurance of the competitor. In the most traditional sense ("Time Card Enduros"), competitors complete a 10+ mile lap, of predominately off-road going, often through forestry. The lap is made up of different stages, each with a target time to complete that stage in exactly, there are penalties for being early and late, thus the goal is to be exactly "on time". Some stages are deliberately "tight", others are lax allowing the competitor to recuperate. There are also a variety of special tests, on variety of terrain to further aid classification, these are speed stages where the fastest time is desired. A normal event lasts for 3 to 4 hours, although longer events are not uncommon. Some events, particularly national and world championship events take place over several days and require maintenance work to be carried out within a limited time window or while the race is running. To prevent circumvention of the maintenance restrictions, the motorcycles are kept overnight in secure storage.',
@@ -110,7 +110,7 @@ class CategoryTableSeeder extends Seeder
                 'name' => 'Speedway',
                 'description' => 'Speedway racing takes place on a flat oval track usually consisting of dirt or loosely packed shale, using bikes with a single gear and no brakes. Competitors use this surface to slide their machines sideways (powersliding or broadsliding) into the bends using the rear wheel to scrub-off speed while still providing the drive to power the bike forward and around the bend.',
                 'active' => true,
-                'parent_id' => ''
+                'parent_id' => null
             ], [
                 'name' => 'Grasstrack',
                 'description' => 'Grasstrack is outdoor speedway. The track are longer (400 m+, hence it is often also referred to as Long Track at world level), often on grass (although other surfaces exist) and even feature elevation changes. Machinery is very similar to a speedway bike (still no brakes, but normally two gears, rear suspension, etc.)',
@@ -135,7 +135,7 @@ class CategoryTableSeeder extends Seeder
                 'name' => 'Others',
                 'description' => 'Other categories',
                 'active' => true,
-                'parent_id' => ''
+                'parent_id' => null
             ], [
                 'name' => 'Drag racing/sprints',
                 'description' => 'Drag racing or sprints is a racing venue where two participants line up at a dragstrip with a signaled starting line. Upon the starting signal, the riders accelerate down a straight, quarter-mile long paved track where their elapsed time and terminal speed are recorded. The rider to reach the finish line first is the winner. This can occur upon purpose built venues (e.g., Santa Pod), temporary venues (e.g., runways or drives of country houses). In addition to "regular" motorcycles, top fuel motorcycles using Nitrous Oxide also compete in this category.',

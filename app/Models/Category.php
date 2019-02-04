@@ -7,7 +7,6 @@ use App\Events\Category\Deleted;
 use App\Events\Category\Updated;
 use App\Traits\RevisionableUpgrade;
 use App\Traits\Searchable;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -51,11 +50,11 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Category whereUuid($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Make[] $makes
  */
 class Category extends Model
 {
     use SoftDeletes,
-        Sluggable,
         Searchable,
         RevisionableTrait,
         RevisionableUpgrade;
@@ -86,7 +85,7 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug', 'description', 'active', 'uuid', 'parent_id'
+        'name', 'description', 'active', 'uuid', 'parent_id'
     ];
 
     /**
@@ -101,20 +100,6 @@ class Category extends Model
         'updated' => Updated::class,
         'deleted' => Deleted::class
     ];
-
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
-    }
 
     /**
      * Searchable rules.

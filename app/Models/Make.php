@@ -40,6 +40,10 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereUuid($value)
+ * @property int|null $category_id
+ * @property-read \App\Models\Category|null $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereCategoryId($value)
  */
 class Make extends Model
 {
