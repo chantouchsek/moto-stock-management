@@ -120,7 +120,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     protected $fillable = [
         'first_name', 'last_name', 'email', 'password', 'phone_number', 'username', 'date_of_birth',
         'gender', 'address', 'start_work_date', 'base_salary', 'status', 'resigned_at', 'bonus', 'uuid',
-        'bio', 'locale', 'full_time', 'rate'
+        'bio', 'locale', 'full_time', 'rate', 'staff_id'
     ];
 
     /**
@@ -175,6 +175,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
         parent::boot();
         self::creating(function ($model) {
             $model->uuid = (string)Uuid::generate(4);
+            $lastRecord = Sale::orderBy('id', 'desc')->withTrashed()->first();
+            $model->staff_id = str_pad($lastRecord ? $lastRecord->id + 1 : 1, 10, "0", STR_PAD_LEFT);
         });
     }
 

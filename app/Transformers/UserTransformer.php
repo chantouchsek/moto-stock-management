@@ -41,7 +41,8 @@ class UserTransformer extends BaseTransformer
             'bio' => (string)$item->bio,
             'roles' => $item->roles->pluck('name')->all(),
             'loans' => collect($item->loans),
-            'rate' => $item->rate
+            'rate' => $item->rate,
+            'staff_id' => (string)$item->staff_id
         ];
     }
 }
