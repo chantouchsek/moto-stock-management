@@ -164,7 +164,7 @@ class RevenueController extends Controller
         $type = $request->input('type', 'model');
 
         $products = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
-            ->with(['supplier', 'category', 'make', 'model', 'color'])
+            ->with(['supplier', 'make', 'model', 'color'])
             ->when($type === 'supplier', function ($query) {
                 $query->orderBy('supplier_id');
             })
@@ -173,9 +173,6 @@ class RevenueController extends Controller
             })
             ->when($type === 'model', function ($query) {
                 $query->orderBy('model_id');
-            })
-            ->when($type === 'category', function ($query) {
-                $query->orderBy('category_id');
             })
             ->when($type === 'color', function ($query) {
                 $query->orderBy('color_id');
@@ -189,9 +186,6 @@ class RevenueController extends Controller
                 }
                 if ($type === 'model') {
                     return $query->model->name;
-                }
-                if ($type === 'category') {
-                    return $query->category->name;
                 }
                 return $query->color->name;
             })->map(function ($row) {

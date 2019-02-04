@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
+use League\OAuth2\Server\Exception\OAuthServerException;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -248,5 +250,36 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     public function loans(): HasMany
     {
         return $this->hasMany(Loan::class, 'staff_id', 'id');
+    }
+
+    /**
+     * Find the user identified by the given $identifier.
+     *
+     * @param $identifier
+     * @return mixed
+     */
+    public function findForPassport($identifier)
+    {
+        return $this->orWhere('email', $identifier)
+            ->orWhere('staff_id', $identifier)
+            ->orWhere('name', $identifier)->first();
+    }
+
+    /**
+     * @param $password
+     * @return bool
+     * @throws OAuthServerException
+     */
+    public function validateForPassportPasswordGrant($password)
+    {
+        //check for password
+        if (Hash::check($password, $this->getAuthPassword())) {
+            //is user active?
+            if ($this->status) {
+                return true;
+            }
+            throw new OAuthServerException('User account is not active', 6, 'account_inactive', 401);
+        }
+        return false;
     }
 }

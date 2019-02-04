@@ -16,16 +16,11 @@ class CreateMakesTable extends Migration
         Schema::create('makes', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
-            $table->unsignedInteger('category_id')->nullable();
             $table->string('name')->unique()->nullable();
             $table->text('description')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('category_id')
-                ->references('id')->on('categories')
-                ->onDelete('cascade');
         });
     }
 

@@ -40,7 +40,6 @@ use Webpatser\Uuid\Uuid;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \App\Models\Category|null $category
  * @property-read \App\Models\Make|null $make
  * @property-read \App\Models\Models|null $model
  * @property-read \App\Models\Supplier|null $supplier
@@ -132,7 +131,6 @@ class Product extends Model implements HasMedia
      */
     public $sortable = [
         'name',
-        'category_id',
         'description',
         'price',
         'cost',
@@ -223,14 +221,6 @@ class Product extends Model implements HasMedia
     public function getRouteKeyName()
     {
         return 'uuid';
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class)->withTrashed();
     }
 
     /**

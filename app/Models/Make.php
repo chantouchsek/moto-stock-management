@@ -41,7 +41,6 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereUuid($value)
  * @property int|null $category_id
- * @property-read \App\Models\Category|null $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Make whereCategoryId($value)
  */
@@ -55,7 +54,7 @@ class Make extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'active', 'uuid', 'category_id'
+        'name', 'description', 'active', 'uuid'
     ];
 
 
@@ -99,14 +98,6 @@ class Make extends Model
     public function getRouteKeyName()
     {
         return 'uuid';
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class)->withTrashed();
     }
 
     /**

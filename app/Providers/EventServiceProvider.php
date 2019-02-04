@@ -18,12 +18,6 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        // Category
-        'App\Events\Category\Created' => [
-            'App\Listeners\Category\Created'
-        ],
-        'App\Events\Category\Updated' => [],
-        'App\Events\Category\Deleted' => [],
         // Sales
         'App\Events\Sale\Created' => [
             'App\Listeners\Sale\Created'

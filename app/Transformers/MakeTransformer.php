@@ -21,8 +21,6 @@ class MakeTransformer extends BaseTransformer
             'description' => $item->description,
             'active' => (int)$item->active,
             'models' => collect($item->models),
-            'category_id' => (int)$item->category_id,
-            'category' => $item->category,
             'products' => $item->products->count()
         ];
     }

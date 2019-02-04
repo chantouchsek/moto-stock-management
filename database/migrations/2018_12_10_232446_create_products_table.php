@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('make_id')->nullable();
             $table->unsignedInteger('model_id')->nullable();
             $table->unsignedInteger('supplier_id')->nullable();
-            $table->unsignedInteger('category_id')->nullable();
             $table->unsignedInteger('color_id')->nullable();
             $table->string('name', 255)->nullable();
             $table->text('description')->nullable();
@@ -47,10 +46,6 @@ class CreateProductsTable extends Migration
 
             $table->foreign('supplier_id')
                 ->references('id')->on('suppliers')
-                ->onDelete('cascade');
-
-            $table->foreign('category_id')
-                ->references('id')->on('categories')
                 ->onDelete('cascade');
 
             $table->foreign('color_id')
