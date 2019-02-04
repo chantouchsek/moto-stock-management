@@ -21,7 +21,8 @@ class MakeTransformer extends BaseTransformer
             'description' => $item->description,
             'active' => (int)$item->active,
             'models' => collect($item->models),
-            'products' => $item->products->count()
+            'products' => $item->products->count(),
+            'created_at' => $item->created_at ? $item->created_at->toDateTimeString() : ''
         ];
     }
 }
