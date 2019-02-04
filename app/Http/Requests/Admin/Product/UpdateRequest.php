@@ -32,10 +32,6 @@ class UpdateRequest extends FormRequest
                 'required',
                 Rule::exists('suppliers', 'id')
             ],
-            'category_id' => [
-                'required',
-                Rule::exists('categories', 'id')
-            ],
             'make_id' => [
                 'required',
                 Rule::exists('makes', 'id')
