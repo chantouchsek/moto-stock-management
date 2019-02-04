@@ -96,9 +96,9 @@ class Category extends Model
      * @var array The event mapping.
      */
     protected $dispatchesEvents = [
-//        'created' => Created::class,
-//        'updated' => Updated::class,
-//        'deleted' => Deleted::class
+        'created' => Created::class,
+        'updated' => Updated::class,
+        'deleted' => Deleted::class
     ];
 
     /**
