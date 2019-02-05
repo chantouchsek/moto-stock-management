@@ -25,7 +25,7 @@ class ModelsTableSeeder extends Seeder
                 'active' => 1
             ], [
                 'name' => 'Spitfire',
-                'make_id' => '4',
+                'make_id' => '5',
                 'description' => 'Spitfire',
                 'active' => 1
             ], [
@@ -35,7 +35,7 @@ class ModelsTableSeeder extends Seeder
                 'active' => 1
             ], [
                 'name' => 'Lightning',
-                'make_id' => '4',
+                'make_id' => '5',
                 'description' => 'Lightning',
                 'active' => 1
             ], [
@@ -45,7 +45,7 @@ class ModelsTableSeeder extends Seeder
                 'active' => 1
             ], [
                 'name' => 'Victor 441',
-                'make_id' => '4',
+                'make_id' => '5',
                 'description' => 'Victor 441',
                 'active' => 1
             ], [
@@ -55,7 +55,7 @@ class ModelsTableSeeder extends Seeder
                 'active' => 1
             ], [
                 'name' => 'Rocket III',
-                'make_id' => '4',
+                'make_id' => '5',
                 'description' => 'Trail 90',
                 'active' => 1
             ], [
@@ -130,7 +130,7 @@ class ModelsTableSeeder extends Seeder
                 'active' => 1
             ], [
                 'name' => 'Beagle',
-                'make_id' => '4',
+                'make_id' => '5',
                 'description' => 'Beagle',
                 'active' => 1
             ], [
