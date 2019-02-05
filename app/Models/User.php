@@ -175,7 +175,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
         parent::boot();
         self::creating(function ($model) {
             $model->uuid = (string)Uuid::generate(4);
-            $lastRecord = Sale::orderBy('id', 'desc')->withTrashed()->first();
+            $lastRecord = User::orderBy('id', 'desc')->withTrashed()->first();
             $model->staff_id = str_pad($lastRecord ? $lastRecord->id + 1 : 1, 10, "0", STR_PAD_LEFT);
         });
     }
