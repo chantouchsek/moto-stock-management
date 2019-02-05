@@ -264,6 +264,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     {
         return $this->orWhere('email', $identifier)
             ->orWhere('staff_id', $identifier)
+            ->orWhere('username', $identifier)
             ->orWhere('phone_number', $identifier)->first();
     }
 
