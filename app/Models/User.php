@@ -102,6 +102,8 @@ use Webpatser\Uuid\Uuid;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Loan[] $loans
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payroll[] $payrolls
  * @property-read string $user_avatar
+ * @property string $staff_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStaffId($value)
  */
 class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLocalePreference
 {

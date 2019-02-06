@@ -33,6 +33,7 @@ class CreateProductsTable extends Migration
             $table->string('status')->default('new')->comment('Is new or second hand');
             $table->string('code')->nullable();
             $table->dateTime('sole_on')->nullable();
+            $table->string('engine_size')->nullable()->comment('CC');
             $table->timestamps();
             $table->softDeletes();
 

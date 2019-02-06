@@ -88,6 +88,8 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereYear($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product sortable($defaultParameters = null)
+ * @property string|null $engine_size
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Product whereEngineSize($value)
  */
 class Product extends Model implements HasMedia
 {
@@ -123,7 +125,8 @@ class Product extends Model implements HasMedia
         'engine_number' => "Engine number",
         'plate_number' => "Plate number",
         'frame_number' => "Frame number",
-        'sole_on' => "Sole on"
+        'sole_on' => "Sole on",
+        'engine_size' => 'Engine size'
     ];
 
     /**
@@ -147,7 +150,8 @@ class Product extends Model implements HasMedia
         'status',
         'code',
         'sole_on',
-        'uuid'
+        'uuid',
+        'engine_size'
     ];
 
     /**
@@ -172,7 +176,8 @@ class Product extends Model implements HasMedia
         'status',
         'code',
         'sole_on',
-        'uuid'
+        'uuid',
+        'engine_size'
     ];
 
     /**
@@ -195,10 +200,11 @@ class Product extends Model implements HasMedia
          */
         'columns' => [
             'products.id' => 1,
-            'products.name' => 5,
+            'products.name' => 8,
             'products.description' => 1,
             'products.engine_number' => 10,
-            'products.frame_number' => 5
+            'products.frame_number' => 5,
+            'products.engine_size' => 2
         ]
     ];
 

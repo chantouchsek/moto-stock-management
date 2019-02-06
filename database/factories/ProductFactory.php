@@ -18,6 +18,7 @@ $factory->define(\App\Models\Product::class, function (Faker $faker) {
         'frame_number' => $faker->unique()->randomNumber(),
         'status' => $faker->randomElement(['new', 'second_hand']),
         'code' => $faker->postcode,
-        'date_import' => $faker->date('Y-m-d')
+        'date_import' => $faker->date('Y-m-d'),
+        'engine_size' => $faker->randomNumber()
     ];
 });

@@ -40,7 +40,8 @@ class ProductTransformer extends BaseTransformer
             'sole_on' => isset($item->sole_on) ? $item->sole_on->toDateString() : '',
             'color_id' => (int)$item->color_id,
             'status' => (string)$item->status,
-            'file' => $item->hasMedia('product-image-featured') ? config('app.url') . $item->getMedia('product-image-featured')->first()->getUrl('product-image-featured') : ''
+            'file' => $item->hasMedia('product-image-featured') ? config('app.url') . $item->getMedia('product-image-featured')->first()->getUrl('product-image-featured') : '',
+            'engine_size' => (string)$item->engine_size
         ];
     }
 }
