@@ -20,7 +20,8 @@ class Deleted extends SaleNotification
             'notify_type' => 'sale_deleted',
             'notify_id' => $this->sale->uuid,
             'created_at' => $timestamp,
-            'updated_at' => $timestamp
+            'updated_at' => $timestamp,
+            'title' => 'Sale Deleted'
         ];
     }
 }

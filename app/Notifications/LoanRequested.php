@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Loan;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Notifications\Notification;
@@ -60,10 +61,14 @@ class LoanRequested extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
+        $timestamp = Carbon::now()->addSecond()->toDateTimeString();
         return [
             'body' => $this->loan->staff->full_name . " was request to loan salary amount: $" . $this->loan->amount . "<br/>Reason: {$this->loan->reason}",
             'notify_type' => 'loan_request',
-            'notify_id' => $this->loan->uuid
+            'notify_id' => $this->loan->uuid,
+            'title' => 'Loan Request',
+            'created_at' => $timestamp,
+            'updated_at' => $timestamp
         ];
     }
 }

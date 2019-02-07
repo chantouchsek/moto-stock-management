@@ -19,7 +19,8 @@ class PermissionTransformer extends BaseTransformer
             'name' => (string)$item->name,
             'roles' => collect($item->roles)->map(function ($row) {
                 return $row->name;
-            })
+            }),
+            'users' => collect($item->users)
         ];
     }
 }

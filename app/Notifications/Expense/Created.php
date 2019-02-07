@@ -20,7 +20,8 @@ class Created extends ExpenseNotification
             'notify_type' => 'expense_created',
             'notify_id' => $this->expense->uuid,
             'created_at' => $timestamp,
-            'updated_at' => $timestamp
+            'updated_at' => $timestamp,
+            'title' => 'Expense Created'
         ];
     }
 }

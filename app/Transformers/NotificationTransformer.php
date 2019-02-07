@@ -22,7 +22,8 @@ class NotificationTransformer extends BaseTransformer
             'body' => isset($item->data['body']) ? $item->data['body'] : '',
             'notify_type' => isset($item->data['notify_type']) ? $item->data['notify_type'] : '',
             'created_at' => isset($item->created_at) ? $item->created_at->toDateTimeString() : null,
-            'type' => $item->type
+            'type' => $item->type,
+            'title' => (string)$item->title
         ];
     }
 }

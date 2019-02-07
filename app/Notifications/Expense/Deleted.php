@@ -20,7 +20,8 @@ class Deleted extends ExpenseNotification
             'notify_type' => 'expense_deleted',
             'notify_id' => $this->expense->uuid,
             'created_at' => $timestamp,
-            'updated_at' => $timestamp
+            'updated_at' => $timestamp,
+            'title' => 'Expense Deleted'
         ];
     }
 }

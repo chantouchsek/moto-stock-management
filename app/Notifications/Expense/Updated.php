@@ -19,7 +19,8 @@ class Updated extends ExpenseNotification
             'body' => "Expense amount: {$this->expense->amount} was updated at {$this->expense->updated_at} by {$notifiable->full_name}",
             'notify_type' => 'expense_updated',
             'notify_id' => $this->expense->uuid,
-            'created_at' => $timestamp
+            'created_at' => $timestamp,
+            'title' => 'Expense Updated'
         ];
     }
 }
