@@ -287,4 +287,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
         }
         return false;
     }
+
+    /**
+     * Route for onesignal
+     * @return array
+     */
+    public function routeNotificationForOneSignal()
+    {
+        return ['01df94f0-3e76-4710-8a9f-77bc36140ef5'];
+    }
 }

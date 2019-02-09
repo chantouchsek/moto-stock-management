@@ -6,6 +6,9 @@ use App\Models\Sale;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use NotificationChannels\OneSignal\OneSignalChannel;
+use NotificationChannels\OneSignal\OneSignalMessage;
+use NotificationChannels\OneSignal\OneSignalWebButton;
 
 abstract class SaleNotification extends Notification implements ShouldQueue
 {
@@ -31,6 +34,24 @@ abstract class SaleNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database', 'broadcast', OneSignalChannel::class];
+    }
+
+    /**
+     * @param $notifiable
+     * @return OneSignalMessage
+     */
+    public function toOneSignal($notifiable)
+    {
+        return OneSignalMessage::create()
+            ->subject("Your {$notifiable->service} account was approved!")
+            ->body("Click here to see details.")
+            ->url('http://onesignal.com')
+            ->webButton(
+                OneSignalWebButton::create('link-1')
+                    ->text('Click here')
+                    ->icon('https://upload.wikimedia.org/wikipedia/commons/4/4f/Laravel_logo.png')
+                    ->url('http://laravel.com')
+            );
     }
 }
