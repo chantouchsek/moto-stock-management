@@ -21,6 +21,11 @@ class CreateUserDevicesTable extends Migration
             $table->string('push_token')->nullable();
             $table->boolean('subscribed')->default(false);
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
         });
     }
 
