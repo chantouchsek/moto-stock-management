@@ -22,16 +22,22 @@ class DeviceController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(Request $request)
     {
-        $uniqueDevice = UserDevice::where('user_id', '=', $request->get('user_id'))
+        DB::beginTransaction();
+        $uniqueDevice = UserDevice::where('user_id', '=', $request->user('api')->id)
             ->where('player_id', '=', $request->get('player_id'))
             ->first();
         if (empty($uniqueDevice)) {
-            DB::commit();
-            $device = new UserDevice($request->all());
+
+            $device = new UserDevice($request->except(['user_id']));
+
+            $device->user_id = $request->user('api')->id;
+
             $device->save();
+
             DB::commit();
             return $this->respondCreated('Device has been registered successful.');
         }
