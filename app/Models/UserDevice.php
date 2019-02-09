@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Webpatser\Uuid\Uuid;
 
 /**
  * App\Models\UserDevice
@@ -17,6 +18,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class UserDevice extends Model
 {
 
+    /**
+     * @var array
+     */
     protected $fillable = ['user_id', 'player_id', 'push_token', 'subscribe', 'device_name', 'country', 'lang_code'];
 
 
@@ -26,5 +30,17 @@ class UserDevice extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = (string)Uuid::generate(4);
+        });
     }
 }
