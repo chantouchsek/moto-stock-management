@@ -3,6 +3,7 @@
 namespace App\Notifications\Sale;
 
 use App\Models\Sale;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -43,15 +44,13 @@ abstract class SaleNotification extends Notification implements ShouldQueue
      */
     public function toOneSignal($notifiable)
     {
+        $timestamp = Carbon::now()->addSecond()->toDateTimeString();
         return OneSignalMessage::create()
-            ->subject("Your {$notifiable->service} account was approved!")
-            ->body("Click here to see details.")
-            ->url('http://onesignal.com')
-            ->webButton(
-                OneSignalWebButton::create('link-1')
-                    ->text('Click here')
-                    ->icon('https://upload.wikimedia.org/wikipedia/commons/4/4f/Laravel_logo.png')
-                    ->url('http://laravel.com')
-            );
+            ->subject("Sale")
+            ->body("Sale number: #{$this->sale->sale_no} was updated at {$this->sale->updated_at} by {$notifiable->full_name}")
+            ->setData('notify_type', 'sale_updated')
+            ->setData('created_at', $timestamp)
+            ->setData('updated_at', $timestamp)
+            ->setData('notify_id', $this->sale->uuid);
     }
 }

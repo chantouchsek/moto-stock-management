@@ -20,8 +20,7 @@ class Updated extends SaleNotification
             'notify_type' => 'sale_updated',
             'notify_id' => $this->sale->uuid,
             'created_at' => $timestamp,
-            'updated_at' => $timestamp,
-            'title' => 'Sale Updated'
+            'updated_at' => $timestamp
         ];
     }
 }

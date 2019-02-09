@@ -104,6 +104,7 @@ use Webpatser\Uuid\Uuid;
  * @property-read string $user_avatar
  * @property string $staff_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStaffId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\UserDevice[] $devices
  */
 class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLocalePreference
 {
@@ -254,6 +255,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, HasLoca
     public function loans(): HasMany
     {
         return $this->hasMany(Loan::class, 'staff_id', 'id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function devices(): HasMany
+    {
+        return $this->hasMany(UserDevice::class);
     }
 
     /**

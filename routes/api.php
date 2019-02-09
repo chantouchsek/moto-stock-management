@@ -20,7 +20,7 @@ Route::namespace('Admin')->group(function () {
         Route::get('notifications', 'NotificationController@index')->name('notifications.index');
         Route::get('notifications/markAsRead', 'NotificationController@readNotification')->name('notifications.read');
         Route::get('notifications/unReads', 'NotificationController@unReads')->name('notifications.unread');
-
+        Route::resource('devices', 'DeviceController', ['only' => ['index', 'store', 'update']]);
     });
     Route::namespace('Expense')->prefix('expenses')->name('expenses.')->group(function () {
         Route::resource('{expense}/uploads', 'UploadAttachmentController', ['only' => ['store', 'destroy']]);
