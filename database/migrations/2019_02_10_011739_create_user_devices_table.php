@@ -20,9 +20,6 @@ class CreateUserDevicesTable extends Migration
             $table->string('player_id')->nullable();
             $table->string('push_token')->nullable();
             $table->boolean('subscribed')->default(false);
-            $table->string('device_name')->nullable();
-            $table->string('country')->nullable();
-            $table->string('lang_code')->nullable();
             $table->timestamps();
         });
     }

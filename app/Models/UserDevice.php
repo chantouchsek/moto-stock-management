@@ -6,25 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webpatser\Uuid\Uuid;
 
+
 /**
  * App\Models\UserDevice
  *
- * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice query()
- * @mixin \Eloquent
  * @property int $id
  * @property string|null $uuid
  * @property int|null $user_id
  * @property string|null $player_id
  * @property string|null $push_token
- * @property int $subscribe
+ * @property int $subscribed
  * @property string|null $device_name
  * @property string|null $country
  * @property string|null $lang_code
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereDeviceName($value)
@@ -32,12 +32,11 @@ use Webpatser\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereLangCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice wherePlayerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice wherePushToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereSubscribe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereSubscribed($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereUuid($value)
- * @property int $subscribed
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\UserDevice whereSubscribed($value)
+ * @mixin \Eloquent
  */
 class UserDevice extends Model
 {
@@ -49,10 +48,7 @@ class UserDevice extends Model
         'user_id',
         'player_id',
         'push_token',
-        'subscribed',
-        'device_name',
-        'country',
-        'lang_code'
+        'subscribed'
     ];
 
 
