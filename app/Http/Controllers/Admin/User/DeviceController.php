@@ -29,8 +29,7 @@ class DeviceController extends Controller
         DB::beginTransaction();
 
         $uniqueDevice = UserDevice::where('user_id', '=', $request->user('api')->id)
-            ->where('player_id', '=', $request->get('player_id'))
-            ->first();
+            ->where('player_id', '=', $request->get('player_id'))->first();
 
         if (empty($uniqueDevice)) {
 
@@ -44,11 +43,14 @@ class DeviceController extends Controller
 
             return $this->respondCreated('Device has been registered successful.');
         }
-        $uniqueDevice->update($request->only('subscribed'));
+
+        $uniqueDevice->fill($request->only('subscribed'));
+
+        $uniqueDevice->save();
 
         DB::commit();
 
-        return $this->respondCreated('Device already registered.');
+        return $this->respondCreated('Your device updated.');
     }
 
     /**
