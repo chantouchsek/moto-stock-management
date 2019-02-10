@@ -65,7 +65,7 @@ class DeviceController extends Controller
 
         $userDevice = UserDevice::where('player_id', $playerId)->first();
 
-        $userDevice->update($request->all());
+        $userDevice->update($request->only('subscribed'));
 
         DB::commit();
 
