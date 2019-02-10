@@ -36,6 +36,7 @@ class Created extends SaleNotification
         return OneSignalMessage::create()
             ->subject("Sale Created")
             ->body("Sale number: #{$this->sale->sale_no} was created at {$this->sale->updated_at} by {$notifiable->full_name}")
+            ->icon($notifiable->user_avatar)
             ->setData('notify_type', 'sale')
             ->setData('created_at', $timestamp)
             ->setData('updated_at', $timestamp)

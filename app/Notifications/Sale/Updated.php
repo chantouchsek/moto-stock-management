@@ -36,6 +36,7 @@ class Updated extends SaleNotification
             ->subject("Sale Updated")
             ->body("Sale number: #{$this->sale->sale_no} was updated at {$this->sale->updated_at} by {$notifiable->full_name}")
             ->setData('notify_type', 'sale')
+            ->icon($notifiable->user_avatar)
             ->setData('created_at', $timestamp)
             ->setData('updated_at', $timestamp)
             ->setData('notify_id', $this->sale->uuid);

@@ -37,6 +37,7 @@ class Deleted extends ExpenseNotification
             ->subject("Expense Deleted")
             ->body("Expense amount: {$this->expense->amount} was deleted at {$this->expense->created_at} by {$notifiable->full_name}")
             ->setData('notify_type', 'expense')
+            ->icon($notifiable->user_avatar)
             ->setData('created_at', $timestamp)
             ->setData('updated_at', $timestamp)
             ->setData('notify_id', $this->expense->uuid);

@@ -36,6 +36,7 @@ class Updated extends ExpenseNotification
             ->subject("Expense Updated")
             ->body("Expense amount: {$this->expense->amount} was updated at {$this->expense->created_at} by {$notifiable->full_name}")
             ->setData('notify_type', 'expense')
+            ->icon($notifiable->user_avatar)
             ->setData('created_at', $timestamp)
             ->setData('updated_at', $timestamp)
             ->setData('notify_id', $this->expense->uuid);
