@@ -25,7 +25,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             'amount' => ['required', 'min:3', 'int'],
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'expense_on' => 'max:255'
         ];
     }
 }

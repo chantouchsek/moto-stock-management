@@ -27,7 +27,8 @@ class StoreRequest extends FormRequest
             'amount' => [
                 'required', 'min:2', 'int'
             ],
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'expense_on' => 'max:255'
         ];
     }
 }

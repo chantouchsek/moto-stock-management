@@ -32,8 +32,7 @@ class StoreRequest extends FormRequest
             ],
             'needed_date' => [
                 'required', 'date', 'after:today'
-            ],
-            'expense_on' => 'max:255'
+            ]
         ];
     }
 }
