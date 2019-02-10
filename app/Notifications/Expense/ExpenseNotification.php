@@ -6,6 +6,7 @@ use App\Models\Expense;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use NotificationChannels\OneSignal\OneSignalChannel;
 
 abstract class ExpenseNotification extends Notification implements ShouldQueue
 {
@@ -31,6 +32,6 @@ abstract class ExpenseNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database', 'broadcast', OneSignalChannel::class];
     }
 }

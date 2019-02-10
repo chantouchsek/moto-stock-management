@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Lang;
+use NotificationChannels\OneSignal\OneSignalChannel;
+use NotificationChannels\OneSignal\OneSignalMessage;
 
 class LoanRequested extends Notification implements ShouldQueue
 {
@@ -35,7 +37,7 @@ class LoanRequested extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database', 'broadcast'];
+        return ['mail', 'database', 'broadcast', OneSignalChannel::class];
     }
 
     /**
@@ -70,5 +72,21 @@ class LoanRequested extends Notification implements ShouldQueue
             'created_at' => $timestamp,
             'updated_at' => $timestamp
         ];
+    }
+
+    /**
+     * @param $notifiable
+     * @return OneSignalMessage
+     */
+    public function toOneSignal($notifiable)
+    {
+        $timestamp = Carbon::now()->addSecond()->toDateTimeString();
+        return OneSignalMessage::create()
+            ->subject("Loan Requested")
+            ->body($this->loan->staff->full_name . " was request to loan salary amount: $" . $this->loan->amount . "<br/>Reason: {$this->loan->reason}")
+            ->setData('notify_type', 'loan')
+            ->setData('created_at', $timestamp)
+            ->setData('updated_at', $timestamp)
+            ->setData('notify_id', $this->loan->uuid);
     }
 }
