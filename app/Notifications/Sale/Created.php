@@ -3,6 +3,7 @@
 namespace App\Notifications\Sale;
 
 use Carbon\Carbon;
+use NotificationChannels\OneSignal\OneSignalMessage;
 
 class Created extends SaleNotification
 {
@@ -23,5 +24,21 @@ class Created extends SaleNotification
             'updated_at' => $timestamp,
             'title' => 'Sale Created'
         ];
+    }
+
+    /**
+     * @param $notifiable
+     * @return OneSignalMessage
+     */
+    public function toOneSignal($notifiable)
+    {
+        $timestamp = Carbon::now()->addSecond()->toDateTimeString();
+        return OneSignalMessage::create()
+            ->subject("Sale Created")
+            ->body("Sale number: #{$this->sale->sale_no} was created at {$this->sale->updated_at} by {$notifiable->full_name}")
+            ->setData('notify_type', 'sale_created')
+            ->setData('created_at', $timestamp)
+            ->setData('updated_at', $timestamp)
+            ->setData('notify_id', $this->sale->uuid);
     }
 }
