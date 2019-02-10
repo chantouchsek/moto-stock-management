@@ -62,8 +62,7 @@ class DeviceController extends Controller
     public function update(UserDevice $userDevice, Request $request)
     {
         DB::beginTransaction();
-        $userDevice->fill($request->only('subscribed'));
-        $userDevice->save();
+        $userDevice->update($request->all());
         DB::commit();
         return $this->respondCreated('Item updated.');
     }
