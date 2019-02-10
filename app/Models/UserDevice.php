@@ -71,4 +71,15 @@ class UserDevice extends Model
             $model->uuid = (string)Uuid::generate(4);
         });
     }
+
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'player_id';
+    }
 }

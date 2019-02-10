@@ -27,9 +27,11 @@ class DeviceController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
+
         $uniqueDevice = UserDevice::where('user_id', '=', $request->user('api')->id)
             ->where('player_id', '=', $request->get('player_id'))
             ->first();
+
         if (empty($uniqueDevice)) {
 
             $device = new UserDevice($request->except(['user_id']));
@@ -39,8 +41,13 @@ class DeviceController extends Controller
             $device->save();
 
             DB::commit();
+
             return $this->respondCreated('Device has been registered successful.');
         }
+        $uniqueDevice->update($request->only('subscribed'));
+
+        DB::commit();
+
         return $this->respondCreated('Device already registered.');
     }
 
@@ -53,7 +60,7 @@ class DeviceController extends Controller
     public function update(UserDevice $device, Request $request)
     {
         DB::beginTransaction();
-        $device->fill($request->all());
+        $device->fill($request->only('subscribed'));
         $device->save();
         DB::commit();
         return $this->respondCreated('Item updated.');
