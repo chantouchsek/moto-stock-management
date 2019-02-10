@@ -18,7 +18,7 @@ class Updated extends SaleNotification
         $timestamp = Carbon::now()->addSecond()->toDateTimeString();
         return [
             'body' => "Sale number: #{$this->sale->sale_no} was updated at {$this->sale->updated_at} by {$notifiable->full_name}",
-            'notify_type' => 'sale_updated',
+            'notify_type' => 'sale',
             'notify_id' => $this->sale->uuid,
             'created_at' => $timestamp,
             'updated_at' => $timestamp
@@ -35,7 +35,7 @@ class Updated extends SaleNotification
         return OneSignalMessage::create()
             ->subject("Sale Updated")
             ->body("Sale number: #{$this->sale->sale_no} was updated at {$this->sale->updated_at} by {$notifiable->full_name}")
-            ->setData('notify_type', 'sale_updated')
+            ->setData('notify_type', 'sale')
             ->setData('created_at', $timestamp)
             ->setData('updated_at', $timestamp)
             ->setData('notify_id', $this->sale->uuid);

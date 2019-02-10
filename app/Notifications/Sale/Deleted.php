@@ -18,7 +18,7 @@ class Deleted extends SaleNotification
         $timestamp = Carbon::now()->addSecond()->toDateTimeString();
         return [
             'body' => "Sale number: #{$this->sale->sale_no} was deleted at {$this->sale->deleted_at} by {$notifiable->full_name}",
-            'notify_type' => 'sale_deleted',
+            'notify_type' => 'sale',
             'notify_id' => $this->sale->uuid,
             'created_at' => $timestamp,
             'updated_at' => $timestamp,
@@ -36,7 +36,7 @@ class Deleted extends SaleNotification
         return OneSignalMessage::create()
             ->subject("Sale Deleted")
             ->body("Sale number: #{$this->sale->sale_no} was deleted at {$this->sale->updated_at} by {$notifiable->full_name}")
-            ->setData('notify_type', 'sale_deleted')
+            ->setData('notify_type', 'sale')
             ->setData('created_at', $timestamp)
             ->setData('updated_at', $timestamp)
             ->setData('notify_id', $this->sale->uuid);
