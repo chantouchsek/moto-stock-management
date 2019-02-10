@@ -54,16 +54,21 @@ class DeviceController extends Controller
     }
 
     /**
-     * @param UserDevice $userDevice
+     * @param int $playerId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function update(UserDevice $userDevice, Request $request)
+    public function update($playerId, Request $request)
     {
         DB::beginTransaction();
+
+        $userDevice = UserDevice::where('player_id', $playerId)->first();
+
         $userDevice->update($request->all());
+
         DB::commit();
+
         return $this->respondCreated('Item updated.');
     }
 
