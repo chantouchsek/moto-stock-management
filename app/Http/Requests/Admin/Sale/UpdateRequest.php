@@ -25,12 +25,6 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_name' => [
-                'required', 'min:2', 'string'
-            ],
-            'customer_address' => [
-                'required', 'min:2', 'string'
-            ],
             'price' => 'required',
             'date' => 'required|date',
             'in_lack_amount' => 'required_if:is_in_lack,1'

@@ -25,12 +25,6 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_name' => [
-                'required', 'min:2', 'string'
-            ],
-            'customer_address' => [
-                'required', 'min:2', 'string'
-            ],
             'product_id' => [
                 'required',
                 Rule::exists('products', 'id')->whereNull('sole_on')

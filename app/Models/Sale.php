@@ -138,12 +138,6 @@ class Sale extends Model implements HasMedia
     ];
 
     /**
-     * @var array
-     */
-    protected $dates = ['date'];
-
-
-    /**
      * The event map for the model.
      *
      * Allows for object-based events for native Eloquent events.
@@ -155,6 +149,12 @@ class Sale extends Model implements HasMedia
         'updated' => Updated::class,
         'deleted' => Deleted::class
     ];
+    /**
+     * @var array
+     */
+    protected $dates = ['date'];
+
+
 
     /**
      * Searchable rules.
