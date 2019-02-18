@@ -121,7 +121,6 @@ class Product extends Model implements HasMedia
         'price' => 'Price',
         'cost' => 'Cost',
         'year' => 'Year',
-        'import_from' => 'Import from',
         'engine_number' => "Engine number",
         'plate_number' => "Plate number",
         'frame_number' => "Frame number",
@@ -137,18 +136,15 @@ class Product extends Model implements HasMedia
         'description',
         'price',
         'cost',
-        'supplier_id',
         'make_id',
         'color_id',
         'model_id',
         'year',
-        'import_from',
         'date_import',
         'engine_number',
         'plate_number',
         'frame_number',
         'status',
-        'code',
         'sole_on',
         'uuid',
         'engine_size'
@@ -163,12 +159,10 @@ class Product extends Model implements HasMedia
         'description',
         'price',
         'cost',
-        'supplier_id',
         'make_id',
         'color_id',
         'model_id',
         'year',
-        'import_from',
         'date_import',
         'engine_number',
         'plate_number',
@@ -248,19 +242,10 @@ class Product extends Model implements HasMedia
     /**
      * @return BelongsTo
      */
-    public function supplier(): BelongsTo
-    {
-        return $this->belongsTo(Supplier::class)->withTrashed();
-    }
-
-    /**
-     * @return BelongsTo
-     */
     public function color(): BelongsTo
     {
         return $this->belongsTo(Color::class)->withTrashed();
     }
-
 
     /**
      * @param Media|null $media

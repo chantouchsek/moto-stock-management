@@ -157,17 +157,14 @@ class RevenueController extends Controller
      * @param IndexRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function productBySupplier(IndexRequest $request)
+    public function productBy(IndexRequest $request)
     {
         $fromDate = Carbon::createFromFormat('Y-m-d', $request->input('start_date'));
         $tillDate = Carbon::createFromFormat('Y-m-d', $request->input('end_date'));
         $type = $request->input('type', 'model');
 
         $products = Product::whereBetween(DB::raw('date(date_import)'), [$fromDate, $tillDate])
-            ->with(['supplier', 'make', 'model', 'color'])
-            ->when($type === 'supplier', function ($query) {
-                $query->orderBy('supplier_id');
-            })
+            ->with(['make', 'model', 'color'])
             ->when($type === 'make', function ($query) {
                 $query->orderBy('make_id');
             })
@@ -178,9 +175,6 @@ class RevenueController extends Controller
                 $query->orderBy('color_id');
             })
             ->get()->groupBy(function ($query) use ($type) {
-                if ($type === 'supplier') {
-                    return $query->supplier->name;
-                }
                 if ($type === 'make') {
                     return $query->make->name;
                 }

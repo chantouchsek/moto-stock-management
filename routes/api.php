@@ -34,7 +34,6 @@ Route::namespace('Admin')->group(function () {
     Route::resource('users', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('roles', 'RoleController', ['except' => ['create', 'edit']]);
     Route::resource('permissions', 'PermissionController', ['except' => ['create', 'edit']]);
-    Route::resource('suppliers', 'SupplierController', ['except' => ['create', 'edit']]);
     Route::resource('makes', 'MakeController', ['except' => ['create', 'edit']]);
     Route::resource('models', 'ModelsController', ['except' => ['create', 'edit']]);
     Route::resource('customers', 'CustomerController', ['except' => ['create', 'edit']]);
@@ -54,6 +53,6 @@ Route::namespace('Admin')->group(function () {
         Route::resource('histories', 'HistoryController', ['only' => ['index']]);
     });
     Route::resource('payrolls', 'PayrollController', ['except' => ['create', 'edit']]);
-    Route::get('revenues/product-by-supplier', 'RevenueController@productBySupplier')->name('revenues.productBySupplier');
+    Route::get('revenues/product-by', 'RevenueController@productBy')->name('revenues.product-by');
     Route::resource('revenues', 'RevenueController', ['only' => ['index']]);
 });
