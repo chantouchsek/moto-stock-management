@@ -42,10 +42,6 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('models')
                 ->onDelete('cascade');
 
-            $table->foreign('supplier_id')
-                ->references('id')->on('suppliers')
-                ->onDelete('cascade');
-
             $table->foreign('color_id')
                 ->references('id')->on('colors')
                 ->onDelete('cascade');
